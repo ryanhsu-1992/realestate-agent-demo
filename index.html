@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#2A241F" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>您的房仲 小許｜示範版</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #F3EEE6;
+      --bg-deep: #EBE4D8;
+      --paper: #FFFCF7;
+      --ink: #2A241F;
+      --ink-soft: #5C544C;
+      --muted: #8A8278;
+      --line: #E4DDD2;
+      --line-strong: #D4CBBE;
+      --accent: #B85C38;
+      --accent-dark: #8E3F24;
+      --accent-soft: #F4E4DC;
+      --accent-mid: #D47852;
+      --good: #2F6B4F;
+      --good-soft: #E4F0E8;
+      --warn: #B5791A;
+      --warn-soft: #F8EED8;
+      --bad: #A33B2C;
+      --bad-soft: #F8E6E2;
+      --info: #3D5A73;
+      --info-soft: #E6EEF3;
+      --shadow: 0 1px 2px rgba(42,36,31,.06), 0 8px 24px rgba(42,36,31,.06);
+      --radius: 16px;
+      --nav-h: 64px;
+      --demo-h: 28px;
+      --safe-b: env(safe-area-inset-bottom, 0px);
+      --font: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      --serif: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: var(--bg); color: var(--ink); font-family: var(--font); }
+    body {
+      min-height: 100dvh;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    button, input, select, textarea { font-family: inherit; font-size: inherit; }
+    button { cursor: pointer; border: 0; background: none; color: inherit; }
+    a { color: var(--accent-dark); }
+    img { max-width: 100%; display: block; }
+    .hidden { display: none !important; }
+
+    .demo-ribbon {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      height: var(--demo-h);
+      background: var(--ink);
+      color: #F3EEE6;
+      font-size: 11px;
+      letter-spacing: .08em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 12px;
+    }
+    .demo-ribbon b { font-weight: 600; color: #E8C4B4; }
+
+    .app { padding-bottom: calc(var(--nav-h) + var(--safe-b) + 12px); }
+
+    .bottom-nav {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      z-index: 50;
+      background: rgba(255,252,247,.92);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid var(--line);
+      padding-bottom: var(--safe-b);
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      height: calc(var(--nav-h) + var(--safe-b));
+    }
+    .bottom-nav a {
+      text-decoration: none;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .02em;
+    }
+    .bottom-nav a svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.7; }
+    .bottom-nav a.active { color: var(--accent-dark); }
+    .bottom-nav .nav-hint { display: none; }
+
+    .wrap { width: min(560px, 100%); margin: 0 auto; padding: 0 16px; }
+    .wrap-wide { width: min(720px, 100%); margin: 0 auto; padding: 0 16px; }
+
+    .hero {
+      padding: 28px 0 8px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: none;
+      color: var(--accent-dark);
+      font-weight: 600;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 18px; height: 1px;
+      background: var(--accent);
+    }
+    h1, h2, .serif { font-family: var(--serif); font-weight: 700; letter-spacing: .02em; }
+    .hero h1 {
+      font-size: clamp(28px, 8vw, 36px);
+      line-height: 1.25;
+      margin: 10px 0 12px;
+    }
+    .hero .lead {
+      color: var(--ink-soft);
+      font-size: 15px;
+      max-width: 36em;
+    }
+    .agent-card {
+      margin-top: 22px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+    .avatar {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 25%, #F0D3C4, transparent 50%),
+        linear-gradient(160deg, #C97A58, #8E3F24);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .agent-card .name { font-weight: 700; font-size: 17px; }
+    .agent-card .meta { font-size: 13px; color: var(--muted); margin-top: 2px; }
+    .contact-row { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+    .chip-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      border: 1px solid var(--line-strong);
+      background: #fff;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .chip-btn.line { border-color: #8FD1A8; background: #F1FAF4; }
+
+    .section { padding: 22px 0 6px; }
+    .section h2 { font-size: 20px; margin-bottom: 12px; }
+    .section-kicker {
+      font-size: 12px; color: var(--accent-dark); font-weight: 600;
+      letter-spacing: .08em; margin-bottom: 4px;
+    }
+
+    .services {
+      display: grid;
+      gap: 10px;
+    }
+    .service {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 16px;
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+    .service-ico {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      display: grid; place-items: center;
+    }
+    .service-ico svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.7; }
+    .service h3 { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+    .service p { font-size: 13px; color: var(--ink-soft); }
+
+    .form-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 20px 16px 24px;
+      margin: 8px 0 24px;
+    }
+    .form-card h2 { font-size: 22px; margin-bottom: 4px; }
+    .form-card .sub { font-size: 13px; color: var(--muted); margin-bottom: 18px; }
+
+    label.fld { display: block; margin-bottom: 14px; }
+    label.fld > span, .fld-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+    .req { color: var(--accent); margin-left: 2px; }
+    .opt { color: var(--muted); font-weight: 400; font-size: 12px; margin-left: 4px; }
+    input[type="text"], input[type="tel"], input[type="number"], input[type="search"],
+    select, textarea {
+      width: 100%;
+      background: #fff;
+      border: 1px solid var(--line-strong);
+      border-radius: 12px;
+      padding: 12px 12px;
+      color: var(--ink);
+      outline: none;
+      transition: border-color .15s, box-shadow .15s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    select {
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' stroke='%235C544C' stroke-width='1.5' fill='none'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 36px;
+    }
+    textarea { min-height: 88px; resize: vertical; }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(184,92,56,.18);
+    }
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    .choice-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .choice {
+      position: relative;
+    }
+    .choice input { position: absolute; opacity: 0; pointer-events: none; }
+    .choice span {
+      display: block;
+      text-align: center;
+      border: 1px solid var(--line-strong);
+      background: #fff;
+      border-radius: 12px;
+      padding: 10px 6px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .choice input:checked + span {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      box-shadow: 0 0 0 3px rgba(184,92,56,.12);
+    }
+
+    .consent {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+      margin: 6px 0 16px;
+    }
+    .consent-head {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+    .consent input[type="checkbox"] {
+      width: 18px; height: 18px; margin-top: 2px; accent-color: var(--accent-dark);
+    }
+    .consent-head p { font-size: 13px; line-height: 1.55; }
+    .consent details { margin-top: 8px; }
+    .consent summary {
+      font-size: 12px;
+      color: var(--accent-dark);
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .legal {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      line-height: 1.7;
+      white-space: pre-line;
+      background: var(--paper);
+      border-radius: 10px;
+      padding: 12px;
+      border: 1px dashed var(--line-strong);
+    }
+    .legal-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      background: var(--warn-soft);
+      color: var(--warn);
+      border-radius: 4px;
+      padding: 1px 6px;
+      margin-bottom: 6px;
+    }
+
+    .btn-primary {
+      width: 100%;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-weight: 700;
+      font-size: 16px;
+      box-shadow: 0 6px 16px rgba(184,92,56,.28);
+    }
+    .btn-primary:disabled { opacity: .45; box-shadow: none; }
+    .btn-ghost {
+      width: 100%;
+      margin-top: 8px;
+      border: 1px solid var(--line-strong);
+      background: #fff;
+      border-radius: 14px;
+      padding: 12px;
+      font-weight: 600;
+    }
+    .btn-row { display: flex; gap: 8px; }
+    .btn-row > * { flex: 1; margin-top: 0; }
+    .btn-sm {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      border-radius: 10px;
+      padding: 9px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid var(--line-strong);
+      background: #fff;
+    }
+    .btn-sm.primary { background: var(--accent); color: #fff; border-color: transparent; }
+
+    .fineprint {
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    .thanks {
+      text-align: center;
+      padding: 28px 8px 12px;
+    }
+    .thanks .check {
+      width: 64px; height: 64px; margin: 0 auto 14px;
+      border-radius: 50%;
+      background: var(--good-soft);
+      color: var(--good);
+      display: grid; place-items: center;
+      font-size: 28px;
+    }
+    .thanks h2 { font-size: 24px; margin-bottom: 8px; }
+    .thanks p { color: var(--ink-soft); font-size: 14px; word-break: keep-all; }
+
+    /* Admin */
+    .page-head { padding: 18px 0 8px; }
+    .page-head h1 { font-size: 24px; }
+    .page-head p { font-size: 13px; color: var(--muted); }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 12px 0 16px;
+    }
+    .stat {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 8px;
+      text-align: center;
+    }
+    .stat b { display: block; font-size: 18px; font-family: var(--serif); }
+    .stat span { font-size: 10px; color: var(--muted); letter-spacing: .02em; }
+    .stat.warn b { color: var(--warn); }
+    .stat.accent b { color: var(--accent-dark); }
+
+    .subtabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--bg-deep);
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 14px;
+    }
+    .subtabs button {
+      border-radius: 10px;
+      padding: 9px 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-soft);
+    }
+    .subtabs button.on { background: var(--paper); color: var(--ink); box-shadow: var(--shadow); }
+
+    .filters { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; -webkit-overflow-scrolling: touch; }
+    .filters button, .pill {
+      flex: 0 0 auto;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid var(--line-strong);
+      background: #fff;
+      color: var(--ink-soft);
+    }
+    .filters button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+    .searchbar { margin-bottom: 12px; }
+
+    .card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 10px;
+      box-shadow: 0 1px 2px rgba(42,36,31,.04);
+    }
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+    .card-top.stack { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .card-top.stack .badge { align-self: flex-start; }
+    .who { font-weight: 700; font-size: 15px; }
+    .who small { display: block; font-weight: 400; color: var(--muted); font-size: 12px; margin-top: 1px; line-height: 1.5; }
+    .who .nowr { white-space: nowrap; }
+    .badge {
+      flex: 0 0 auto;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 3px 8px;
+      letter-spacing: .02em;
+    }
+    .st-新進 { background: var(--accent-soft); color: var(--accent-dark); }
+    .st-已聯絡 { background: var(--info-soft); color: var(--info); }
+    .st-約看 { background: var(--warn-soft); color: var(--warn); }
+    .st-已委託 { background: var(--good-soft); color: var(--good); }
+    .st-不考慮 { background: var(--bg-deep); color: var(--muted); }
+    .st-已收 { background: var(--good-soft); color: var(--good); }
+    .st-未收 { background: var(--bad-soft); color: var(--bad); }
+    .st-範例 { background: var(--bg-deep); color: var(--muted); }
+    .st-新送出 { background: #F8E6D8; color: var(--accent-dark); }
+    .st-即將到期 { background: var(--warn-soft); color: var(--warn); }
+    .meta-line { font-size: 13px; color: var(--ink-soft); margin-top: 6px; }
+    .meta-line + .meta-line { margin-top: 2px; }
+    .card-actions { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+    .card-actions select {
+      width: auto;
+      padding: 7px 32px 7px 10px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .notes {
+      margin-top: 10px;
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+    .notes strong { color: var(--ink); }
+    .note-add { display: flex; gap: 6px; margin-top: 8px; }
+    .note-add input { padding: 8px 10px; border-radius: 10px; font-size: 13px; }
+    .note-add button { flex: 0 0 auto; }
+
+    .landlord-group { margin-bottom: 18px; }
+    .landlord-group > h3 {
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 700;
+      margin: 8px 0 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+    }
+    .landlord-group > h3 span { font-weight: 400; font-size: 12px; color: var(--muted); }
+    .prop-addr { font-weight: 700; font-size: 14px; line-height: 1.4; }
+    .kv { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; margin-top: 8px; font-size: 12px; }
+    .kv div { background: var(--bg); border-radius: 8px; padding: 7px 8px; }
+    .kv b { display: block; color: var(--muted); font-weight: 500; font-size: 11px; }
+    .warn-banner {
+      margin-top: 8px;
+      background: var(--warn-soft);
+      color: #7A5410;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .log { margin-top: 8px; font-size: 12px; color: var(--ink-soft); }
+    .log li { margin-left: 1.1em; margin-top: 2px; }
+
+    /* Report */
+    .report-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: stretch;
+      margin: 8px 0 14px;
+    }
+    .report-bar select { width: 100%; }
+    .report-sheet {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 20px 16px 24px;
+      margin-bottom: 16px;
+    }
+    .report-head { border-bottom: 1px solid var(--line); padding-bottom: 14px; margin-bottom: 16px; }
+    .report-head .brand { font-size: 12px; letter-spacing: .12em; color: var(--accent-dark); font-weight: 700; }
+    .report-head h1 { font-size: 22px; margin: 4px 0 2px; }
+    .report-head .to { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+    .sample-flag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      background: var(--warn-soft);
+      color: var(--warn);
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .sum-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .sum {
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .sum.hl { background: var(--accent-soft); grid-column: 1 / -1; }
+    .sum label { display: block; font-size: 11px; color: var(--muted); font-weight: 600; }
+    .sum .n { font-family: var(--serif); font-size: 22px; font-weight: 700; line-height: 1.3; }
+    .sum.hl .n { color: var(--accent-dark); font-size: 28px; }
+    .sum .hint { font-size: 11px; color: var(--muted); }
+
+    table.rpt {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin: 6px 0 16px;
+    }
+    table.rpt th {
+      text-align: left;
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 600;
+      padding: 6px 4px;
+      border-bottom: 1px solid var(--line);
+    }
+    table.rpt td { padding: 8px 4px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    table.rpt td.num, table.rpt th.num { text-align: right; font-variant-numeric: tabular-nums; }
+    table.rpt tfoot td { font-weight: 700; border-bottom: 0; padding-top: 10px; }
+
+    .stack-list { border-top: 1px solid var(--line); margin: 6px 0 16px; }
+    .stack-item { padding: 10px 0; border-bottom: 1px solid var(--line); }
+    .stack-title { font-weight: 600; font-size: 13px; line-height: 1.45; }
+    .stack-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .stack-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 6px; font-size: 13px; }
+    .stack-foot .num { font-variant-numeric: tabular-nums; font-weight: 700; }
+    .stack-total { display: flex; justify-content: space-between; padding: 10px 0 0; font-weight: 700; font-size: 13px; }
+    .photos { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 8px 0 16px; }
+    .ph {
+      aspect-ratio: 1;
+      border-radius: 12px;
+      background:
+        linear-gradient(180deg, rgba(42,36,31,.0), rgba(42,36,31,.35)),
+        repeating-linear-gradient(135deg, #E8DFD2 0 8px, #EFE8DC 8px 16px);
+      display: flex;
+      align-items: flex-end;
+      padding: 8px;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      position: relative;
+      overflow: hidden;
+    }
+    .ph::after {
+      content: "範例佔位";
+      position: absolute;
+      top: 8px; right: 8px;
+      background: rgba(42,36,31,.45);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-size: 9px;
+    }
+    .ph:nth-child(1) { background-image: linear-gradient(180deg, rgba(42,36,31,.0), rgba(42,36,31,.4)), linear-gradient(160deg, #D9C7B2, #A89078); }
+    .ph:nth-child(2) { background-image: linear-gradient(180deg, rgba(42,36,31,.0), rgba(42,36,31,.4)), linear-gradient(200deg, #C9D2C8, #7E8F86); }
+    .ph:nth-child(3) { background-image: linear-gradient(180deg, rgba(42,36,31,.0), rgba(42,36,31,.4)), linear-gradient(20deg, #D7CCC4, #8B6E60); }
+
+    .agent-note {
+      background: var(--bg);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+      padding: 12px 14px;
+      font-size: 13px;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .agent-note b { color: var(--ink); display: block; margin-bottom: 4px; font-size: 12px; }
+    .share-hint {
+      font-size: 12px;
+      color: var(--muted);
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-top: 8px;
+    }
+    .share-hint code {
+      display: block;
+      margin-top: 6px;
+      background: #fff;
+      border: 1px dashed var(--line-strong);
+      border-radius: 8px;
+      padding: 8px;
+      font-size: 11px;
+      color: var(--ink-soft);
+      word-break: break-all;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: calc(var(--nav-h) + var(--safe-b) + 16px);
+      transform: translateX(-50%) translateY(12px);
+      background: var(--ink);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 16px;
+      border-radius: 999px;
+      opacity: 0;
+      pointer-events: none;
+      transition: .25s ease;
+      z-index: 80;
+      white-space: nowrap;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    .empty { text-align: center; color: var(--muted); font-size: 13px; padding: 24px 8px; }
+
+    footer.site {
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+      padding: 8px 16px 20px;
+    }
+
+    @media (min-width: 720px) {
+      .hero h1 { font-size: 40px; }
+      .services { grid-template-columns: 1fr 1fr 1fr; }
+      .choice-grid { gap: 10px; }
+    }
+
+    @media print {
+      :root { --bg: #fff; --paper: #fff; }
+      body { background: #fff; }
+      .demo-ribbon, .bottom-nav, .report-bar, .share-hint, .no-print { display: none !important; }
+      .app { padding: 0; }
+      .report-sheet {
+        box-shadow: none;
+        border: 0;
+        border-radius: 0;
+        padding: 0;
+      }
+      .ph::after { content: "房況照片（列印佔位）"; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-ribbon">示範版 · 資料只存在這台裝置 · 所有數字皆為<b>範例資料</b></div>
+
+  <div class="app" id="app"></div>
+
+  <nav class="bottom-nav no-print" aria-label="示範頁面切換">
+    <span class="nav-hint">示範選單</span>
+    <a href="#/" id="nav-home">
+      <svg viewBox="0 0 24 24"><path d="M4 11.5L12 5l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z"/></svg>
+      屋主留資料
+    </a>
+    <a href="#/admin" id="nav-admin">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 8h8M8 12h5"/></svg>
+      業務後台
+    </a>
+    <a href="#/report" id="nav-report">
+      <svg viewBox="0 0 24 24"><path d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M15 3v6h6M8 13h8M8 17h5"/></svg>
+      屋主月報
+    </a>
+  </nav>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+  /* =========================================================
+     設定區 — 改這裡就能換經紀人名稱、電話、LINE、服務區域
+     ========================================================= */
+  const CONFIG = {
+    agentName: "小許",
+    brandName: "您的房仲",
+    title: "您的房仲 小許",
+    phone: "09xx-xxx-xxx",
+    lineId: "hsu-realtor",
+    area: "台北、新北",
+    tagline: "買賣 · 出租 · 代管",
+    intro: "您好，我是小許。之後會以房屋買賣為主；若您有房子想賣、想出租，或希望有人幫忙代管、按月整理收支，都可以把資料留給我，我會再親自跟您聯繫。",
+    reportMonth: "2026-11",
+    reportMonthLabel: "2026年11月",
+    storageKey: "realtor-demo-leads-v1"
+  };
+
+  const ICONS = {
+    buy: '<svg viewBox="0 0 24 24"><path d="M3 11.5L12 4l9 7.5"/><path d="M6 10.5V20h12v-9.5"/><path d="M10 20v-6h4v6"/></svg>',
+    rent: '<svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M7 7V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2M8 13h3M8 16h8"/></svg>',
+    manage: '<svg viewBox="0 0 24 24"><path d="M4 19V6a1 1 0 0 1 1-1h6v14H5a1 1 0 0 1-1-1z"/><path d="M11 5h8a1 1 0 0 1 1 1v4h-9zM11 10h10v8a1 1 0 0 1-1 1h-9"/></svg>'
+  };
+
+  const LEGAL_NOTICE = `【個人資料蒐集告知事項】（範本，正式使用前請確認）
+
+依據《個人資料保護法》第 8 條，向您告知以下事項：
+
+一、蒐集目的：提供房屋買賣、租賃、委託代管之諮詢、免費估價與後續聯絡服務。
+
+二、蒐集之個人資料類別：識別類資訊（姓名、電話、LINE ID）、物件相關資訊（地址或區域、類型、坪數、屋齡、期望價格）及您主動提供之備註與方便聯絡時間。
+
+三、利用期間、地區、對象及方式：
+・期間：自您同意之日起，至達成諮詢或委託目的、或您請求停止利用／刪除之日止。保存期限請依實際業務自行訂定（範本建議：未成交者至多保存 ○ 年）。
+・地區：中華民國臺灣地區。
+・對象：本服務經紀人（${CONFIG.agentName}）及執行業務所必要之相關人員。未經您同意，不會提供予第三人。
+・方式：以電話、簡訊、LINE 或其他電子／書面方式聯繫、紀錄與提供服務。
+
+四、當事人權利：您得依個資法第 3、10、11 條，向我們請求查詢或閱覽、製給複製本、補充或更正、請求停止蒐集／處理／利用或刪除您的個人資料。
+
+五、不提供資料之影響：如未提供必要欄位（姓名、電話、需求），我們將無法完成聯繫與估價服務。
+
+本段文字為示範用範本，正式對外使用前請自行核對內容，必要時請諮詢法律專業人士。`;
+
+  const STATUSES = ["新進", "已聯絡", "約看", "已委託", "不考慮"];
+
+  const SAMPLE_LEADS = [
+    { id: "s1", name: "陳美玲", phone: "0912-345-678", lineId: "mlchen88", address: "台北市大安區忠孝東路四段（附近）", type: "住宅大樓", areaPing: "32", age: "8", need: "想賣", price: "2,280萬（期望）", time: "平日晚上", note: "先了解行情，尚未決定是否出售。", status: "新進", notes: ["11/20 名單進入，待回電。"], createdAt: "2026-11-20", sample: true },
+    { id: "s2", name: "林志偉", phone: "0928-111-222", lineId: "", address: "新北市新店區央北二路", type: "套房", areaPing: "12", age: "15", need: "想委託代管", price: "", time: "週末", note: "人在南部，希望有人幫忙收租與修繕。", status: "已聯絡", notes: ["11/18 已通話，約本週傳現況照片。"], createdAt: "2026-11-18", sample: true },
+    { id: "s3", name: "黃淑芬", phone: "0933-555-666", lineId: "sufin_h", address: "新北市板橋區文化路一段", type: "公寓", areaPing: "24", age: "22", need: "想出租", price: "月租 2.6–2.8萬", time: "皆可", note: "目前空屋，希望盡快找到適合房客。", status: "約看", notes: ["11/19 已帶兩組看房。", "11/21 其中一組考慮中。"], createdAt: "2026-11-15", sample: true },
+    { id: "s4", name: "吳建宏", phone: "0910-888-999", lineId: "", address: "台北市內湖區瑞光路", type: "辦公室", areaPing: "45", age: "6", need: "想賣", price: "3,200萬", time: "平日白天", note: "公司遷移，希望這季處理。", status: "已委託", notes: ["11/10 簽委託，已上架。"], createdAt: "2026-11-10", sample: true },
+    { id: "s5", name: "張雅慧", phone: "0955-222-333", lineId: "yahui.z", address: "新北市三重區重新路", type: "華廈", areaPing: "28", age: "12", need: "想賣", price: "", time: "平日晚上", note: "先問問看，家人意見還沒一致。", status: "不考慮", notes: ["11/12 表示暫時不出售，已禮貌結案。"], createdAt: "2026-11-08", sample: true }
+  ];
+
+  const LANDLORDS = [
+    { id: "wang", name: "王太太", formal: "王淑惠 女士", phone: "0911-200-300" },
+    { id: "chen", name: "陳先生", formal: "陳文傑 先生", phone: "0922-400-500" },
+    { id: "lin", name: "林阿姨", formal: "林秋月 女士", phone: "0933-600-700" }
+  ];
+
+  const PROPERTIES = [
+    {
+      id: "p1", landlordId: "wang",
+      address: "台北市松山區南京東路五段 12 巷 8 號 3 樓",
+      type: "公寓", ping: 22, tenant: "李先生",
+      rent: 28000, feeRate: 0.05, collected: true, collectedOn: "2026/11/05",
+      contractStart: "2025/03/01", contractEnd: "2027/02/28",
+      repairs: [
+        { date: "2026/11/08", item: "廚房水管漏水，更換止水墊片", amount: 1200 },
+        { date: "2026/11/15", item: "樓梯間電燈更換（本戶分攤）", amount: 350 }
+      ],
+      photos: ["客廳", "廚房", "浴室"],
+      agentNote: "本月廚房水管有輕微滲漏，已請熟識水電當日修好，之後會再觀察一週。李先生房租已於 11/5 入帳，房屋整體使用正常。"
+    },
+    {
+      id: "p2", landlordId: "chen",
+      address: "新北市中和區景平路 188 號 7 樓之 2",
+      type: "電梯大樓", ping: 28, tenant: "周小姐",
+      rent: 32000, feeRate: 0.05, collected: false, collectedOn: "",
+      contractStart: "2024/08/01", contractEnd: "2026/12/31",
+      repairs: [
+        { date: "2026/11/03", item: "分離式冷氣年度清洗", amount: 1800 }
+      ],
+      photos: ["客廳", "主臥", "陽台"],
+      agentNote: "周小姐本月租金截至報表日尚未入帳，已於 11/8、11/15 兩次提醒，她表示 11/25 前會匯入。另外本約將於 12/31 到期，建議盡早確認是否續約或另覓房客。"
+    },
+    {
+      id: "p3", landlordId: "chen",
+      address: "新北市永和區福和路 55 號 5 樓",
+      type: "公寓", ping: 18, tenant: "蔡先生",
+      rent: 22000, feeRate: 0.05, collected: true, collectedOn: "2026/11/03",
+      contractStart: "2026/01/15", contractEnd: "2027/01/14",
+      repairs: [],
+      photos: ["客廳", "房間", "陽台"],
+      agentNote: "本戶本月狀況穩定，無修繕，租金已於 11/3 入帳。"
+    },
+    {
+      id: "p4", landlordId: "lin",
+      address: "台北市文山區木柵路三段 102 號 2 樓",
+      type: "公寓", ping: 26, tenant: "鄭同學",
+      rent: 26500, feeRate: 0.05, collected: true, collectedOn: "2026/11/02",
+      contractStart: "2026/07/01", contractEnd: "2027/06/30",
+      repairs: [
+        { date: "2026/11/12", item: "浴室抽風機故障，整組更換", amount: 2400 }
+      ],
+      photos: ["客廳", "浴室", "房間"],
+      agentNote: "浴室抽風機異音後停轉，已更換同級新品，收據會一併附上。鄭同學是學生，作息正常，租金均準時。房屋整體良好。"
+    }
+  ];
+
+  /* ---------- helpers ---------- */
+  const $ = (sel, el = document) => el.querySelector(sel);
+  const esc = (s = "") => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const money = (n) => "$" + Math.round(n).toLocaleString("zh-TW");
+  const feeOf = (p) => Math.round(p.rent * p.feeRate);
+  const repairSum = (p) => p.repairs.reduce((a, r) => a + r.amount, 0);
+  const daysUntil = (dateStr) => {
+    const [y, m, d] = dateStr.split("/").map(Number);
+    return Math.ceil((new Date(y, m - 1, d) - new Date(2026, 10, 22)) / 86400000);
+  };
+  const expiringSoon = (p) => daysUntil(p.contractEnd) <= 60;
+  const toast = (msg) => {
+    const t = $("#toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(toast._id);
+    toast._id = setTimeout(() => t.classList.remove("show"), 2200);
+  };
+
+  function loadLeads() {
+    try { return JSON.parse(localStorage.getItem(CONFIG.storageKey) || "[]"); }
+    catch { return []; }
+  }
+  function saveLeads(list) {
+    localStorage.setItem(CONFIG.storageKey, JSON.stringify(list));
+  }
+  function allLeads() {
+    const stored = loadLeads().map(l => ({ ...l, sample: false }));
+    return [...stored, ...SAMPLE_LEADS];
+  }
+
+  /* ---------- routing ---------- */
+  function parseHash() {
+    const raw = (location.hash || "#/").replace(/^#/, "") || "/";
+    const [path, qs] = raw.split("?");
+    const parts = path.split("/").filter(Boolean);
+    const view = parts[0] || "home";
+    return { view: view === "home" ? "home" : view, id: parts[1] || "", parts };
+  }
+
+  function setNav(view) {
+    ["home", "admin", "report"].forEach(v => {
+      const el = document.getElementById("nav-" + (v === "home" ? "home" : v));
+      if (el) el.classList.toggle("active", (view === "home" && v === "home") || view === v);
+    });
+  }
+
+  function render() {
+    document.title = CONFIG.title + "｜示範版";
+    const { view, id } = parseHash();
+    setNav(["admin", "report"].includes(view) ? view : "home");
+    const app = $("#app");
+    if (view === "admin") app.innerHTML = renderAdmin();
+    else if (view === "report") app.innerHTML = renderReport(id || "wang");
+    else app.innerHTML = renderHome();
+    bindView(view, id);
+    window.scrollTo(0, 0);
+  }
+
+  /* ---------- HOME ---------- */
+  function renderHome() {
+    return `
+      <div class="wrap">
+        <header class="hero">
+          <div class="eyebrow">${esc(CONFIG.tagline)}</div>
+          <h1>把房子的事<br>交給認得的人。</h1>
+          <p class="lead">${esc(CONFIG.intro)}</p>
+          <div class="agent-card">
+            <div class="avatar">${esc(CONFIG.agentName.slice(-1))}</div>
+            <div>
+              <div class="name">${esc(CONFIG.title)}</div>
+              <div class="meta">服務區域：${esc(CONFIG.area)}</div>
+              <div class="contact-row">
+                <a class="chip-btn" href="tel:${esc(CONFIG.phone)}">電話 ${esc(CONFIG.phone)}</a>
+                <a class="chip-btn line" href="#">LINE：${esc(CONFIG.lineId)}</a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="section">
+          <div class="section-kicker">可以幫您的事</div>
+          <h2>買賣、出租、代管</h2>
+          <div class="services">
+            <article class="service">
+              <div class="service-ico">${ICONS.buy}</div>
+              <div>
+                <h3>買賣</h3>
+                <p>免費估價、行情分析，以及委託出售的全程陪同。</p>
+              </div>
+            </article>
+            <article class="service">
+              <div class="service-ico">${ICONS.rent}</div>
+              <div>
+                <h3>出租</h3>
+                <p>協助找適合的房客、看房與合約、交屋注意事項。</p>
+              </div>
+            </article>
+            <article class="service">
+              <div class="service-ico">${ICONS.manage}</div>
+              <div>
+                <h3>代管</h3>
+                <p>收租、修繕協調，每月為您整理一份清楚的收支報表。</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="form-section">
+          <form class="form-card" id="lead-form">
+            <div class="section-kicker">免費估價／留下資料</div>
+            <h2>想賣、想租、想代管<br>都可以留資料給我</h2>
+            <p class="sub">送出後我會再用電話或 LINE 跟您聯絡。標示 <span class="req">*</span> 的是必要欄位。</p>
+
+            <label class="fld"><span>姓名 <i class="req">*</i></span>
+              <input type="text" name="name" required placeholder="怎麼稱呼您" autocomplete="name" />
+            </label>
+            <label class="fld"><span>電話 <i class="req">*</i></span>
+              <input type="tel" name="phone" required placeholder="09xx-xxx-xxx" autocomplete="tel" />
+            </label>
+            <label class="fld"><span>LINE ID <i class="opt">選填</i></span>
+              <input type="text" name="lineId" placeholder="方便的話可以留 LINE" />
+            </label>
+            <label class="fld"><span>物件地址或區域 <i class="req">*</i></span>
+              <input type="text" name="address" required placeholder="例如：大安區信義路四段，或完整地址" />
+            </label>
+            <label class="fld"><span>物件類型 <i class="req">*</i></span>
+              <select name="type" required>
+                <option value="">請選擇</option>
+                <option>公寓</option>
+                <option>電梯大樓</option>
+                <option>華廈</option>
+                <option>透天</option>
+                <option>套房</option>
+                <option>辦公</option>
+                <option>店面</option>
+                <option>其他</option>
+              </select>
+            </label>
+            <div class="row-2">
+              <label class="fld"><span>坪數 <i class="opt">選填</i></span>
+                <input type="number" name="areaPing" min="0" step="0.1" placeholder="例如 28" />
+              </label>
+              <label class="fld"><span>屋齡（年） <i class="opt">選填</i></span>
+                <input type="number" name="age" min="0" step="1" placeholder="例如 12" />
+              </label>
+            </div>
+            <div class="fld">
+              <div class="fld-label">需求 <i class="req">*</i></div>
+              <div class="choice-grid">
+                <label class="choice"><input type="radio" name="need" value="想賣" required /><span>想賣</span></label>
+                <label class="choice"><input type="radio" name="need" value="想出租" /><span>想出租</span></label>
+                <label class="choice"><input type="radio" name="need" value="想委託代管" /><span>想代管</span></label>
+              </div>
+            </div>
+            <label class="fld"><span>期望價格 <i class="opt">選填</i></span>
+              <input type="text" name="price" placeholder="例如：售價 2,000 萬，或月租 2.8 萬" />
+            </label>
+            <label class="fld"><span>方便聯絡時間 <i class="req">*</i></span>
+              <select name="time" required>
+                <option value="">請選擇</option>
+                <option>平日白天</option>
+                <option>平日晚上</option>
+                <option>週末</option>
+                <option>皆可</option>
+              </select>
+            </label>
+            <label class="fld"><span>備註 <i class="opt">選填</i></span>
+              <textarea name="note" placeholder="例如：目前是否有人住、希望何時處理、其他想先說明的事"></textarea>
+            </label>
+
+            <div class="consent">
+              <label class="consent-head">
+                <input type="checkbox" name="consent" required />
+                <p>我已閱讀並同意下方「個人資料蒐集告知事項」，同意 ${esc(CONFIG.title)} 依告知內容蒐集、處理及利用本人資料，以便聯繫與提供估價／諮詢服務。<i class="req">*</i></p>
+              </label>
+              <details>
+                <summary>閱讀告知事項（個資法第 8 條）</summary>
+                <div class="legal"><span class="legal-tag">範本　正式使用前請確認</span>
+${esc(LEGAL_NOTICE)}</div>
+              </details>
+            </div>
+
+            <button type="submit" class="btn-primary">送出資料</button>
+            <p class="fineprint">此為示範版。送出後資料只會存在您目前這台裝置的瀏覽器中，不會上傳到任何伺服器。</p>
+          </form>
+        </section>
+        <footer class="site">${esc(CONFIG.title)}　示範模板　非正式營業網頁</footer>
+      </div>`;
+  }
+
+  function renderThanks(name) {
+    return `
+      <div class="wrap">
+        <div class="form-card thanks">
+          <div class="check">✓</div>
+          <h2>資料已留下，謝謝${name ? "，" + esc(name) : ""}</h2>
+          <p>這是示範版，資料只存在這台裝置，不會真的通知經紀人。正式使用時，這邊會改成通知 ${esc(CONFIG.agentName)}，再由電話或 LINE 跟您聯繫。</p>
+          <button class="btn-ghost" type="button" id="again">再留一筆資料</button>
+          <p class="fineprint">可到「業務後台」查看剛才送出的名單（僅本機可見）。</p>
+        </div>
+      </div>`;
+  }
+
+  /* ---------- ADMIN ---------- */
+  let adminTab = "leads";
+  let leadFilter = "全部";
+  let leadQuery = "";
+
+  function renderAdmin() {
+    const leads = allLeads();
+    const q = leadQuery.trim();
+    const filtered = leads.filter(l => {
+      const okS = leadFilter === "全部" || l.status === leadFilter;
+      const hay = [l.name, l.address, l.need, l.phone, l.type].join(" ");
+      const okQ = !q || hay.includes(q);
+      return okS && okQ;
+    });
+    const counts = Object.fromEntries(STATUSES.map(s => [s, leads.filter(l => l.status === s).length]));
+    const unpaid = PROPERTIES.filter(p => !p.collected).length;
+    const soon = PROPERTIES.filter(expiringSoon).length;
+
+    const leadsHtml = `
+      <div class="searchbar">
+        <input type="search" id="lead-q" placeholder="搜尋姓名、區域、電話…" value="${esc(q)}" />
+      </div>
+      <div class="filters" id="lead-filters">
+        <button data-f="全部" class="${leadFilter === "全部" ? "on" : ""}">全部 ${leads.length}</button>
+        ${STATUSES.map(s => `<button data-f="${s}" class="${leadFilter === s ? "on" : ""}">${s} ${counts[s]}</button>`).join("")}
+      </div>
+      ${filtered.length ? filtered.map(leadCard).join("") : `<div class="empty">目前沒有符合的名單</div>`}
+    `;
+
+    const byLandlord = LANDLORDS.map(l => {
+      const props = PROPERTIES.filter(p => p.landlordId === l.id);
+      return `<div class="landlord-group">
+        <h3>${esc(l.name)} <span>${esc(l.formal)}　${props.length} 戶　${esc(l.phone)}</span></h3>
+        ${props.map(propertyCard).join("")}
+      </div>`;
+    }).join("");
+
+    return `
+      <div class="wrap-wide">
+        <header class="page-head">
+          <div class="eyebrow">僅經紀人可見</div>
+          <h1>業務後台</h1>
+          <p>開發名單與代管物件都在這裡。正式使用時會加上登入保護。以下含範例資料。</p>
+        </header>
+        <div class="stats">
+          <div class="stat accent"><b>${counts["新進"]}</b><span>新進名單</span></div>
+          <div class="stat"><b>${counts["已聯絡"] + counts["約看"]}</b><span>跟進中</span></div>
+          <div class="stat"><b>${PROPERTIES.length}</b><span>代管物件</span></div>
+          <div class="stat warn"><b>${unpaid} / ${soon}</b><span>未收租<br>將到期</span></div>
+        </div>
+        <div class="subtabs">
+          <button data-tab="leads" class="${adminTab === "leads" ? "on" : ""}">開發名單</button>
+          <button data-tab="props" class="${adminTab === "props" ? "on" : ""}">代管物件</button>
+        </div>
+        <div id="admin-body">
+          ${adminTab === "leads" ? leadsHtml : byLandlord}
+        </div>
+        <footer class="site">示範版　資料與金額皆為範例　本機儲存的名單不會同步到雲端</footer>
+      </div>`;
+  }
+
+  function leadCard(l) {
+    const tag = l.sample ? "範例" : "新送出";
+    return `<article class="card" data-lead="${esc(l.id)}">
+      <div class="card-top">
+        <div class="who">${esc(l.name)} <small><span class="nowr">${esc(l.phone)}</span>${l.lineId ? `　<span class="nowr">LINE ${esc(l.lineId)}</span>` : ""}　<span class="nowr">${esc((l.createdAt || "").replace(/-/g, "/"))}</span></small></div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end">
+          <span class="badge st-${tag}">${tag}</span>
+          <span class="badge st-${esc(l.status)}">${esc(l.status)}</span>
+        </div>
+      </div>
+      <div class="meta-line">${esc(l.need)}　·　${esc(l.type || "未填類型")}　·　${esc(l.address)}</div>
+      <div class="meta-line">${l.areaPing ? esc(l.areaPing) + " 坪" : "坪數未填"}${l.age ? "　·　屋齡 " + esc(l.age) + " 年" : ""}${l.price ? "　·　" + esc(l.price) : ""}</div>
+      <div class="meta-line">方便聯絡：${esc(l.time || "未填")}</div>
+      ${l.note ? `<div class="meta-line">備註：${esc(l.note)}</div>` : ""}
+      <div class="notes">
+        <strong>跟進紀錄</strong>
+        ${(l.notes && l.notes.length) ? "<ul>" + l.notes.map(n => `<li>${esc(n)}</li>`).join("") + "</ul>" : "<div>尚無紀錄</div>"}
+        <div class="note-add">
+          <input type="text" placeholder="加一筆跟進備註…" data-note-input="${esc(l.id)}" />
+          <button class="btn-sm" data-add-note="${esc(l.id)}">記下</button>
+        </div>
+      </div>
+      <div class="card-actions">
+        <select data-status="${esc(l.id)}" aria-label="更改狀態">
+          ${STATUSES.map(s => `<option ${s === l.status ? "selected" : ""}>${s}</option>`).join("")}
+        </select>
+        ${l.sample ? "" : `<button class="btn-sm" data-del="${esc(l.id)}">刪除本機資料</button>`}
+      </div>
+    </article>`;
+  }
+
+  function propertyCard(p) {
+    const soon = expiringSoon(p);
+    const days = daysUntil(p.contractEnd);
+    return `<article class="card">
+      <div class="card-top stack">
+        <div class="prop-addr">${esc(p.address)}</div>
+        <span class="badge ${p.collected ? "st-已收" : "st-未收"}">${p.collected ? "本月已收" + (p.collectedOn ? "　" + p.collectedOn : "") : "本月未收"}</span>
+      </div>
+      <div class="kv">
+        <div><b>類型／坪數</b>${esc(p.type)}　${p.ping} 坪</div>
+        <div><b>房客</b>${esc(p.tenant)}</div>
+        <div><b>月租金</b>${money(p.rent)}</div>
+        <div><b>代管費（5%）</b>${money(feeOf(p))}</div>
+        <div><b>合約期間</b>${p.contractStart}－${p.contractEnd}</div>
+        <div><b>本月修繕</b>${p.repairs.length ? money(repairSum(p)) : "無"}</div>
+      </div>
+      ${!p.collected ? `<div class="warn-banner">租金尚未入帳，請再跟催房客。</div>` : ""}
+      ${soon ? `<div class="warn-banner">合約將於 ${p.contractEnd} 到期（約 ${days} 天），請盡早與屋主、房客確認續約。</div>` : ""}
+      <div class="log"><strong>修繕／支出</strong>
+        ${p.repairs.length ? "<ul>" + p.repairs.map(r => `<li>${r.date}　${esc(r.item)}　${money(r.amount)}</li>`).join("") + "</ul>" : "<div>本月無修繕支出（範例）</div>"}
+      </div>
+      <div class="card-actions">
+        <a class="btn-sm primary" href="#/report/${p.landlordId}">查看此屋主月報</a>
+      </div>
+    </article>`;
+  }
+
+  /* ---------- REPORT ---------- */
+  function renderReport(landlordId) {
+    const landlord = LANDLORDS.find(l => l.id === landlordId) || LANDLORDS[0];
+    const props = PROPERTIES.filter(p => p.landlordId === landlord.id);
+    const collected = props.filter(p => p.collected);
+    const rentIn = collected.reduce((a, p) => a + p.rent, 0);
+    const rentDue = props.reduce((a, p) => a + p.rent, 0);
+    const fees = collected.reduce((a, p) => a + feeOf(p), 0);
+    const repairs = props.reduce((a, p) => a + repairSum(p), 0);
+    const net = rentIn - fees - repairs;
+    const unpaid = props.filter(p => !p.collected);
+    const soon = props.filter(expiringSoon);
+    const allRepairs = props.flatMap(p => p.repairs.map(r => ({ ...r, address: p.address })));
+    const sharePath = `#/report/${landlord.id}`;
+    const shareDemo = `https://您的網域/r/${landlord.id}-${CONFIG.reportMonth.replace("-", "")}-x7k2`;
+
+    const notes = [...new Set(props.map(p => p.agentNote))];
+
+    return `
+      <div class="wrap">
+        <header class="page-head no-print">
+          <div class="eyebrow">給屋主看的月報</div>
+          <h1>代管月報</h1>
+          <p>每位屋主一份。正式使用時，會用專屬連結傳給對方，不必每月重做 Excel。</p>
+        </header>
+        <div class="report-bar no-print">
+          <select id="landlord-sel" aria-label="選擇屋主">
+            ${LANDLORDS.map(l => `<option value="${l.id}" ${l.id === landlord.id ? "selected" : ""}>${esc(l.name)}（${PROPERTIES.filter(p => p.landlordId === l.id).length} 戶）</option>`).join("")}
+          </select>
+          <div class="btn-row">
+            <button class="btn-sm" id="copy-link">複製分享連結</button>
+            <button class="btn-sm primary" id="print-btn">列印／存成 PDF</button>
+          </div>
+        </div>
+
+        <article class="report-sheet">
+          <header class="report-head">
+            <div class="brand">${esc(CONFIG.title)}　代管報告</div>
+            <h1>${esc(CONFIG.reportMonthLabel)} 收支報告 <span class="sample-flag">範例資料</span></h1>
+            <div class="to">致 ${esc(landlord.formal)}<br>共 ${props.length} 戶　·　報告日 2026年11月22日</div>
+          </header>
+
+          <div class="sum-grid">
+            <div class="sum"><label>本月應收租金</label><div class="n">${money(rentDue)}</div></div>
+            <div class="sum"><label>本月已收租金</label><div class="n">${money(rentIn)}</div>${unpaid.length ? `<div class="hint">${unpaid.length} 戶尚未入帳</div>` : ""}</div>
+            <div class="sum"><label>代管費</label><div class="n">${money(fees)}</div><div class="hint">以已收租金 5% 計（範例）</div></div>
+            <div class="sum"><label>修繕支出</label><div class="n">${money(repairs)}</div></div>
+            <div class="sum hl"><label>本月淨入帳（已收租金 − 代管費 − 修繕）</label><div class="n">${money(net)}</div><div class="hint">實際撥款日與帳戶，正式版可再補上</div></div>
+          </div>
+
+          <h2 style="font-size:16px;margin-bottom:4px;">租金收取</h2>
+          <div class="stack-list">
+            ${props.map(p => `<div class="stack-item">
+              <div class="stack-title">${esc(p.address)}</div>
+              <div class="stack-sub">${esc(p.type)}　${p.ping} 坪　·　房客 ${esc(p.tenant)}</div>
+              <div class="stack-foot">
+                <span class="num">${money(p.rent)}</span>
+                ${p.collected ? `<span class="badge st-已收">已收　${p.collectedOn}</span>` : `<span class="badge st-未收">尚未入帳</span>`}
+              </div>
+            </div>`).join("")}
+            <div class="stack-total"><span>已收合計</span><span>${money(rentIn)}</span></div>
+          </div>
+
+          <h2 style="font-size:16px;margin-bottom:4px;">代管費與修繕支出明細</h2>
+          <table class="rpt">
+            <thead><tr><th>項目</th><th class="num">金額</th></tr></thead>
+            <tbody>
+              ${collected.map(p => `<tr><td>代管費　${esc(p.address.split("區")[1] ? p.address.split("區")[0] + "區" : p.address)}</td><td class="num">− ${money(feeOf(p))}</td></tr>`).join("")}
+              ${allRepairs.length ? allRepairs.map(r => `<tr><td>${r.date}　${esc(r.item)}<br><span style="color:var(--muted);font-size:11px">${esc(r.address)}</span></td><td class="num">− ${money(r.amount)}</td></tr>`).join("") : `<tr><td>本月無修繕支出</td><td class="num">$0</td></tr>`}
+            </tbody>
+            <tfoot><tr><td>本月淨入帳</td><td class="num">${money(net)}</td></tr></tfoot>
+          </table>
+
+          <h2 style="font-size:16px;margin-bottom:8px;">合約到期提醒</h2>
+          ${soon.length ? soon.map(p => `<div class="warn-banner">${esc(p.address)}　合約將於 ${p.contractEnd} 到期（約 ${daysUntil(p.contractEnd)} 天）。建議近日確認是否續約，或是否需要提前尋找新房客。</div>`).join("") : `<p style="font-size:13px;color:var(--ink-soft);margin-bottom:16px;">本月所管物件，皆尚無 60 天內到期的合約。</p>`}
+
+          <h2 style="font-size:16px;margin:16px 0 8px;">房況照片</h2>
+          <div class="photos">
+            ${(props[0] ? props[0].photos : ["客廳","廚房","浴室"]).map(label => `<div class="ph">${esc(label)}</div>`).join("")}
+          </div>
+          <p class="fineprint" style="text-align:left;margin:-8px 0 16px;">以上為照片佔位，正式版可從手機直接上傳本月現況。</p>
+
+          <div class="agent-note">
+            <b>${esc(CONFIG.agentName)} 的留言</b>
+            ${notes.map(n => `<p style="margin-bottom:8px">${esc(n)}</p>`).join("")}
+          </div>
+          <p class="fineprint" style="text-align:left;">本報告僅供示範。金額、日期、房客與地址皆為虛構之範例資料。</p>
+        </article>
+
+        <div class="share-hint no-print">
+          「複製分享連結」在示範版會複製目前這頁的預覽網址。正式使用時，會改成一組專屬、可設期限的安全連結（例如下方這樣），傳 LINE 給屋主即可開啟，不必再做 Excel、也不必讓對方看到其他屋主的資料。
+          <code>${esc(shareDemo)}</code>
+        </div>
+        <footer class="site">${esc(CONFIG.title)}　${esc(CONFIG.phone)}　LINE ${esc(CONFIG.lineId)}</footer>
+      </div>`;
+  }
+
+  /* ---------- bind ---------- */
+  function bindView(view, id) {
+    if (view === "home" || view === "") {
+      const form = $("#lead-form");
+      if (form) form.addEventListener("submit", onSubmitLead);
+      document.querySelectorAll(".chip-btn.line").forEach(a => a.addEventListener("click", ev => {
+        ev.preventDefault();
+        toast("示範版：正式使用時會開啟 LINE");
+      }));
+    }
+    if (view === "admin") {
+      document.querySelectorAll(".subtabs button").forEach(b => b.addEventListener("click", () => {
+        adminTab = b.dataset.tab;
+        render();
+      }));
+      document.querySelectorAll("#lead-filters button").forEach(b => b.addEventListener("click", () => {
+        leadFilter = b.dataset.f;
+        render();
+      }));
+      const q = $("#lead-q");
+      if (q) q.addEventListener("input", (e) => { leadQuery = e.target.value; /* live filter without losing focus */ refreshAdminList(); });
+      bindLeadActions();
+    }
+    if (view === "report") {
+      const sel = $("#landlord-sel");
+      if (sel) sel.addEventListener("change", () => { location.hash = "#/report/" + sel.value; });
+      const printBtn = $("#print-btn");
+      if (printBtn) printBtn.addEventListener("click", () => window.print());
+      const copyBtn = $("#copy-link");
+      if (copyBtn) copyBtn.addEventListener("click", async () => {
+        const url = location.origin + location.pathname + "#/report/" + (LANDLORDS.find(l => l.id === (sel ? sel.value : id)) || LANDLORDS[0]).id;
+        try {
+          await navigator.clipboard.writeText(url);
+          toast("已複製本機預覽連結");
+        } catch {
+          toast("請手動複製網址列的連結");
+        }
+      });
+    }
+  }
+
+  function refreshAdminList() {
+    // re-render but keep scroll and search focus
+    const qEl = $("#lead-q");
+    const pos = qEl ? qEl.selectionStart : null;
+    const y = window.scrollY;
+    const app = $("#app");
+    app.innerHTML = renderAdmin();
+    bindView("admin");
+    const q2 = $("#lead-q");
+    if (q2) { q2.focus(); if (pos != null) q2.setSelectionRange(pos, pos); }
+    window.scrollTo(0, y);
+  }
+
+  function bindLeadActions() {
+    document.querySelectorAll("[data-status]").forEach(sel => sel.addEventListener("change", () => {
+      updateLead(sel.dataset.status, l => { l.status = sel.value; });
+    }));
+    document.querySelectorAll("[data-add-note]").forEach(btn => btn.addEventListener("click", () => {
+      const id = btn.dataset.addNote;
+      const input = document.querySelector(`[data-note-input="${id}"]`);
+      const text = (input && input.value || "").trim();
+      if (!text) return;
+      const stamp = "11/22 " + text;
+      updateLead(id, l => { l.notes = l.notes || []; l.notes.push(stamp); });
+    }));
+    document.querySelectorAll("[data-del]").forEach(btn => btn.addEventListener("click", () => {
+      if (!confirm("刪除這筆本機資料？範例名單不會被刪除。")) return;
+      saveLeads(loadLeads().filter(l => l.id !== btn.dataset.del));
+      toast("已刪除");
+      render();
+    }));
+  }
+
+  function updateLead(id, fn) {
+    if (id.startsWith("s") && SAMPLE_LEADS.some(l => l.id === id)) {
+      const l = SAMPLE_LEADS.find(x => x.id === id);
+      fn(l);
+      render();
+      toast("已更新（範例資料，重新整理會回到預設）");
+      return;
+    }
+    const list = loadLeads();
+    const l = list.find(x => x.id === id);
+    if (l) { fn(l); saveLeads(list); }
+    render();
+    toast("已更新");
+  }
+
+  function onSubmitLead(e) {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    if (!fd.get("consent")) { toast("請先勾選個資同意"); return; }
+    const lead = {
+      id: "u" + Date.now(),
+      name: fd.get("name").trim(),
+      phone: fd.get("phone").trim(),
+      lineId: (fd.get("lineId") || "").trim(),
+      address: fd.get("address").trim(),
+      type: fd.get("type"),
+      areaPing: fd.get("areaPing") || "",
+      age: fd.get("age") || "",
+      need: fd.get("need"),
+      price: (fd.get("price") || "").trim(),
+      time: fd.get("time"),
+      note: (fd.get("note") || "").trim(),
+      status: "新進",
+      notes: ["由表單送出（本機示範）"],
+      createdAt: "2026-11-22",
+      sample: false
+    };
+    saveLeads([lead, ...loadLeads()]);
+    const app = $("#app");
+    app.innerHTML = renderThanks(lead.name);
+    $("#again").addEventListener("click", () => { location.hash = "#/"; render(); });
+    window.scrollTo(0, 0);
+  }
+
+  window.addEventListener("hashchange", render);
+  render();
+  </script>
+</body>
+</html>
