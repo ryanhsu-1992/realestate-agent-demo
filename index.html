@@ -200,26 +200,16 @@
     .copy-card .service-ico { width: 72px; height: 72px; background: linear-gradient(180deg, #FBF7EF, #EDE6D4) padding-box, var(--foil) border-box; }
     .service-ico svg { width: 44px; height: 44px; overflow: visible; }
     .service-ico .ico-3d { width: 62px; height: 62px; object-fit: contain; }
-    .copy-card .en { font-size: 11px; letter-spacing: .12em; font-weight: 700; color: var(--gold-dim); text-transform: uppercase; }
-    .service h3, .copy-card h3 { font-size: 18px; font-weight: 700; color: var(--green); margin-bottom: 2px; font-family: var(--serif); }
-    .service p, .copy-card p, .copy-lead { font-size: 14px; color: var(--ink-soft); }
-    .copy-lead { font-weight: 600; color: var(--green); margin: 0 0 4px; }
-    .copy-bullets { list-style: none; display: grid; gap: 8px; margin: 4px 0 0; padding: 0; }
-    .copy-bullets li { display: grid; grid-template-columns: 24px 1fr; gap: 8px; align-items: start; font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
-    .copy-bullets li .ico-3d { width: 24px; height: 24px; object-fit: contain; margin-top: 0; }
-    .copy-bullets li svg { width: 18px; height: 18px; overflow: visible; margin-top: 1px; flex: 0 0 18px; }
+    .copy-card .en { font-size: 11px; letter-spacing: .12em; font-weight: 700; color: var(--gold-dim); text-transform: uppercase; margin: 2px 0 6px; }
+    .service h3, .copy-card h3 { font-size: 18px; font-weight: 700; color: var(--green); margin-bottom: 2px; font-family: var(--serif); line-height: 1.35; }
+    .service p, .copy-card p { font-size: 14px; color: var(--ink-soft); }
+    .copy-bullets { list-style: none; display: grid; gap: 6px; margin: 4px 0 0; padding: 0; }
+    .copy-bullets li { display: grid; grid-template-columns: 1em 1fr; gap: 2px; align-items: start; font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
+    .copy-bullets li::before { content: "・"; color: var(--green); font-weight: 700; }
     .copy-card .go { font-size: 12px; font-weight: 700; color: var(--gold-dim); margin-top: 6px; }
     a.copy-card:hover, a.service:hover { border-color: var(--gold-dim); box-shadow: var(--shadow), 0 0 0 1px rgba(201,164,92,.25); }
-    .expertise { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
-    .exp { background: var(--cream); border: 1px solid var(--line); border-radius: 11px; padding: 12px; }
-    .exp .ico { margin-bottom: 6px; width: 48px; height: 48px; }
-    .exp .ico svg { width: 32px; height: 32px; overflow: visible; }
-    .exp .ico .ico-3d { width: 48px; height: 48px; object-fit: contain; }
-    .exp h3 { font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 2px; }
-    .exp p { font-size: 12px; color: var(--ink-soft); line-height: 1.55; }
     @media (min-width: 720px) {
       .services-main { grid-template-columns: 1fr 1fr 1fr; }
-      .expertise { grid-template-columns: repeat(4, 1fr); }
     }
     .listing-grid { display: grid; gap: 12px; }
     @media (min-width: 560px) { .listing-grid { grid-template-columns: 1fr 1fr; } }
@@ -925,45 +915,36 @@ ${esc(LEGAL_NOTICE)}</div>
         <div class="services-main">
           <article class="copy-card reveal">
             <div class="service-ico">${ICONS.svg("match")}</div>
+            <h3>房屋配對｜輕鬆找房不煩惱</h3>
             <div class="en">Property Matching</div>
-            <h3>💯房屋配對</h3>
-            <p class="copy-lead">輕鬆找房不煩惱</p>
             <ul class="copy-bullets">
-              <li>${ICONS.svg("buy")}<span>提供優質房子，嚴選房客住戶，能夠英文溝通對外國人友善！</span></li>
-              <li>${ICONS.svg("factory")}<span>歡迎公司行號、人力仲介洽詢房屋、廠房、店面、土地！</span></li>
-              <li>${ICONS.svg("rent")}<span>短期租屋租金另議！租屋成功會收取租金半個月服務費！</span></li>
+              <li>提供優質房子，嚴選房客住戶，能夠英文溝通對外國人友善！</li>
+              <li>歡迎公司行號、人力仲介洽詢房屋、廠房、店面、土地！</li>
+              <li>短期租屋租金另議！租屋成功會收取租金半個月服務費！</li>
             </ul>
           </article>
           <article class="copy-card reveal">
             <div class="service-ico">${ICONS.svg("buy")}</div>
+            <h3>房產買賣｜為您推薦一輩子的家</h3>
             <div class="en">Residential Sales</div>
-            <h3>🏠房產買賣</h3>
-            <p class="copy-lead">為您推薦一輩子的家</p>
             <ul class="copy-bullets">
-              <li>${ICONS.svg("tax")}<span>為您做市場趨勢、稅務分析、投資方向建議！</span></li>
-              <li>${ICONS.svg("reno")}<span>室內裝修、格局規劃推薦，一齊打造理想生活樣貌！</span></li>
-              <li>${ICONS.svg("match")}<span>開價不等於成交價，勇敢出價、先享受世界！</span></li>
+              <li>為您做市場趨勢、稅務分析、投資方向建議！</li>
+              <li>室內裝修、格局規劃推薦，一齊打造理想生活樣貌！</li>
+              <li>開價不等於成交價，勇敢出價、先享受世界！</li>
             </ul>
           </article>
           <a class="copy-card reveal" href="#form-section">
             <div class="service-ico">${ICONS.svg("entrust")}</div>
+            <h3>歡迎委託｜資產配置找津銓</h3>
             <div class="en">Property Entrustment</div>
-            <h3>🎯歡迎委託</h3>
-            <p class="copy-lead">資產配置找津銓</p>
             <ul class="copy-bullets">
-              <li>${ICONS.svg("form")}<span>誠摯邀請您：若剛好有不動產買賣／稅務規劃／周遭行情分析等需求</span></li>
-              <li>${ICONS.svg("phone")}<span>歡迎隨時聯絡，請給津銓服務的機會，共創房產價值！</span></li>
-              <li>${ICONS.svg("match")}<span>一人委託即享受團隊服務！住商機構聯賣全台約650家分店！</span></li>
-              <li>${ICONS.svg("globe")}<span>六大房仲網站、六大賞屋平台曝光！</span></li>
+              <li>誠摯邀請您：若剛好有不動產買賣／稅務規劃／周遭行情分析等需求</li>
+              <li>歡迎隨時聯絡，請給津銓服務的機會，共創房產價值！</li>
+              <li>一人委託即享受團隊服務！住商機構聯賣全台約650家分店！</li>
+              <li>六大房仲網站、六大賞屋平台曝光！</li>
             </ul>
             <div class="go">前往委託估價 →</div>
           </a>
-        </div>
-        <div class="expertise">
-          <article class="exp reveal"><div class="ico">${ICONS.svg("match")}</div><h3>配對</h3><p>依需求媒合買賣雙方，減少無效看屋。</p></article>
-          <article class="exp reveal"><div class="ico">${ICONS.svg("tax")}</div><h3>稅務分析</h3><p>協助梳理買賣與出租的稅務注意事項。</p></article>
-          <article class="exp reveal"><div class="ico">${ICONS.svg("reno")}</div><h3>裝修規劃</h3><p>交易前後的修繕與格局建議，對接熟悉廠商。</p></article>
-          <article class="exp reveal"><div class="ico">${ICONS.svg("globe")}</div><h3>外國人英文溝通</h3><p>可提供英文溝通，協助外籍人士看屋與簽約。</p></article>
         </div>
       </section>
       </div>
