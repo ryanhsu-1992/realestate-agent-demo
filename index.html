@@ -58,7 +58,7 @@
 
     #intro { position: fixed; inset: 0; z-index: 200; background: var(--green-deep); display: grid; place-items: center; color: var(--gold); transition: opacity .45s ease, visibility .45s ease; }
     #intro.done { opacity: 0; visibility: hidden; pointer-events: none; }
-    #intro svg { width: 132px; height: 110px; overflow: visible; animation: introPop .9s ease both; }
+    #intro svg, #intro img { width: 148px; height: 148px; overflow: visible; animation: introPop .9s ease both; object-fit: contain; }
     @keyframes introPop { from { opacity: 0; transform: translateY(8px) scale(.96); } to { opacity: 1; transform: none; } }
     #intro .intro-skip { position: absolute; bottom: calc(28px + var(--safe-b)); left: 50%; transform: translateX(-50%); color: var(--gold-soft); font-size: 12px; letter-spacing: .16em; opacity: .75; padding: 8px 16px; }
     @media (prefers-reduced-motion: reduce) {
@@ -66,6 +66,7 @@
       .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
       #app.page-out, #app.page-in { opacity: 1 !important; transform: none !important; transition: none !important; }
       .btn-gold::after, .cta-bar a.primary::after { animation: none !important; content: none !important; }
+      .hero-diorama { animation: none !important; }
     }
 
     .demo-ribbon { position: sticky; top: 0; z-index: 60; min-height: var(--demo-h); background: var(--green-deep); color: rgba(232, 215, 168, .82); font-size: 11px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 14px; padding: 8px 12px; letter-spacing: .06em; }
@@ -143,10 +144,15 @@
 
 
     .hero { position: relative; background: linear-gradient(180deg, var(--green-deep) 0%, var(--green) 55%, var(--green-mid) 100%); color: var(--cream); overflow: hidden; min-height: calc(100svh - var(--demo-h)); display: flex; flex-direction: column; justify-content: flex-end; padding: 36px 0 0; }
+    body.view-home .hero { padding-bottom: calc(var(--cta-h) + var(--safe-b) + 8px); }
+    @media (min-width: 720px) { body.view-home .hero { padding-bottom: 16px; } }
     .hero::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(ellipse at 20% 0%, rgba(201,164,92,.16), transparent 50%), radial-gradient(ellipse at 90% 20%, rgba(255,252,246,.05), transparent 40%); pointer-events: none; }
     .hero-texture { position: absolute; inset: 0; pointer-events: none; opacity: .07; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
-    .skyline { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 110px; pointer-events: none; opacity: .42; }
-    .hero-inner { position: relative; z-index: 1; width: min(560px, 100%); margin: 0 auto; padding: 0 20px 124px; }
+    .hero-diorama { position: relative; z-index: 1; width: min(640px, 96%); margin: 4px auto 8px; pointer-events: none; animation: dioramaFloat 5.6s ease-in-out infinite; }
+    @media (max-width: 719px) { body.view-home .hero-diorama { margin-bottom: calc(var(--cta-h) + var(--safe-b) + 8px); } }
+    .hero-diorama img { width: 100%; height: auto; display: block; filter: drop-shadow(0 16px 28px rgba(0,0,0,.28)); }
+    @keyframes dioramaFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    .hero-inner { position: relative; z-index: 1; width: min(560px, 100%); margin: 0 auto; padding: 0 20px 16px; }
     .hero-photo { width: 118px; height: 118px; margin: 0 auto 18px; border-radius: 50%; border: 2px solid var(--gold); padding: 3px; box-shadow: 0 0 0 8px rgba(201,164,92,.12), 0 16px 40px rgba(0,0,0,.25); background: var(--green-deep); }
     .hero-photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
     .hero .team { text-align: center; font-size: 12px; letter-spacing: .18em; color: var(--gold); font-weight: 600; margin-bottom: 8px; }
@@ -158,7 +164,7 @@
 
     .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 11px; padding: 12px 16px; font-weight: 700; font-size: 15px; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease, border-color .15s ease; box-shadow: 0 4px 14px rgba(0,0,0,.12); }
     .btn svg { width: 22px; height: 22px; overflow: visible; flex: 0 0 22px; }
-    .btn-gold svg { background: var(--green-deep); border-radius: 7px; padding: 1px; box-sizing: content-box; width: 20px; height: 20px; }
+    .btn .ico-3d { width: 28px; height: 28px; flex: 0 0 28px; object-fit: contain; filter: drop-shadow(0 1px 2px rgba(21,40,31,.2)); }
     .btn:active { transform: translateY(1px) scale(.99); }
     .btn-gold { position: relative; overflow: hidden; color: var(--green-deep); background-image: var(--foil); background-size: 220% 100%; background-position: 0 50%; box-shadow: 0 1px 0 rgba(255,255,255,.35) inset, 0 6px 18px rgba(201,164,92,.32), 0 14px 28px rgba(21,40,31,.12); }
     .btn-gold > * { position: relative; z-index: 1; }
@@ -179,6 +185,7 @@
     .cta-bar a.primary { position: relative; overflow: hidden; color: var(--green-deep); background-image: var(--foil); background-size: 220% 100%; box-shadow: 0 1px 0 rgba(255,255,255,.3) inset, 0 4px 12px rgba(201,164,92,.28); }
     .cta-bar a.primary::after { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.48) 50%, transparent 65%); transform: translateX(-130%); animation: foilShimmer 5.2s ease-in-out infinite; pointer-events: none; }
     .cta-bar a svg { width: 22px; height: 22px; overflow: visible; }
+    .cta-bar a .ico-3d { width: 30px; height: 30px; object-fit: contain; filter: drop-shadow(0 1px 2px rgba(0,0,0,.25)); }
 
     .section { padding: 36px 0 8px; }
     .section-kicker { font-size: 12px; color: var(--gold-dim); font-weight: 600; letter-spacing: .14em; margin-bottom: 6px; }
@@ -190,21 +197,24 @@
     .service, .copy-card { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 18px 16px; display: grid; grid-template-columns: 56px 1fr; gap: 14px; align-items: start; box-shadow: var(--shadow); color: inherit; text-decoration: none; }
     .copy-card { grid-template-columns: 1fr; gap: 8px; }
     .service-ico { width: 56px; height: 56px; border-radius: 14px; display: grid; place-items: center; border: 1.5px solid transparent; background: linear-gradient(180deg, #F7F1E4, #E8DCC0) padding-box, var(--foil) border-box; box-shadow: 0 1px 0 rgba(255,255,255,.7) inset, 0 2px 4px rgba(21,40,31,.08), 0 8px 18px rgba(31,61,46,.1); }
-    .copy-card .service-ico { width: 58px; height: 58px; }
+    .copy-card .service-ico { width: 72px; height: 72px; background: linear-gradient(180deg, #FBF7EF, #EDE6D4) padding-box, var(--foil) border-box; }
     .service-ico svg { width: 44px; height: 44px; overflow: visible; }
+    .service-ico .ico-3d { width: 62px; height: 62px; object-fit: contain; }
     .copy-card .en { font-size: 11px; letter-spacing: .12em; font-weight: 700; color: var(--gold-dim); text-transform: uppercase; }
     .service h3, .copy-card h3 { font-size: 18px; font-weight: 700; color: var(--green); margin-bottom: 2px; font-family: var(--serif); }
     .service p, .copy-card p, .copy-lead { font-size: 14px; color: var(--ink-soft); }
     .copy-lead { font-weight: 600; color: var(--green); margin: 0 0 4px; }
     .copy-bullets { list-style: none; display: grid; gap: 8px; margin: 4px 0 0; padding: 0; }
-    .copy-bullets li { display: grid; grid-template-columns: 20px 1fr; gap: 8px; align-items: start; font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
+    .copy-bullets li { display: grid; grid-template-columns: 24px 1fr; gap: 8px; align-items: start; font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
+    .copy-bullets li .ico-3d { width: 24px; height: 24px; object-fit: contain; margin-top: 0; }
     .copy-bullets li svg { width: 18px; height: 18px; overflow: visible; margin-top: 1px; flex: 0 0 18px; }
     .copy-card .go { font-size: 12px; font-weight: 700; color: var(--gold-dim); margin-top: 6px; }
     a.copy-card:hover, a.service:hover { border-color: var(--gold-dim); box-shadow: var(--shadow), 0 0 0 1px rgba(201,164,92,.25); }
     .expertise { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
     .exp { background: var(--cream); border: 1px solid var(--line); border-radius: 11px; padding: 12px; }
-    .exp .ico { margin-bottom: 6px; width: 36px; height: 36px; }
+    .exp .ico { margin-bottom: 6px; width: 48px; height: 48px; }
     .exp .ico svg { width: 32px; height: 32px; overflow: visible; }
+    .exp .ico .ico-3d { width: 48px; height: 48px; object-fit: contain; }
     .exp h3 { font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 2px; }
     .exp p { font-size: 12px; color: var(--ink-soft); line-height: 1.55; }
     @media (min-width: 720px) {
@@ -215,8 +225,10 @@
     @media (min-width: 560px) { .listing-grid { grid-template-columns: 1fr 1fr; } }
     .listing { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow); text-align: left; width: 100%; color: inherit; display: block; }
     .listing:hover { border-color: var(--gold-dim); }
-    .listing-art { height: 132px; position: relative; }
+    .listing-art { height: 148px; position: relative; overflow: hidden; }
     .listing-art svg { width: 100%; height: 100%; display: block; }
+    .listing-art-3d, .ph-art-3d { width: 100%; height: 100%; display: grid; place-items: center; background: linear-gradient(180deg, #F7F1E4 0%, #E8EFE3 48%, #D5E0CC 100%); }
+    .listing-art-3d .ico-3d, .ph-art-3d .ico-3d { width: 72%; height: auto; max-height: 88%; object-fit: contain; filter: drop-shadow(0 10px 16px rgba(21,40,31,.18)); }
     .listing-art .tag { position: absolute; top: 10px; left: 10px; font-size: 11px; font-weight: 700; letter-spacing: .06em; padding: 3px 8px; border-radius: 999px; }
     .tag-出售 { background: var(--green); color: var(--gold-soft); }
     .tag-出租 { background: var(--gold); color: var(--green-deep); }
@@ -229,7 +241,7 @@
     .modal-bg { position: fixed; inset: 0; z-index: 80; background: rgba(21,40,31,.55); display: grid; place-items: end center; padding: 16px 12px calc(16px + var(--safe-b)); }
     .modal { width: min(520px, 100%); background: var(--paper); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,.25); max-height: 88dvh; overflow-y: auto; animation: pop .25s ease; }
     @keyframes pop { from { transform: translateY(18px); opacity: 0; } to { transform: none; opacity: 1; } }
-    .modal-art { height: 120px; position: relative; }
+    .modal-art { height: 148px; position: relative; overflow: hidden; }
     .modal-body { padding: 18px 16px 20px; }
     .modal-body h3 { font-size: 20px; color: var(--green); margin: 6px 0 8px; }
     .modal dl { display: grid; grid-template-columns: 72px 1fr; gap: 4px 8px; font-size: 13px; margin: 10px 0 14px; }
@@ -412,6 +424,8 @@
     .cat-chips button { flex: 0 0 auto; border: 1px solid var(--line-strong); background: #fff; border-radius: 999px; padding: 7px 12px; font-size: 12px; font-weight: 600; color: var(--ink-soft); display: inline-flex; align-items: center; gap: 6px; }
     .cat-chips button.on { background: var(--green); color: var(--gold-soft); border-color: var(--green); }
     .cat-chips button svg { width: 18px; height: 18px; overflow: visible; }
+    .cat-chips button .ico-3d, .deal-toggle button .ico-3d, .intent-switch button .ico-3d { width: 22px; height: 22px; object-fit: contain; }
+    .deal-toggle button, .intent-switch button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
     .listing-addr { font-size: 12px; color: var(--muted); margin-top: 2px; }
     .listing-spec { font-size: 12px; color: var(--ink-soft); margin-top: 4px; }
     .listing-extra { font-size: 12px; color: var(--green); margin-top: 4px; font-weight: 600; }
@@ -460,23 +474,7 @@
     </defs>
   </svg>
   <div id="intro" role="dialog" aria-label="開場動畫">
-    <svg viewBox="0 0 120 100" aria-hidden="true">
-      <defs>
-        <linearGradient id="ig" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F6E7B8"/><stop offset="100%" stop-color="#C9A45C"/></linearGradient>
-        <linearGradient id="igb" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3F6E54"/><stop offset="100%" stop-color="#1F3D2E"/></linearGradient>
-        <linearGradient id="iw" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFF3C2"/><stop offset="100%" stop-color="#E8C86A"/></linearGradient>
-      </defs>
-      <ellipse cx="18" cy="86" rx="10" ry="6" fill="#2F543A"/>
-      <path d="M18 86 C12 86 11 70 18 70 S24 86 18 86Z" fill="#3F6B4A"/>
-      <path d="M10 54 L60 14 L110 54" fill="url(#ig)" stroke="#8A641F" stroke-width="1.4" stroke-linejoin="round"/>
-      <rect x="24" y="52" width="72" height="40" rx="2" fill="url(#igb)" stroke="#15281F" stroke-width="1"/>
-      <rect x="32" y="60" width="14" height="12" rx="1.5" fill="url(#iw)"/>
-      <rect x="74" y="60" width="14" height="12" rx="1.5" fill="url(#iw)"/>
-      <path d="M52 92 V70 H68 V92" fill="url(#ig)" stroke="#8A641F" stroke-width="1"/>
-      <circle cx="65" cy="82" r="1.6" fill="#1F3D2E"/>
-      <rect x="86" y="22" width="5" height="14" fill="#8A641F"/>
-      <path d="M84 20 c4-6 10-3 8 4" fill="none" stroke="#D9D4C8" stroke-width="1.6" stroke-linecap="round"/>
-    </svg>
+    <img src="icons/house.webp" alt="" width="148" height="148" />
     <button class="intro-skip" type="button" id="intro-skip">略過</button>
   </div>
 
@@ -581,183 +579,35 @@
   };
 
   const ICONS = {
-      _n: 0,
-      svg(name) {
-        const fn = this[name];
-        if (typeof fn !== "function") return "";
-        return fn.call(this, "ic" + (++this._n));
-      },
-      _defs(id) {
-        return `<defs>
-          <linearGradient id="og-${id}" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#F6E7B8"/>
-            <stop offset="42%" stop-color="#C9A45C"/>
-            <stop offset="100%" stop-color="#8A641F"/>
-          </linearGradient>
-          <linearGradient id="og2-${id}" x1="1" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#E8D7A8"/>
-            <stop offset="100%" stop-color="#A6853F"/>
-          </linearGradient>
-          <linearGradient id="gn-${id}" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#3F6E54"/>
-            <stop offset="100%" stop-color="#1F3D2E"/>
-          </linearGradient>
-          <linearGradient id="sg-${id}" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#B7C9B0"/>
-            <stop offset="100%" stop-color="#5E7A5C"/>
-          </linearGradient>
-          <linearGradient id="hl-${id}" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#fff" stop-opacity=".55"/>
-            <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
-          </linearGradient>
-          <linearGradient id="win-${id}" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#F8E7A8"/>
-            <stop offset="100%" stop-color="#E2C36A"/>
-          </linearGradient>
-          <filter id="ds-${id}" x="-25%" y="-15%" width="150%" height="150%">
-            <feDropShadow dx="0" dy=".7" stdDeviation=".45" flood-color="#15281F" flood-opacity=".32"/>
-          </filter>
-        </defs>`;
-      },
-      _wrap(id, inner) {
-        return `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" overflow="visible">${this._defs(id)}<g filter="url(#ds-${id})" stroke-linejoin="round" stroke-linecap="round">${inner}</g></svg>`;
-      },
-      phone(id) {
-        return this._wrap(id, `
-          <rect x="7.2" y="2.8" width="9.6" height="18.4" rx="2.4" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".4"/>
-          <rect x="8.1" y="4.6" width="7.8" height="11.6" rx="1" fill="url(#gn-${id})"/>
-          <rect x="8.1" y="4.6" width="7.8" height="5" rx="1" fill="url(#hl-${id})"/>
-          <circle cx="12" cy="18.6" r="1.05" fill="url(#og2-${id})" stroke="#8A641F" stroke-width=".3"/>
-          <path d="M10.2 6.2h3.6" stroke="#E8D7A8" stroke-width=".7"/>`);
-      },
-      line(id) {
-        return this._wrap(id, `
-          <path d="M5.2 8.2c0-3.1 3.1-5.5 6.8-5.5s6.8 2.4 6.8 5.5-3.1 5.5-6.8 5.5c-.6 0-1.2-.06-1.8-.2L6.2 16.2 7.2 13.2C5.9 12.2 5.2 10.3 5.2 8.2z" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".4"/>
-          <path d="M8.2 11.2c0-2.2 1.8-3.6 3.8-3.6" fill="none" stroke="url(#gn-${id})" stroke-width=".6" opacity=".35"/>
-          <circle cx="9.4" cy="8.2" r=".7" fill="url(#gn-${id})"/>
-          <circle cx="12" cy="8.2" r=".7" fill="url(#gn-${id})"/>
-          <circle cx="14.6" cy="8.2" r=".7" fill="url(#gn-${id})"/>
-          <path d="M6.8 15.4l.7-2" fill="#8A641F" opacity=".15"/>`);
-      },
-      buy(id) { /* house + key + chimney smoke + tree */
-        return this._wrap(id, `
-          <ellipse cx="5.1" cy="19.6" rx="2.1" ry=".7" fill="url(#sg-${id})" opacity=".8"/>
-          <path d="M5.1 19.2C4 19.2 3.6 16.4 5.1 16.4S6.2 19.2 5.1 19.2z" fill="url(#gn-${id})"/>
-          <path d="M3.2 12.4 L12 4.6 L20.8 12.4" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".45"/>
-          <path d="M4.6 11.8h15.2" stroke="#F6E7B8" stroke-width=".4" opacity=".5"/>
-          <path d="M16.6 6.2v-2" stroke="url(#og2-${id})" stroke-width="1.2"/>
-          <path d="M16.2 3.4c.6-.6 1.4-.3 1.2.5M15.6 4.2c.5-.5 1.2-.2 1 .5" stroke="#C9C4B6" stroke-width=".7" fill="none"/>
-          <rect x="6.4" y="12" width="11.2" height="8.4" rx=".6" fill="url(#gn-${id})" stroke="#15281F" stroke-width=".35"/>
-          <rect x="6.4" y="12" width="11.2" height="3.2" fill="url(#hl-${id})" opacity=".35"/>
-          <rect x="8.1" y="13.4" width="2.3" height="2.3" rx=".3" fill="url(#win-${id})"/>
-          <rect x="13.6" y="13.4" width="2.3" height="2.3" rx=".3" fill="url(#win-${id})"/>
-          <path d="M8.1 14.55h2.3M14.75 13.4v2.3" stroke="#8A641F" stroke-width=".25" opacity=".4"/>
-          <path d="M11 20.4v-4.1h2.2v4.1" fill="url(#og2-${id})" stroke="#8A641F" stroke-width=".35"/>
-          <circle cx="12.8" cy="18.6" r=".28" fill="#1F3D2E"/>
-          <path d="M16.8 16.6c1.5 0 2.6 1.1 2.2 1.9h-1.8c-.7-1.2.1-1.9-.4-1.9z" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".3"/>
-          <rect x="19.2" y="16.8" width="1.15" height="2.8" rx=".3" fill="url(#og2-${id})" stroke="#8A641F" stroke-width=".25"/>
-          <path d="M20.35 17.3h.8M20.35 18.2h.7M20.35 19.1h.8" stroke="#8A641F" stroke-width=".35"/>`);
-      },
-      rent(id) { /* door + key */
-        return this._wrap(id, `
-          <rect x="5.2" y="3.2" width="11.2" height="17.6" rx="1" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".4"/>
-          <rect x="6.3" y="4.6" width="9" height="15.2" rx=".5" fill="url(#gn-${id})"/>
-          <rect x="6.3" y="4.6" width="9" height="4.4" fill="url(#hl-${id})" opacity=".3"/>
-          <rect x="7.4" y="6.2" width="3" height="3.2" rx=".3" fill="url(#win-${id})"/>
-          <rect x="11.2" y="6.2" width="3" height="3.2" rx=".3" fill="url(#win-${id})"/>
-          <path d="M10.2 19.8v-5.2h3.2v5.2" fill="url(#og2-${id})" stroke="#8A641F" stroke-width=".35"/>
-          <circle cx="12.6" cy="17.5" r=".32" fill="#1F3D2E"/>
-          <path d="M17.2 14.8c1.4 0 2.5 1 2.1 1.85h-1.7c-.7-1.15.1-1.85-.4-1.85z" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".3"/>
-          <rect x="19.4" y="15" width="1.1" height="2.6" rx=".25" fill="url(#og2-${id})" stroke="#8A641F" stroke-width=".25"/>
-          <path d="M20.5 15.5h.75M20.5 16.3h.65M20.5 17.1h.75" stroke="#8A641F" stroke-width=".35"/>`);
-      },
-      match(id) { /* handshake with cuffs */
-        return this._wrap(id, `
-          <path d="M3.6 13.4c0-1.2.8-2 2-2h2.1l3.6 3.4c.5.5 1.3.5 1.8 0l.3-.3" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".4"/>
-          <path d="M20.4 13.4c0-1.2-.8-2-2-2h-2.1l-3.6 3.4c-.5.5-1.3.5-1.8 0l-.3-.3" fill="url(#og2-${id})" stroke="#8A641F" stroke-width=".4"/>
-          <path d="M8.2 14.2l2.4 2.5c.8.8 2 .8 2.8 0l2.4-2.5" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".4"/>
-          <path d="M9.2 15.2l1.6 1.6c.6.6 1.6.6 2.2 0l1.6-1.6" fill="none" stroke="#F6E7B8" stroke-width=".45" opacity=".7"/>
-          <rect x="2.4" y="10.6" width="4.2" height="3.6" rx=".6" fill="url(#gn-${id})" stroke="#15281F" stroke-width=".3"/>
-          <rect x="17.4" y="10.6" width="4.2" height="3.6" rx=".6" fill="url(#gn-${id})" stroke="#15281F" stroke-width=".3"/>
-          <path d="M3 11.4h3M18 11.4h3" stroke="#F6E7B8" stroke-width=".4" opacity=".5"/>`);
-      },
-      tax(id) { /* chart + coin */
-        return this._wrap(id, `
-          <path d="M3.6 19.4h16.8" stroke="url(#og-${id})" stroke-width="1.1"/>
-          <rect x="5.2" y="12.4" width="3" height="7" rx=".5" fill="url(#gn-${id})" stroke="#15281F" stroke-width=".3"/>
-          <rect x="9.4" y="8.6" width="3" height="10.8" rx=".5" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".3"/>
-          <rect x="13.6" y="10.6" width="3" height="8.8" rx=".5" fill="url(#sg-${id})" stroke="#1F3D2E" stroke-width=".3"/>
-          <rect x="5.2" y="12.4" width="3" height="2.2" fill="url(#hl-${id})" opacity=".35"/>
-          <rect x="9.4" y="8.6" width="3" height="2.6" fill="url(#hl-${id})" opacity=".4"/>
-          <circle cx="18.6" cy="6.6" r="3.1" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".4"/>
-          <circle cx="18.6" cy="6.6" r="2.05" fill="none" stroke="#8A641F" stroke-width=".35"/>
-          <path d="M18.6 5.2v2.8M17.7 5.7h1.8M17.7 7.5h1.8" stroke="#1F3D2E" stroke-width=".4"/>`);
-      },
-      reno(id) { /* blueprint with house */
-        return this._wrap(id, `
-          <rect x="3.4" y="3.6" width="17.2" height="16.8" rx="1.2" fill="url(#gn-${id})" stroke="#15281F" stroke-width=".4"/>
-          <path d="M3.4 7.2h17.2M8.6 3.6v16.8" stroke="#C9A45C" stroke-width=".35" opacity=".55"/>
-          <path d="M7.4 14.8 L12.2 10.2 L17 14.8" fill="none" stroke="url(#og-${id})" stroke-width="1.15"/>
-          <rect x="9.4" y="14.8" width="5.6" height="3.6" fill="none" stroke="url(#og-${id})" stroke-width=".9"/>
-          <rect x="11.2" y="16.2" width="2" height="2.2" fill="url(#win-${id})" stroke="#8A641F" stroke-width=".25"/>`);
-      },
-      globe(id) { /* globe + speech */
-        return this._wrap(id, `
-          <circle cx="10.2" cy="12" r="7.1" fill="url(#gn-${id})" stroke="#15281F" stroke-width=".4"/>
-          <path d="M10.2 4.9c2.1 2.3 3.1 4.6 3.1 7.1s-1 4.8-3.1 7.1c-2.1-2.3-3.1-4.6-3.1-7.1s1-4.8 3.1-7.1z" fill="none" stroke="url(#og-${id})" stroke-width=".7"/>
-          <path d="M3.4 12h13.6M5.2 8.4h10M5.2 15.6h10" stroke="#C9A45C" stroke-width=".45" opacity=".8"/>
-          <path d="M15.2 5.6h6.2c.7 0 1.2.5 1.2 1.2v3.4c0 .7-.5 1.2-1.2 1.2h-3.4L15 13.2v-1.8h-.2c-.6 0-1-.5-1-1.1V6.8c0-.7.6-1.2 1.4-1.2z" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".35"/>
-          <path d="M16.4 7.6h3.4M16.4 9.3h2.4" stroke="#1F3D2E" stroke-width=".45"/>`);
-      },
-      land(id) { /* plot, grass, survey flag */
-        return this._wrap(id, `
-          <path d="M3 18.6 L8.5 13.2 L15 16.2 L21 11.4 V20.2 H3 Z" fill="url(#sg-${id})" stroke="#1F3D2E" stroke-width=".35"/>
-          <path d="M3 18.6 L8.5 13.2 L15 16.2 L21 11.4" fill="none" stroke="url(#og-${id})" stroke-width=".7"/>
-          <path d="M5.2 17.8c.4-1.5 1.2-1.6 1.2 0M9.2 16.4c.4-1.6 1.3-1.7 1.2 0M13.6 17.2c.4-1.5 1.2-1.6 1.2 0" fill="url(#gn-${id})"/>
-          <path d="M17.4 13.2 V6.2" stroke="#8A641F" stroke-width=".9"/>
-          <path d="M17.5 6.2 L22 7.6 L17.5 9.4z" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".3"/>
-          <circle cx="17.4" cy="13.2" r=".55" fill="#8A641F"/>`);
-      },
-      factory(id) { /* sawtooth + windows */
-        return this._wrap(id, `
-          <path d="M2.8 19.6 V12.2 L6.4 8.6 V12.2 L10 8.6 V12.2 L13.6 8.6 V19.6 Z" fill="url(#gn-${id})" stroke="#15281F" stroke-width=".4"/>
-          <path d="M2.8 12.2 L6.4 8.6 L10 12.2 L13.6 8.6" fill="none" stroke="url(#og-${id})" stroke-width=".8"/>
-          <rect x="13.6" y="12.4" width="7.6" height="7.2" fill="url(#og2-${id})" stroke="#8A641F" stroke-width=".35"/>
-          <rect x="4.1" y="13.6" width="2" height="2.2" rx=".25" fill="url(#win-${id})"/>
-          <rect x="7.7" y="13.6" width="2" height="2.2" rx=".25" fill="url(#win-${id})"/>
-          <rect x="11.2" y="13.6" width="2" height="2.2" rx=".25" fill="url(#win-${id})"/>
-          <rect x="15.2" y="14.2" width="2" height="2" rx=".25" fill="url(#win-${id})"/>
-          <rect x="18" y="14.2" width="2" height="2" rx=".25" fill="url(#win-${id})"/>
-          <path d="M19.6 12.4v-3.2" stroke="#8A641F" stroke-width=".8"/>
-          <path d="M19.2 8c.5-.6 1.3-.3 1.1.5" stroke="#C9C4B6" stroke-width=".7" fill="none"/>`);
-      },
-      form(id) {
-        return this._wrap(id, `
-          <path d="M7.2 3.4h7.2l4.4 4.4V20.4c0 .7-.6 1.2-1.2 1.2H7.2c-.7 0-1.2-.5-1.2-1.2V4.6c0-.7.5-1.2 1.2-1.2z" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".4"/>
-          <path d="M14.4 3.5v3.6c0 .5.4.9.9.9h3.4" fill="url(#og2-${id})" stroke="#8A641F" stroke-width=".35"/>
-          <path d="M8.6 11.2h6.8M8.6 14h6.8M8.6 16.8h4.4" stroke="url(#gn-${id})" stroke-width=".85"/>`);
-      },
-      entrust(id) { /* house + gold seal / key */
-        return this._wrap(id, `
-          <path d="M3.4 11.6 L11.2 4.8 L19 11.6" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".45"/>
-          <rect x="5.4" y="11.2" width="11.6" height="8.4" rx=".5" fill="url(#gn-${id})" stroke="#15281F" stroke-width=".35"/>
-          <rect x="5.4" y="11.2" width="11.6" height="2.6" fill="url(#hl-${id})" opacity=".3"/>
-          <rect x="7" y="12.8" width="2.1" height="2.1" rx=".25" fill="url(#win-${id})"/>
-          <path d="M10.2 19.6v-3.6h2.2v3.6" fill="url(#og2-${id})" stroke="#8A641F" stroke-width=".3"/>
-          <circle cx="18.4" cy="16.2" r="3.2" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".4"/>
-          <circle cx="18.4" cy="16.2" r="1.7" fill="none" stroke="#8A641F" stroke-width=".4"/>
-          <path d="M18.4 15v2.5M17.6 15.6h1.6M17.6 17.2h1.6" stroke="#1F3D2E" stroke-width=".35"/>`);
-      },
-      manage(id) {
-        return this._wrap(id, `
-          <rect x="3.2" y="6.2" width="8.2" height="13.2" rx=".6" fill="url(#gn-${id})" stroke="#15281F" stroke-width=".35"/>
-          <rect x="12.4" y="4.4" width="8.4" height="15" rx=".6" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".35"/>
-          <rect x="4.4" y="8" width="2" height="2" rx=".25" fill="url(#win-${id})"/>
-          <rect x="7.2" y="8" width="2" height="2" rx=".25" fill="url(#win-${id})"/>
-          <rect x="14" y="6.6" width="2" height="2" rx=".25" fill="url(#win-${id})"/>
-          <rect x="17" y="6.6" width="2" height="2" rx=".25" fill="url(#win-${id})"/>`);
-      }
-    };
+    files: {
+      house: "icons/house.webp",
+      apartment: "icons/apartment.webp",
+      shop: "icons/shop.webp",
+      factory: "icons/factory.webp",
+      land: "icons/land.webp",
+      key: "icons/key.webp",
+      handshake: "icons/handshake.webp",
+      chart: "icons/chart.webp",
+      blueprint: "icons/blueprint.webp",
+      globe: "icons/globe.webp",
+      phone: "icons/phone.webp",
+      chat: "icons/chat.webp"
+    },
+    alias: {
+      buy: "house", rent: "key", match: "handshake", tax: "chart", reno: "blueprint",
+      line: "chat", form: "key", entrust: "key", manage: "apartment"
+    },
+    src(name) {
+      const key = this.files[name] ? name : (this.alias[name] || name);
+      return this.files[key] || "";
+    },
+    img(name, cls) {
+      const src = this.src(name);
+      if (!src) return "";
+      return `<img class="ico-3d${cls ? " " + cls : ""}" src="${src}" alt="" width="256" height="256" draggable="false" />`;
+    },
+    svg(name) { return this.img(name); }
+  };
   
 
   const LEGAL_NOTICE = `【個人資料蒐集告知事項】（範本，正式使用前請確認）
@@ -828,171 +678,20 @@
     </g>
   </svg>`;
 
-    function listingArt(item) {
-      const id = "la-" + item.id;
-      const kind = item.category || "住宅";
-      const seed = [...String(item.id)].reduce((a, c) => a + c.charCodeAt(0), 0);
-      const rent = item.type === "出租";
-      const sky = `<defs>
-        <linearGradient id="sky-${id}" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="${rent ? "#F3E4C8" : "#E9F0E6"}"/>
-          <stop offset="55%" stop-color="${rent ? "#D7C4A0" : "#C9D6C4"}"/>
-          <stop offset="100%" stop-color="${rent ? "#8FA0A4" : "#9AABB0"}"/>
-        </linearGradient>
-        <linearGradient id="gd-${id}" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#6E8A64"/>
-          <stop offset="100%" stop-color="#3E5A3C"/>
-        </linearGradient>
-        <linearGradient id="bld-${id}" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#2C4A3A"/>
-          <stop offset="100%" stop-color="#1A3226"/>
-        </linearGradient>
-        <linearGradient id="gold-${id}" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#E8D7A8"/>
-          <stop offset="100%" stop-color="#C9A45C"/>
-        </linearGradient>
-        <linearGradient id="lit-${id}" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#FFF3C2"/>
-          <stop offset="100%" stop-color="#E8C86A"/>
-        </linearGradient>
-      </defs>
-      <rect width="200" height="140" fill="url(#sky-${id})"/>
-      <circle cx="${156 + (seed % 26)}" cy="${24 + (seed % 8)}" r="16" fill="${rent ? "#F0C27A" : "#F6E7B8"}" opacity=".9"/>
-      <circle cx="${156 + (seed % 26)}" cy="${24 + (seed % 8)}" r="11" fill="${rent ? "#FFE0A0" : "#FFF6D6"}"/>`;
-      const ground = `<path d="M0 116 C40 108 80 120 120 112 C150 106 175 114 200 108 V140 H0 Z" fill="url(#gd-${id})"/>`;
-      const tree = (x, s=1) => `<g transform="translate(${x},0) scale(${s})">
-        <rect x="0" y="96" width="5" height="20" rx="1" fill="#5A3E28"/>
-        <ellipse cx="2.5" cy="90" rx="12" ry="16" fill="#3F6B4A"/>
-        <ellipse cx="-4" cy="96" rx="8" ry="11" fill="#2F543A"/>
-        <ellipse cx="9" cy="97" rx="7" ry="10" fill="#4E7C55"/>
-      </g>`;
-      const win = (x,y,w=8,h=9) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="1" fill="url(#lit-${id})" stroke="#C9A45C" stroke-width=".6"/>`;
-  
-      let mid = "";
-      if (kind === "廠房") {
-        mid = `
-          ${tree(18,.8)}
-          <path d="M40 116 V78 L62 58 V78 L84 58 V78 L106 58 V116 Z" fill="url(#bld-${id})" stroke="#C9A45C" stroke-width="1.2"/>
-          <path d="M40 78 L62 58 L84 78 L106 58" fill="none" stroke="#E8D7A8" stroke-width="1.6"/>
-          ${win(50,86)}${win(72,86)}${win(94,86)}
-          <rect x="106" y="86" width="52" height="30" fill="#2A4636" stroke="#C9A45C" stroke-width="1"/>
-          ${win(116,94,10,10)}${win(134,94,10,10)}
-          <rect x="158" y="70" width="5" height="16" fill="#8A641F"/>
-          <path d="M156 66c4-6 10-3 8 3" fill="none" stroke="#D9D4C8" stroke-width="1.4"/>`;
-      } else if (kind === "土地") {
-        mid = `
-          <path d="M18 116 L58 78 L110 96 L188 64 V116 Z" fill="#6F8F62" stroke="#C9A45C" stroke-width="1.3"/>
-          <path d="M18 116 L58 78 L110 96 L188 64" fill="none" stroke="#E8D7A8" stroke-width="1.6"/>
-          <path d="M40 108c2-8 6-8 6 0M70 98c2-9 7-9 6 0M100 104c2-8 6-8 6 0M140 92c2-9 7-8 6 0" fill="#2F543A"/>
-          <path d="M150 88 V48" stroke="#8A641F" stroke-width="2"/>
-          <path d="M151 48 L178 58 L151 68 Z" fill="url(#gold-${id})" stroke="#8A641F" stroke-width=".8"/>
-          ${tree(24,.7)}`;
-      } else if (kind === "店面・辦公") {
-        mid = `
-          ${tree(16,.75)}
-          <rect x="46" y="52" width="118" height="64" fill="url(#bld-${id})" stroke="#C9A45C" stroke-width="1.2"/>
-          <rect x="46" y="52" width="118" height="14" fill="#2A4A38"/>
-          ${win(58,76,16,14)}${win(82,76,16,14)}${win(106,76,16,14)}${win(130,76,16,14)}
-          <path d="M46 98 H164" stroke="#E8D7A8" stroke-width="3"/>
-          <rect x="86" y="100" width="28" height="16" fill="url(#gold-${id})" stroke="#8A641F" stroke-width=".8"/>
-          ${tree(176,.7)}`;
-      } else {
-        /* residential: house or mid-rise */
-        const rooms = item.rooms || 3;
-        if (rooms <= 1) {
-          mid = `${tree(22,.75)}
-            <rect x="70" y="58" width="70" height="58" fill="url(#bld-${id})" stroke="#C9A45C" stroke-width="1.2"/>
-            <path d="M64 60 L105 32 L146 60" fill="url(#gold-${id})" stroke="#8A641F" stroke-width="1.2"/>
-            ${win(84,72,12,12)}${win(114,72,12,12)}
-            <rect x="98" y="94" width="16" height="22" fill="url(#gold-${id})" stroke="#8A641F" stroke-width=".7"/>
-            ${tree(168,.85)}`;
-        } else if (rooms >= 4 && (item.propertyType || "").includes("透天")) {
-          mid = `${tree(14,.7)}
-            <path d="M44 116 V78 L78 52 L112 78 V116" fill="url(#bld-${id})" stroke="#C9A45C" stroke-width="1.2"/>
-            <path d="M44 78 L78 52 L112 78" fill="url(#gold-${id})" stroke="#8A641F" stroke-width="1.2"/>
-            ${win(58,84)}${win(90,84)}
-            <rect x="112" y="86" width="46" height="30" fill="#243E32" stroke="#C9A45C" stroke-width="1"/>
-            ${win(122,94,10,10)}${win(138,94,10,10)}
-            <rect x="72" y="98" width="14" height="18" fill="url(#gold-${id})"/>
-            ${tree(170,.8)}`;
-        } else {
-          mid = `${tree(6 + (seed % 10),.65)}
-            <rect x="48" y="36" width="96" height="80" fill="url(#bld-${id})" stroke="#C9A45C" stroke-width="1.2"/>
-            ${win(60,48)}${win(80,48)}${win(100,48)}${win(120,48)}
-            ${win(60,66)}${win(80,66)}${win(100,66)}${win(120,66)}
-            ${win(60,84)}${win(80,84)}${win(100,84)}${win(120,84)}
-            <rect x="84" y="100" width="22" height="16" fill="url(#gold-${id})" stroke="#8A641F" stroke-width=".7"/>
-            ${tree(158 + (seed % 14),.9)}`;
-        }
-      }
-      return `<svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${sky}${mid}${ground}</svg>`;
-    }
-  
-    function sceneArt(kind, key) {
-      const id = "sc-" + String(key || kind).replace(/[^\w\u4e00-\u9fff]/g, "").slice(0, 12) + "-" + (++ICONS._n);
-      const seed = [...String(key || kind)].reduce((a, c) => a + c.charCodeAt(0), 0);
-      const sky = `<defs>
-        <linearGradient id="sky-${id}" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#E9F0E6"/>
-          <stop offset="55%" stop-color="#C9D6C4"/>
-          <stop offset="100%" stop-color="#9AABB0"/>
-        </linearGradient>
-        <linearGradient id="gd-${id}" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#6E8A64"/>
-          <stop offset="100%" stop-color="#3E5A3C"/>
-        </linearGradient>
-        <linearGradient id="bld-${id}" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#2C4A3A"/>
-          <stop offset="100%" stop-color="#1A3226"/>
-        </linearGradient>
-        <linearGradient id="gold-${id}" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#E8D7A8"/>
-          <stop offset="100%" stop-color="#C9A45C"/>
-        </linearGradient>
-        <linearGradient id="lit-${id}" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#FFF3C2"/>
-          <stop offset="100%" stop-color="#E8C86A"/>
-        </linearGradient>
-      </defs>
-      <rect width="200" height="140" fill="url(#sky-${id})"/>
-      <circle cx="${156 + (seed % 24)}" cy="26" r="16" fill="#F6E7B8" opacity=".85"/>
-      <circle cx="${156 + (seed % 24)}" cy="26" r="11" fill="#FFF6D6"/>`;
-      const ground = `<path d="M0 116 C40 108 80 120 120 112 C150 106 175 114 200 108 V140 H0 Z" fill="url(#gd-${id})"/>`;
-      const tree = (x, s=1) => `<g transform="translate(${x},0) scale(${s})">
-        <rect x="0" y="96" width="5" height="20" rx="1" fill="#5A3E28"/>
-        <ellipse cx="2.5" cy="90" rx="12" ry="16" fill="#3F6B4A"/>
-        <ellipse cx="-4" cy="96" rx="8" ry="11" fill="#2F543A"/>
-        <ellipse cx="9" cy="97" rx="7" ry="10" fill="#4E7C55"/>
-      </g>`;
-      const win = (x,y,w=7,h=8) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="1" fill="url(#lit-${id})" stroke="#C9A45C" stroke-width=".5"/>`;
-      let mid = "";
-      if (kind === "project") {
-        mid = `${tree(8,.65)}
-          <rect x="48" y="42" width="72" height="74" fill="url(#bld-${id})" stroke="#C9A45C" stroke-width="1.1"/>
-          ${win(56,52)}${win(70,52)}${win(84,52)}${win(98,52)}
-          ${win(56,68)}${win(70,68)}${win(84,68)}${win(98,68)}
-          ${win(56,84)}${win(70,84)}${win(84,84)}${win(98,84)}
-          <path d="M130 116 V28" stroke="#8A641F" stroke-width="3"/>
-          <path d="M130 28 H168" stroke="#8A641F" stroke-width="2.4"/>
-          <path d="M168 28 V70" stroke="#C9A45C" stroke-width="1.4"/>
-          <path d="M162 70 L168 86 L174 70 Z" fill="url(#gold-${id})"/>
-          <path d="M130 44 h22 M130 58 h16" stroke="#C9A45C" stroke-width="1.3"/>
-          <rect x="86" y="100" width="18" height="16" fill="url(#gold-${id})"/>
-          ${tree(178,.7)}`;
-      } else {
-        mid = `${tree(6,.6)}
-          <rect x="28" y="54" width="54" height="62" fill="url(#bld-${id})" stroke="#C9A45C" stroke-width="1"/>
-          ${win(36,64)}${win(50,64)}${win(64,64)}
-          ${win(36,80)}${win(50,80)}${win(64,80)}
-          <rect x="86" y="36" width="62" height="80" fill="#243E32" stroke="#C9A45C" stroke-width="1.1"/>
-          ${win(96,48)}${win(110,48)}${win(124,48)}
-          ${win(96,64)}${win(110,64)}${win(124,64)}
-          ${win(96,80)}${win(110,80)}${win(124,80)}
-          <rect x="108" y="100" width="16" height="16" fill="url(#gold-${id})"/>
-          ${tree(162,.85)}`;
-      }
-      return `<svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${sky}${mid}${ground}</svg>`;
-    }
+  function listingIconName(item) {
+    const kind = item.category || "住宅";
+    if (kind === "廠房") return "factory";
+    if (kind === "土地") return "land";
+    if (kind === "店面・辦公") return "shop";
+    if ((item.propertyType || "").includes("透天") || (item.rooms || 0) <= 2) return "house";
+    return "apartment";
+  }
+  function listingArt(item) {
+    return `<div class="listing-art-3d">${ICONS.img(listingIconName(item))}</div>`;
+  }
+  function sceneArt(kind, key) {
+    return `<div class="ph-art-3d">${ICONS.img(kind === "project" ? "apartment" : "house")}</div>`;
+  }
 
 
   const $ = (sel, el = document) => el.querySelector(sel);
@@ -1037,10 +736,8 @@
     return `${esc(item.propertyType || item.type)}　·　${esc(item.layout)}　·　${item.ping} 坪`;
   }
   function catIcon(cat) {
-    if (cat === "廠房") return ICONS.svg("factory");
-    if (cat === "土地") return ICONS.svg("land");
-    if (cat === "店面・辦公") return ICONS.svg("reno");
-    return "";
+    const map = { "一房": "house", "兩房": "house", "三房": "apartment", "四房以上": "apartment", "店面・辦公": "shop", "廠房": "factory", "土地": "land" };
+    return map[cat] ? ICONS.img(map[cat]) : "";
   }
   const consentBlock = () => `
     <div class="consent">
@@ -1129,9 +826,9 @@ ${esc(LEGAL_NOTICE)}</div>
 
   function intentSwitch() {
     return `<div class="intent-switch" role="tablist" aria-label="需求類型">
-      <button type="button" data-intent="buy" class="${formIntent === "buy" ? "on" : ""}">我想買房</button>
-      <button type="button" data-intent="sell" class="${formIntent === "sell" ? "on" : ""}">我想賣房、出租</button>
-      <button type="button" data-intent="rent" class="${formIntent === "rent" ? "on" : ""}">我想租房</button>
+      <button type="button" data-intent="buy" class="${formIntent === "buy" ? "on" : ""}">${ICONS.img("house")}我想買房</button>
+      <button type="button" data-intent="sell" class="${formIntent === "sell" ? "on" : ""}">${ICONS.img("key")}我想賣房、出租</button>
+      <button type="button" data-intent="rent" class="${formIntent === "rent" ? "on" : ""}">${ICONS.img("chat")}我想租房</button>
     </div>`;
   }
 
@@ -1148,7 +845,7 @@ ${esc(LEGAL_NOTICE)}</div>
           <p class="sub">以下皆為<b>範例物件</b>，僅供版面示範，非正式委託案。土地與廠房也都可以找我問。</p>
         </div>
         <div class="deal-toggle" role="tablist" aria-label="出售或出租">
-          ${["全部", "出售", "出租"].map(d => `<button type="button" data-deal="${d}" class="${listingDeal === d ? "on" : ""}">${d}</button>`).join("")}
+          ${["全部", "出售", "出租"].map(d => `<button type="button" data-deal="${d}" class="${listingDeal === d ? "on" : ""}">${d === "出租" ? ICONS.img("key") : d === "出售" ? ICONS.img("house") : ""}${d}</button>`).join("")}
         </div>
         <div class="cat-chips" role="tablist" aria-label="物件類型">
           ${LISTING_CATS.map(c => `<button type="button" data-cat="${c}" class="${listingCat === c ? "on" : ""}">${catIcon(c)}${c}${c !== "全部" ? ` ${counts[c]}` : ""}</button>`).join("")}
@@ -1177,7 +874,6 @@ ${esc(LEGAL_NOTICE)}</div>
     return `
       <header class="hero">
         <div class="hero-texture"></div>
-        ${SKYLINE}
         <div class="hero-inner">
           <div class="hero-photo"><img src="${esc(CONFIG.photo)}" alt="${esc(CONFIG.agentName)}" width="118" height="118" /></div>
           <div class="team">${esc(CONFIG.team)}</div>
@@ -1198,6 +894,7 @@ ${esc(LEGAL_NOTICE)}</div>
             <a href="#/rent">我想租房</a>
           </div>
         </div>
+        <div class="hero-diorama" aria-hidden="true"><img src="icons/hero.webp" alt="" width="1280" height="783" /></div>
       </header>
 
       <div class="hero-legal-wrap band-cream band-linen">
