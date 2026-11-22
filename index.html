@@ -321,7 +321,7 @@ h1,h2,h3,h4{font-weight:400}
 .sticker--b{right:2%;bottom:8%;transform:rotate(5deg);background:var(--coral);color:#fff}
 .hood__float{position:absolute;z-index:2;width:76px;filter:drop-shadow(0 10px 10px rgb(0 0 0/.18));animation:bob 5s ease-in-out infinite}
 .hood__float--1{right:6%;top:2%}
-.hood__float--2{left:6%;bottom:4%;animation-delay:-2.5s}
+.hood__float--2{left:12%;bottom:4%;animation-delay:-2.5s}
 @keyframes bob{50%{transform:translateY(-8px) rotate(4deg)}}
 .wave{display:block;width:100%;height:36px}
 .wave-wrap--legal{color:var(--primary);margin-bottom:-1px}
@@ -377,6 +377,64 @@ h1,h2,h3,h4{font-weight:400}
 .totop{border:2px solid var(--foreground);box-shadow:0 4px 0 var(--foreground)}
 .totop:active{transform:translateY(2px);box-shadow:0 2px 0 var(--foreground)}
 
+.hood__art{perspective:900px}
+.town{position:relative;z-index:1;transform-style:preserve-3d;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .25s ease-out;will-change:transform}
+.town .hood__diorama{display:block;transition:filter .6s ease}
+.town__pop{position:absolute;z-index:2;inset:0;background:url(icons/hero-base.webp) 0 0/100% 100% no-repeat;pointer-events:none;opacity:0}
+.town__pop.is-pop{opacity:1;animation:pop .62s cubic-bezier(.3,1.6,.5,1)}
+.town__pop--flag.is-pop{animation:wave .9s ease-in-out}
+@keyframes pop{0%{transform:none}30%{transform:translateY(-4.5%) scale(1.05,.97)}55%{transform:translateY(0) scale(.97,1.03)}80%{transform:translateY(-1%)}100%{transform:none}}
+@keyframes wave{0%,100%{transform:none}20%{transform:skewY(-6deg)}45%{transform:skewY(5deg)}70%{transform:skewY(-3deg)}}
+.town__hot{position:absolute;z-index:5;background:transparent;border:0;border-radius:18px;cursor:pointer;padding:0;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.town__hot:focus-visible,.town__walker:focus-visible,.hood__float:focus-visible,.town__sun:focus-visible,.town__pause:focus-visible{outline:3px dashed var(--primary);outline-offset:2px}
+.town__walker{position:absolute;z-index:4;padding:0;border:0;background:none;cursor:pointer;animation:walk 9s linear infinite;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.town__walker img{display:block;width:100%;height:auto;animation:step .45s ease-in-out infinite alternate;filter:drop-shadow(0 4px 3px rgb(60 40 0/.25))}
+@keyframes walk{0%{translate:-14% 14%;opacity:0}8%{opacity:1}50%{translate:12% -12%}62%{translate:14% -14%}88%{opacity:1}100%{translate:34% -33%;opacity:0}}
+@keyframes step{to{transform:translateY(-3%) rotate(1.5deg)}}
+.town__walker.is-hop img{animation:hop .5s ease-out}
+@keyframes hop{40%{transform:translateY(-16%)}}
+.town__glows{position:absolute;z-index:3;inset:0;pointer-events:none}
+.town__glow{position:absolute;width:5.5%;aspect-ratio:1;translate:-50% -50%;border-radius:50%;background:radial-gradient(circle,#FFE79A 0 18%,rgb(255 214 110/.55) 40%,transparent 70%);mix-blend-mode:screen;opacity:0;transition:opacity .5s ease var(--d)}
+.town__say{position:absolute;z-index:9;translate:-50% calc(-100% - 10px);background:#fff;color:var(--foreground);border:2px solid var(--foreground);border-radius:16px;padding:8px 12px;font-weight:700;font-size:14px;line-height:1.35;white-space:nowrap;box-shadow:3px 3px 0 var(--foreground);animation:say .25s ease-out}
+.town__say::after{content:"";position:absolute;left:50%;bottom:-8px;width:12px;height:12px;background:#fff;border:solid var(--foreground);border-width:0 2px 2px 0;translate:-50% 0;rotate:45deg}
+.town__say.is-below{translate:-50% 12px}
+.town__say.is-below::after{bottom:auto;top:-8px;border-width:2px 0 0 2px}
+.town__say a{display:inline-flex;align-items:center;min-height:32px;margin-left:6px;color:var(--primary);text-decoration:underline;text-underline-offset:3px}
+@keyframes say{from{opacity:0;transform:translateY(6px) scale(.9)}}
+.town__sun{border:0;padding:0;cursor:pointer;transition:background-color .6s ease;-webkit-tap-highlight-color:transparent}
+.town__moon{position:absolute;right:12%;bottom:12%;width:34px;height:34px;border-radius:50%;box-shadow:-8px 6px 0 0 #FFE9A8;opacity:0;transition:opacity .6s}
+.sticker{animation:drift 6s ease-in-out infinite}
+.sticker--b{animation-delay:-3s}
+@keyframes drift{50%{translate:0 -6px}}
+.hood__float{border:0;background:none;padding:0;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.hood__float img{display:block;width:100%;height:auto}
+.hood__blob.town__sun{position:absolute}
+.hood__float.is-spin img{animation:spin .5s ease-out}
+@keyframes spin{to{transform:rotate(360deg) scale(1.1)}}
+.town__pause{position:absolute;z-index:5;left:0;bottom:0;width:32px;height:32px;display:grid;place-items:center;border-radius:50%;border:2px solid var(--foreground);background:#fff;color:var(--foreground);cursor:pointer;opacity:.75}
+.town__pause:hover{opacity:1}
+.town__pause .p2{display:none}.town__pause[aria-pressed="true"] .p1{display:none}.town__pause[aria-pressed="true"] .p2{display:block}
+.town__party{position:absolute;inset:0;z-index:7;pointer-events:none;overflow:visible}
+.town__party i{position:absolute;left:50%;top:40%;width:10px;height:14px;border-radius:3px;animation:conf 1.6s cubic-bezier(.2,.7,.4,1) forwards}
+@keyframes conf{0%{transform:translate(0,0) rotate(0);opacity:1}100%{transform:translate(var(--x),var(--y)) rotate(var(--r));opacity:0}}
+.town__banner{position:absolute;z-index:8;left:50%;top:38%;translate:-50% -50%;background:var(--coral);color:#fff;border:3px solid var(--foreground);border-radius:22px;padding:12px 22px;font-family:var(--font-display);font-size:clamp(22px,5vw,32px);box-shadow:5px 5px 0 var(--foreground);white-space:nowrap;animation:say .35s cubic-bezier(.3,1.6,.5,1)}
+.town__banner small{display:block;font-family:var(--font-body);font-size:14px;font-weight:700;color:#FFE9A8}
+[data-town].is-paused *,[data-town].is-paused{animation-play-state:paused!important}
+[data-town].is-paused .town__say,[data-town].is-paused .town__banner,[data-town].is-paused .town__pop,[data-town].is-paused .town__party i,[data-town].is-paused .is-spin img,[data-town].is-paused .is-hop img{animation-play-state:running!important}
+[data-town].is-night .town__sun{background:#1F3557}
+[data-town].is-night .town__moon{opacity:1}
+[data-town].is-night .hood__diorama{filter:brightness(.55) saturate(.75) hue-rotate(-12deg) drop-shadow(0 18px 16px rgb(0 0 30/.4))}
+[data-town].is-night .town__pop{filter:brightness(.55) saturate(.75) hue-rotate(-12deg)}
+[data-town].is-night .town__glow{opacity:1}
+[data-town].is-night .town__walker img{filter:brightness(.7) drop-shadow(0 4px 3px rgb(0 0 0/.3))}
+@media (prefers-reduced-motion:reduce){
+ .town{transition:none;transform:none!important}
+ .town__walker,.town__walker img,.sticker,.hood__float,.hood__blob{animation:none!important}
+ .town__walker{translate:none;opacity:1}
+ .town__pop.is-pop{animation:none!important}
+ .town__pause{display:none}
+}
+
 </style>
 <script>document.documentElement.classList.add('js');</script>
 </head>
@@ -421,13 +479,26 @@ h1,h2,h3,h4{font-weight:400}
   <a href="#form" data-go-intent="rent">我想租房</a>
 </nav>
     </div>
-    <div class="hood__art" aria-hidden="true">
-      <div class="hood__blob"></div>
-      <img class="hood__diorama" src="icons/hero.webp" alt="" width="1280" height="783" fetchpriority="high">
-      <span class="sticker sticker--a">服務區域：桃園</span>
-      <span class="sticker sticker--b">買賣 · 出租</span>
-      <img class="hood__float hood__float--1" src="icons/key.webp" alt="" width="90" height="90">
-      <img class="hood__float hood__float--2" src="icons/chat.webp" alt="" width="90" height="90">
+    <div class="hood__art" data-town role="group" aria-label="互動小鎮：點點房子、旗子、鑰匙試試看（有彩蛋）">
+      <button type="button" class="hood__blob town__sun" data-sun aria-label="切換白天／夜晚" aria-pressed="false"><span class="town__moon" aria-hidden="true"></span></button>
+      <div class="town" data-tilt>
+        <img class="hood__diorama" src="icons/hero-base.webp" alt="" width="1280" height="783" fetchpriority="high">
+        <div class="town__glows" aria-hidden="true"><span class="town__glow" style="left:12.11%;top:33.46%;--d:0ms"></span><span class="town__glow" style="left:14.84%;top:46.62%;--d:90ms"></span><span class="town__glow" style="left:23.44%;top:44.06%;--d:180ms"></span><span class="town__glow" style="left:36.56%;top:13.03%;--d:270ms"></span><span class="town__glow" style="left:41.41%;top:11.75%;--d:360ms"></span><span class="town__glow" style="left:36.72%;top:21.71%;--d:0ms"></span><span class="town__glow" style="left:41.56%;top:20.69%;--d:90ms"></span><span class="town__glow" style="left:44.22%;top:27.33%;--d:180ms"></span><span class="town__glow" style="left:44.22%;top:19.16%;--d:270ms"></span><span class="town__glow" style="left:36.09%;top:30.14%;--d:360ms"></span><span class="town__glow" style="left:60.94%;top:31.93%;--d:0ms"></span><span class="town__glow" style="left:70.70%;top:30.40%;--d:90ms"></span><span class="town__glow" style="left:79.30%;top:45.98%;--d:180ms"></span><span class="town__glow" style="left:89.06%;top:44.96%;--d:270ms"></span><span class="town__glow" style="left:31.09%;top:59.77%;--d:360ms"></span><span class="town__glow" style="left:37.66%;top:57.73%;--d:0ms"></span><span class="town__glow" style="left:59.38%;top:47.25%;--d:90ms"></span></div>
+        <span class="town__pop" data-pop="house" style="clip-path:polygon(6.88% 29.12%,19.14% 16.86%,26.95% 30.65%,26.95% 54.28%,19.92% 57.22%,7.19% 52.62%);transform-origin:16.80% 56.19%" aria-hidden="true"></span><span class="town__pop" data-pop="apt" style="clip-path:polygon(29.06% 31.29%,33.59% 1.92%,43.75% 1.02%,47.34% 13.79%,50.39% 32.18%,43.75% 39.85%,34.38% 38.57%);transform-origin:39.45% 39.59%" aria-hidden="true"></span><span class="town__pop" data-pop="shop1" style="clip-path:polygon(55.31% 21.97%,57.42% 11.24%,64.84% 7.66%,74.06% 15.07%,74.38% 42.15%,67.19% 45.72%,54.53% 38.57%);transform-origin:64.84% 45.34%" aria-hidden="true"></span><span class="town__pop" data-pop="shop2" style="clip-path:polygon(73.28% 31.93%,75.16% 27.08%,82.97% 22.99%,92.81% 29.89%,93.12% 55.17%,87.50% 60.54%,72.27% 53.90%);transform-origin:82.81% 60.03%" aria-hidden="true"></span><span class="town__pop" data-pop="cottage" style="clip-path:polygon(25.16% 51.09%,31.25% 42.40%,39.69% 41.63%,41.56% 49.81%,41.56% 66.67%,35.16% 70.24%,25.62% 65.39%);transform-origin:33.59% 69.60%" aria-hidden="true"></span>
+        <span class="town__pop town__pop--flag" data-pop="flag" style="clip-path:polygon(63.44% 53.64%,72.27% 56.19%,72.27% 66.41%,66.02% 66.41%,66.02% 74.71%,63.44% 74.71%);transform-origin:64.69% 74.07%" aria-hidden="true"></span>
+        <button type="button" class="town__walker" data-walker style="left:46.95%;top:51.98%;width:9.53%;height:21.46%" aria-label="拿著鑰匙的津銓（點我）"><img src="icons/hero-walker.webp" alt="" width="122" height="168"></button>
+        <button type="button" class="town__hot" data-bld="house" data-word="透天" data-cat="四房以上" style="left:7.42%;top:17.88%;width:19.53%;height:38.31%" aria-label="透天厝（看四房以上範例物件）"></button><button type="button" class="town__hot" data-bld="apt" data-word="華廈" data-cat="三房" style="left:29.69%;top:1.53%;width:20.31%;height:37.42%" aria-label="華廈大樓（看三房範例物件）"></button><button type="button" class="town__hot" data-bld="shop1" data-word="店面" data-cat="店面・辦公" style="left:55.62%;top:7.92%;width:18.44%;height:36.78%" aria-label="店面（看店面・辦公範例物件）"></button><button type="button" class="town__hot" data-bld="shop2" data-word="店面" data-cat="店面・辦公" style="left:73.59%;top:23.24%;width:19.22%;height:36.78%" aria-label="店面（看店面・辦公範例物件）"></button><button type="button" class="town__hot" data-bld="cottage" data-word="廠房・倉庫" data-cat="廠房" style="left:25.78%;top:42.78%;width:15.47%;height:26.82%" aria-label="平房小廠（看廠房範例物件）"></button>
+        <button type="button" class="town__hot town__hot--flag" data-flag style="left:63.44%;top:53.64%;width:8.83%;height:21.07%" aria-label="小旗子（點我）"></button>
+      </div>
+      <span class="sticker sticker--a" aria-hidden="true">服務區域：桃園</span>
+      <span class="sticker sticker--b" aria-hidden="true">買賣 · 出租</span>
+      <button type="button" class="hood__float hood__float--1" data-key aria-label="金鑰匙（連點有驚喜）"><img src="icons/key.webp" alt="" width="90" height="90"></button>
+      <button type="button" class="hood__float hood__float--2" data-chat aria-label="手機：用 LINE 聊聊"><img src="icons/chat.webp" alt="" width="90" height="90"></button>
+      <button type="button" class="town__pause" data-town-pause aria-pressed="false" aria-label="暫停小鎮動畫"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path class="p1" d="M8 5v14M16 5v14" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/><path class="p2" d="M7 5l12 7-12 7z" fill="currentColor"/></svg></button>
+      <div class="town__say" data-say role="status" aria-live="polite" hidden></div>
+      <div class="town__party" data-party aria-hidden="true"></div>
+      <p class="town__banner" data-banner role="status" aria-live="assertive" hidden></p>
+      <a hidden data-line-href href="https://line.me/R/ti/p/@652ddpuz"></a>
     </div>
   </div>
 </section>
@@ -883,7 +954,7 @@ $$("[data-line-send]").forEach(function(a){a.addEventListener("click",function()
 setTimeout(function(){
   if(!document.getAnimations)return;
   document.getAnimations().forEach(function(a){
-    try{var t=a.effect.getComputedTiming(); if(t.iterations!==Infinity)return;
+    try{if(a.effect.target&&a.effect.target.closest&&a.effect.target.closest('[data-town]'))return;var t=a.effect.getComputedTiming(); if(t.iterations!==Infinity)return;
       var dur=t.duration, cur=t.currentIteration||0; a.effect.updateTiming({iterations:cur+1});
       var left=(cur+1)*dur-(t.localTime||0); if(left>2500)a.updatePlaybackRate(left/2500);}catch(e){}
   });
@@ -921,6 +992,96 @@ if(!reduce && "IntersectionObserver" in window){
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}})},{threshold:.12,rootMargin:"0px 0px -30px 0px"});
   $$(".reveal").forEach(function(n,i){n.style.setProperty("--d",(i%4)*70+"ms");io.observe(n)});
 }
+})();
+
+
+(function(){
+var art=document.querySelector("[data-town]"); if(!art)return;
+var q=function(s){return art.querySelector(s)}, qa=function(s){return Array.prototype.slice.call(art.querySelectorAll(s))};
+var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var town=q(".town"), say=q("[data-say]"), sayT;
+function pct(el){var r=el.getBoundingClientRect(), t=art.getBoundingClientRect(); return [((r.left+r.width/2)-t.left)/t.width*100, ((r.top+r.height*0.35)-t.top)/t.height*100];}
+function bubble(el,html,ms){
+  var p=pct(el); say.innerHTML=html; say.hidden=false;
+  var x=Math.min(Math.max(p[0],18),82), below=p[1]<20;
+  say.classList.toggle("is-below",below);
+  say.style.left=x+"%"; say.style.top=(below?Math.max(p[1],4)+8:p[1])+"%";
+  say.style.animation="none"; void say.offsetWidth; say.style.animation="";
+  clearTimeout(sayT); sayT=setTimeout(hideSay,ms||3800);
+}
+function hideSay(){ if(say.contains(document.activeElement)||say.matches(":hover")){sayT=setTimeout(hideSay,1500);return;} say.hidden=true; }
+function pop(id){ var p=q('[data-pop="'+id+'"]'); if(!p)return; p.classList.remove("is-pop"); void p.offsetWidth; p.classList.add("is-pop"); setTimeout(function(){p.classList.remove("is-pop")},950); }
+/* buildings -> bounce + bubble + filter link */
+qa("[data-bld]").forEach(function(b){
+  b.addEventListener("click",function(){
+    pop(b.dataset.bld);
+    bubble(b,b.dataset.word+'！<a href="#listings" data-go="'+b.dataset.cat+'">看物件 →</a>',4500);
+  });
+});
+say.addEventListener("click",function(e){
+  var a=e.target.closest("[data-go]"); if(!a)return; e.preventDefault();
+  var chip=document.querySelector('.fchip[data-cat="'+a.dataset.go+'"]'); if(chip)chip.click();
+  var sec=document.getElementById("listings"); say.hidden=true;
+  if(sec){sec.scrollIntoView({behavior:reduce?"auto":"smooth"}); history.replaceState(null,"","#listings"); var h=sec.querySelector("h2"); if(h){h.tabIndex=-1;h.focus({preventScroll:true});}}
+});
+/* flag */
+q("[data-flag]").addEventListener("click",function(){ pop("flag"); bubble(this,"津銓在這裡！📍"); });
+/* key x5 -> confetti */
+var taps=0, tapT;
+function keyTap(el){
+  taps++; clearTimeout(tapT); tapT=setTimeout(function(){taps=0},2500);
+  if(taps>=5){ taps=0; party(); return; }
+  bubble(el, taps===1?"叮！":"叮！".repeat(Math.min(taps,3))+"（"+taps+"/5）",1600);
+}
+var keyBtn=q("[data-key]");
+keyBtn.addEventListener("click",function(){ keyBtn.classList.remove("is-spin"); void keyBtn.offsetWidth; keyBtn.classList.add("is-spin"); keyTap(q("[data-walker]")); });
+var walker=q("[data-walker]");
+walker.addEventListener("click",function(){
+  walker.classList.remove("is-hop"); void walker.offsetWidth; walker.classList.add("is-hop");
+  if(taps===0) bubble(walker,"帶著鑰匙，陪您去看房～",2600); keyTap(walker);
+});
+var colors=["#FFC94A","#C9472C","#0B6E6E","#8FB573","#FFFFFF","#F29E8E"];
+function party(){
+  var box=q("[data-party]"), ban=q("[data-banner]");
+  say.hidden=true;
+  ban.innerHTML="恭喜交屋！<small>鑰匙交到您手上囉 — 許津銓</small>"; ban.hidden=false;
+  if(!reduce){
+    box.innerHTML="";
+    for(var i=0;i<46;i++){var c=document.createElement("i"); var a=Math.random()*Math.PI*2, d=120+Math.random()*220;
+      c.style.background=colors[i%colors.length]; c.style.setProperty("--x",Math.cos(a)*d+"px"); c.style.setProperty("--y",(Math.sin(a)*d-40+Math.random()*120)+"px");
+      c.style.setProperty("--r",(Math.random()*720-360)+"deg"); c.style.animationDelay=(Math.random()*120)+"ms"; box.appendChild(c);}
+    setTimeout(function(){box.innerHTML=""},1900);
+  }
+  setTimeout(function(){ban.hidden=true},3200);
+}
+/* phone -> LINE prompt */
+q("[data-chat]").addEventListener("click",function(){
+  var href=q("[data-line-href]").getAttribute("href");
+  bubble(this,'想直接聊？<a href="'+href+'" target="_blank" rel="noopener">加官方 LINE →</a>',6000);
+});
+/* sun -> day/night */
+var sun=q("[data-sun]");
+sun.addEventListener("click",function(){
+  var on=art.classList.toggle("is-night"); sun.setAttribute("aria-pressed",on);
+  bubble(sun,on?"晚安桃園，燈都亮了 🌙":"早安！太陽出來囉 ☀️",2600);
+});
+/* pause (WCAG 2.2.2) + pause offscreen */
+var pause=q("[data-town-pause]"), userPaused=false;
+pause.addEventListener("click",function(){ userPaused=!userPaused; art.classList.toggle("is-paused",userPaused); pause.setAttribute("aria-pressed",userPaused); pause.setAttribute("aria-label",userPaused?"播放小鎮動畫":"暫停小鎮動畫"); });
+if("IntersectionObserver" in window){ new IntersectionObserver(function(es){ art.classList.toggle("is-paused",userPaused||!es[0].isIntersecting); }).observe(art); }
+/* parallax tilt: pointer / gyro (subtle) */
+if(!reduce){
+  var raf=0, tx=0, ty=0;
+  function apply(){ raf=0; if(userPaused){tx=ty=0;} town.style.setProperty("--rx",(-ty*6).toFixed(2)+"deg"); town.style.setProperty("--ry",(tx*8).toFixed(2)+"deg"); }
+  function set(x,y){ tx=Math.max(-1,Math.min(1,x)); ty=Math.max(-1,Math.min(1,y)); if(!raf)raf=requestAnimationFrame(apply); }
+  art.addEventListener("pointermove",function(e){ if(e.pointerType!=="mouse")return; var r=art.getBoundingClientRect(); set((e.clientX-r.left)/r.width*2-1,(e.clientY-r.top)/r.height*2-1); });
+  art.addEventListener("pointerleave",function(){ set(0,0); });
+  if(window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission!=="function"){
+    var base=null;
+    addEventListener("deviceorientation",function(e){ if(e.beta==null)return; if(!base)base=[e.beta,e.gamma]; set((e.gamma-base[1])/25,(e.beta-base[0])/25); },{passive:true});
+  }
+}
+addEventListener("keydown",function(e){ if(e.key==="Escape"&&!say.hidden){say.hidden=true;} });
 })();
 
 </script>
