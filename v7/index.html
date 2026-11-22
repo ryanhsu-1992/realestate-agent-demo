@@ -394,57 +394,24 @@ h1,h2,h3,h4{font-weight:400}
 @keyframes pop{0%{transform:none;animation-timing-function:cubic-bezier(.3,0,.5,1)}14%{transform:scale(1.05,.93);animation-timing-function:cubic-bezier(.2,.8,.4,1)}42%{transform:translateY(-5%) scale(.96,1.06);animation-timing-function:cubic-bezier(.6,0,.8,.4)}64%{transform:scale(1.05,.94);animation-timing-function:cubic-bezier(.3,0,.5,1)}82%{transform:translateY(-.8%) scale(.99,1.015)}100%{transform:none}}
 @keyframes flagbig{0%,100%{transform:none}20%{transform:skewY(-7deg) scaleX(.94)}45%{transform:skewY(5deg)}70%{transform:skewY(-3deg)}}
 .town__hot{position:absolute;z-index:5;background:transparent;border:0;border-radius:18px;cursor:pointer;padding:0;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-.town__hot:focus-visible,.town__walker:focus-visible,.town__keyprop:focus-visible,.hood__float:focus-visible,.town__sun:focus-visible,.town__pause:focus-visible{outline:3px dashed var(--primary);outline-offset:2px}
+.town__hot:focus-visible,.town__walker:focus-visible,.hood__float:focus-visible,.town__sun:focus-visible,.town__pause:focus-visible{outline:3px dashed var(--primary);outline-offset:2px}
 /* walker (rigged SVG, driven by JS) */
-.town__walker{position:absolute;left:0;top:0;z-index:4;width:7%;padding:0;border:0;background:none;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;will-change:transform}
-.town__walker .w{display:block;width:100%;height:auto;overflow:visible}
-.w.is-flip{transform:scaleX(-1)}
-.w .w-front{display:none}.w.is-front .w-front{display:inline}.w.is-front .w-back{display:none}
-.w-thigh,.w-shin,.w-arm,.w-up{animation-duration:.96s;animation-timing-function:linear;animation-iteration-count:infinite;animation-play-state:paused}
-.w-leg--near .w-thigh{animation-name:thigh}
-.w-leg--near .w-shin{animation-name:shin}
-.w-leg--far .w-thigh{animation-name:thigh;animation-delay:-.48s}
-.w-leg--far .w-shin{animation-name:shin;animation-delay:-.48s}
-.w-arm--near{transform-origin:-7px -51px;animation-name:arm}
-.w-arm--far{transform-origin:7.7px -51px;animation-name:arm;animation-delay:-.48s}
-.w-up{animation-name:wbob}
-.w-head{transform-origin:1px -57px;transition:transform .5s cubic-bezier(.22,1,.36,1)}
-.w.is-look .w-head{transform:rotate(-7deg)}
-@keyframes thigh{0%{transform:rotate(-24deg);animation-timing-function:cubic-bezier(.45,0,.55,1)}50%{transform:rotate(20deg);animation-timing-function:cubic-bezier(.3,0,.4,1)}100%{transform:rotate(-24deg)}}
-@keyframes shin{0%{transform:rotate(4deg)}20%{transform:rotate(2deg)}45%{transform:rotate(12deg)}62%{transform:rotate(46deg)}82%{transform:rotate(22deg)}100%{transform:rotate(4deg)}}
-@keyframes arm{0%{transform:rotate(22deg)}50%{transform:rotate(-20deg)}100%{transform:rotate(22deg)}}
-@keyframes wbob{0%,50%,100%{transform:translateY(.6px)}25%,75%{transform:translateY(-1.8px)}}
-.w.is-wave .w-arm--near{animation:wave .5s ease-in-out infinite alternate!important;animation-play-state:running!important}
-@keyframes wave{0%{transform:rotate(-140deg)}100%{transform:rotate(-170deg)}}
-.town__walker.is-hop .w{animation:hop .55s linear}
-@keyframes hop{0%{translate:0 0;scale:1 1}15%{scale:1.08 .9;translate:0 2%}45%{translate:0 -16%;scale:.95 1.06}70%{translate:0 0;scale:1.06 .94}100%{translate:0 0;scale:1 1}}
+.town__walker{position:absolute;left:0;top:0;z-index:4;width:7.07%;padding:0;border:0;background:none;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;will-change:transform}
+/* walker: frame-based clay sprite (20 frames) */
+.town__walker::before{content:"";position:absolute;left:30%;right:30%;bottom:.4%;height:4.5%;border-radius:50%;background:radial-gradient(closest-side,rgb(52 60 24/.38),rgb(52 60 24/0))}
+.town__walker .w{position:relative;display:block;width:100%;aspect-ratio:144/234;background:url(../icons/walker-sprite.webp) 0 0/2000% 100% no-repeat;transform-origin:50% 98%}
+.town__walker .w.is-flip{transform:scaleX(-1)}
+.town__walker .w.is-tilt{transform:rotate(-4deg)}
+.town__walker .w.is-flip.is-tilt{transform:scaleX(-1) rotate(-4deg)}
+.town__walker.is-hop .w{animation:whop .6s linear}
+@keyframes whop{0%{translate:0 0}15%{translate:0 3%}50%{translate:0 -14%}80%{translate:0 0}100%{translate:0 0}}
 /* clay key pedestal */
-.town__keyprop{position:absolute;z-index:5;padding:0;border:0;background:none;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-.town__keyprop::before{content:"";position:absolute;inset:-22% -30% -8%}
-.town__keyprop img{display:block;width:100%;height:auto;transform-origin:50% 92%;filter:drop-shadow(0 3px 2px rgb(70 60 10/.22))}
-.town__keyprop.is-jig img{animation:jig .6s linear}
+.hood__float.is-jig img{animation:jig .6s linear}
 @keyframes jig{0%{transform:none}15%{transform:scale(1.06,.92)}40%{transform:translateY(-7%) scale(.95,1.07) rotate(-4deg)}62%{transform:scale(1.04,.95) rotate(2deg)}82%{transform:rotate(-1deg)}100%{transform:none}}
 /* glows, smoke, sky */
 .town__glows{position:absolute;z-index:3;inset:0;pointer-events:none}
 .town__glow,.town__glint{position:absolute;width:5.5%;aspect-ratio:1;translate:-50% -50%;border-radius:50%;background:radial-gradient(circle,#FFE79A 0 18%,rgb(255 214 110/.55) 40%,transparent 70%);mix-blend-mode:screen;opacity:0;transition:opacity .6s ease var(--d)}
-.town__glint{width:4%}
-.town__smoke{position:absolute;inset:0;z-index:3;pointer-events:none}
-.town__puff{position:absolute;width:3.6%;aspect-ratio:1;margin:-1.8% 0 0 -1.8%;border-radius:50%;background:radial-gradient(circle at 38% 32%,#fff 0 30%,#E4E8E2 58%,rgb(200 208 200/0) 72%);opacity:0;animation:puff 4.6s cubic-bezier(.25,.6,.4,1) infinite}
-@keyframes puff{0%{transform:translate(0,0) scale(.35);opacity:0}15%{opacity:.85}100%{transform:translate(55%,-420%) scale(1.5);opacity:0}}
-.town__sky{position:absolute;inset:0 0 40% 0;pointer-events:none;overflow:hidden}
-.cloud{position:absolute;width:20%;aspect-ratio:2.4;border-radius:999px;background:radial-gradient(ellipse at 45% 30%,#fff 0 45%,#EEF4F1 75%);box-shadow:0 6px 10px -6px rgb(30 60 50/.18);opacity:.92;animation:cloud 70s linear infinite}
-.cloud::before,.cloud::after{content:"";position:absolute;border-radius:50%;background:inherit}
-.cloud::before{width:46%;aspect-ratio:1;left:14%;top:-34%}.cloud::after{width:34%;aspect-ratio:1;left:48%;top:-22%}
-.cloud--a{top:6%;animation-delay:-20s}.cloud--b{top:22%;width:14%;animation-duration:95s;animation-delay:-70s;opacity:.8}.cloud--c{top:2%;width:11%;animation-duration:120s;animation-delay:-5s;opacity:.7}
-@keyframes cloud{from{transform:translateX(-120%)}to{transform:translateX(620%)}}
-.birds{position:absolute;top:12%;left:0;width:8%;animation:birds 26s linear infinite;animation-delay:-4s}
-.birds svg{width:100%;height:auto;overflow:visible}
-.bw{fill:none;stroke:#3C5A55;stroke-width:1.8;stroke-linecap:round;transform-origin:center;transform-box:fill-box;animation:flap .42s ease-in-out infinite alternate}
-.bw2{animation-delay:-.2s;animation-duration:.38s}
-@keyframes flap{to{transform:scaleY(-.55)}}
-@keyframes birds{0%{transform:translate(-120%,40%);opacity:0}3%{opacity:1}38%{transform:translate(1300%,-60%);opacity:1}40%,100%{transform:translate(1300%,-60%);opacity:0}}
-.star{position:absolute;width:4px;height:4px;border-radius:50%;background:#FFF6D6;opacity:0;transition:opacity .8s}
-@keyframes twinkle{50%{opacity:.25}}
+.hood__float .town__glint{position:absolute;left:50%;top:26%;width:46%;translate:-50% -50%;pointer-events:none}
 /* bubbles */
 .town__say{position:absolute;z-index:9;translate:-50% calc(-100% - 10px);background:#fff;color:var(--foreground);border:2px solid var(--foreground);border-radius:16px;padding:8px 12px;font-weight:700;font-size:14px;line-height:1.35;white-space:nowrap;box-shadow:3px 3px 0 var(--foreground);animation:say .3s cubic-bezier(.22,1,.36,1)}
 .town__say::after{content:"";position:absolute;left:50%;bottom:-8px;width:12px;height:12px;background:#fff;border:solid var(--foreground);border-width:0 2px 2px 0;translate:-50% 0;rotate:45deg}
@@ -453,12 +420,11 @@ h1,h2,h3,h4{font-weight:400}
 .town__say a{display:inline-flex;align-items:center;min-height:32px;margin-left:6px;color:var(--primary);text-decoration:underline;text-underline-offset:3px}
 @keyframes say{from{opacity:0;transform:translateY(6px) scale(.9)}}
 .town__sun{border:0;padding:0;cursor:pointer;transition:background-color .8s ease;-webkit-tap-highlight-color:transparent}
-.town__moon{position:absolute;right:12%;bottom:12%;width:34px;height:34px;border-radius:50%;box-shadow:-8px 6px 0 0 #FFE9A8;opacity:0;transition:opacity .8s}
 .sticker{animation:drift 6.4s cubic-bezier(.45,0,.55,1) infinite;transition:filter .8s}
 .sticker--b{animation-duration:7.3s;animation-delay:-3s}
 @keyframes drift{50%{translate:0 -6px}}
 .hood__float{border:0;background:none;padding:0;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:filter .8s}
-.hood__float img{display:block;width:100%;height:auto}
+.hood__float img{display:block;width:100%;height:auto;transform-origin:50% 90%}
 .hood__blob.town__sun{position:absolute}
 .town__pause{position:absolute;z-index:6;left:0;bottom:0;width:32px;height:32px;display:grid;place-items:center;border-radius:50%;border:2px solid var(--foreground);background:#fff;color:var(--foreground);cursor:pointer;opacity:.75}
 .town__pause:hover{opacity:1}
@@ -472,22 +438,16 @@ h1,h2,h3,h4{font-weight:400}
 [data-town].is-paused .town__say,[data-town].is-paused .town__banner,[data-town].is-paused .town__pop,[data-town].is-paused .town__party i,[data-town].is-paused .is-jig img,[data-town].is-paused .is-hop .w{animation-play-state:running!important}
 /* night: the whole diorama (incl. key pedestal, walker) shares one filter */
 [data-town].is-night .town__sun{background:#1F3557}
-[data-town].is-night .town__moon{opacity:1}
 [data-town].is-night .town__scene{filter:brightness(.56) saturate(.72) hue-rotate(-14deg)}
 [data-town].is-night .town__glow{opacity:1;animation:flick var(--t) ease-in-out infinite alternate}
 [data-town].is-night .town__glint{opacity:.85;animation:glint 2.4s ease-in-out infinite}
-[data-town].is-night .town__puff{background:radial-gradient(circle at 40% 35%,#B9C3D6,rgb(170 182 205/.6) 55%,rgb(170 182 205/0) 72%)}
-[data-town].is-night .cloud{opacity:.28}
-[data-town].is-night .birds{display:none}
-[data-town].is-night .star{opacity:1;animation:twinkle 2.6s ease-in-out infinite}
 [data-town].is-night .sticker{filter:brightness(.86) saturate(.9)}
-[data-town].is-night .hood__float{filter:brightness(.58) saturate(.72) hue-rotate(-14deg)}
+[data-town].is-night .hood__float img{transition:filter .8s;filter:brightness(.58) saturate(.72) hue-rotate(-14deg)}
 @keyframes flick{0%{opacity:1}55%{opacity:.82}70%{opacity:.95}100%{opacity:.88}}
 @keyframes glint{0%,100%{opacity:.35;scale:.8}50%{opacity:.95;scale:1.1}}
 @media (prefers-reduced-motion:reduce){
  .town{transition:none;transform:none!important}
- .town__amb,.sticker,.hood__float,.hood__blob,.cloud,.birds,.bw,.town__puff,.star,.town__glow,.town__glint{animation:none!important}
- .birds,.town__puff{display:none}
+ .town__amb,.sticker,.hood__float,.hood__blob,.town__glow,.town__glint{animation:none!important}
  .town__pop.is-pop,.is-jig img,.is-hop .w{animation:none!important}
  .town__pause{display:none}
 }
@@ -537,53 +497,22 @@ h1,h2,h3,h4{font-weight:400}
 </nav>
     </div>
     <div class="hood__art" data-town role="group" aria-label="互動小鎮：點點房子、旗子、鑰匙試試看（有彩蛋）">
-      <button type="button" class="hood__blob town__sun" data-sun aria-label="切換白天／夜晚" aria-pressed="false"><span class="town__moon" aria-hidden="true"></span></button>
-      <div class="town__sky" aria-hidden="true"><span class="cloud cloud--a"></span><span class="cloud cloud--b"></span><span class="cloud cloud--c"></span>
-        <span class="birds"><svg viewBox="0 0 40 16" width="40" height="16"><path class="bw" d="M2 8q5-6 9 0q4-6 9 0" /><path class="bw bw2" d="M22 5q4-5 7 0q3-5 7 0"/></svg></span>
-        <i class="star" style="left:12%;top:12%"></i><i class="star" style="left:30%;top:4%;animation-delay:-1s"></i><i class="star" style="left:62%;top:7%;animation-delay:-2.1s"></i><i class="star" style="left:84%;top:16%;animation-delay:-.6s"></i><i class="star" style="left:46%;top:14%;animation-delay:-1.6s"></i></div>
+      <button type="button" class="hood__blob town__sun" data-sun aria-label="切換白天／夜晚" aria-pressed="false"></button>
       <div class="town" data-tilt>
         <div class="town__scene">
           <img class="hood__diorama" src="../icons/hero-base.webp" alt="" width="1280" height="783" fetchpriority="high">
           <span class="town__amb town__amb--tree" style="clip-path:polygon(2.34% 32.57%,5.47% 31.29%,8.44% 33.46%,8.75% 44.06%,7.03% 49.17%,3.91% 49.17%,2.34% 43.42%);transform-origin:5.47% 48.53%;animation-duration:4.6s;animation-delay:-1.1s" aria-hidden="true"></span><span class="town__amb town__amb--tree" style="clip-path:polygon(48.44% 12.13%,51.72% 11.24%,54.69% 14.05%,54.84% 26.18%,52.50% 33.46%,50.39% 33.46%,48.28% 25.54%);transform-origin:51.56% 32.95%;animation-duration:5.3s;animation-delay:-3.4s" aria-hidden="true"></span><span class="town__amb town__amb--tree" style="clip-path:polygon(44.53% 31.29%,47.27% 30.40%,50.00% 32.57%,50.16% 42.15%,48.05% 46.62%,46.48% 46.62%,44.38% 41.51%);transform-origin:47.27% 45.98%;animation-duration:4.1s;animation-delay:-0.6s" aria-hidden="true"></span><span class="town__amb town__amb--tree" style="clip-path:polygon(92.58% 34.23%,95.47% 33.21%,98.28% 35.76%,98.44% 47.25%,96.25% 52.11%,94.14% 52.11%,92.34% 46.62%);transform-origin:95.31% 51.34%;animation-duration:5.8s;animation-delay:-2.2s" aria-hidden="true"></span><span class="town__amb town__amb--awn" style="clip-path:polygon(55.62% 23.24%,57.42% 17.88%,66.56% 21.71%,66.56% 30.14%,64.84% 30.65%,55.62% 26.56%);transform-origin:60.94% 20.43%;animation-duration:3.3s;animation-delay:-0.9s" aria-hidden="true"></span><span class="town__amb town__amb--awn" style="clip-path:polygon(74.61% 36.02%,76.17% 32.18%,85.62% 36.40%,85.62% 46.62%,83.59% 47.00%,74.61% 40.61%);transform-origin:79.69% 34.48%;animation-duration:3.9s;animation-delay:-2.6s" aria-hidden="true"></span>
           <span class="town__amb town__amb--flag town__pop--flag" data-pop="flag" style="clip-path:polygon(64.77% 54.66%,72.27% 56.96%,70.78% 61.05%,72.03% 65.64%,64.77% 64.62%);transform-origin:64.77% 60.03%" aria-hidden="true"></span>
           <span class="town__pop" data-pop="house" style="clip-path:polygon(6.88% 29.12%,19.14% 16.86%,26.95% 30.65%,26.95% 54.28%,19.92% 57.22%,7.19% 52.62%);transform-origin:16.80% 56.19%" aria-hidden="true"></span><span class="town__pop" data-pop="apt" style="clip-path:polygon(29.06% 31.29%,33.59% 1.92%,43.75% 1.02%,47.34% 13.79%,50.39% 32.18%,43.75% 39.85%,34.38% 38.57%);transform-origin:39.45% 39.59%" aria-hidden="true"></span><span class="town__pop" data-pop="shop1" style="clip-path:polygon(55.31% 21.97%,57.42% 11.24%,64.84% 7.66%,74.06% 15.07%,74.38% 42.15%,67.19% 45.72%,54.53% 38.57%);transform-origin:64.84% 45.34%" aria-hidden="true"></span><span class="town__pop" data-pop="shop2" style="clip-path:polygon(73.28% 31.93%,75.16% 27.08%,82.97% 22.99%,92.81% 29.89%,93.12% 55.17%,87.50% 60.54%,72.27% 53.90%);transform-origin:82.81% 60.03%" aria-hidden="true"></span><span class="town__pop" data-pop="cottage" style="clip-path:polygon(25.16% 51.09%,31.25% 42.40%,39.69% 41.63%,41.56% 49.81%,41.56% 66.67%,35.16% 70.24%,25.62% 65.39%);transform-origin:33.59% 69.60%" aria-hidden="true"></span>
-          <button type="button" class="town__walker" data-walker aria-label="拿著鑰匙的津銓（點我）"><svg class="w" viewBox="-32 -92 64 96" width="64" height="96" aria-hidden="true" focusable="false">
-<defs>
-<radialGradient id="wgH" cx=".32" cy=".25" r=".9"><stop offset="0" stop-color="#8CC27C"/><stop offset=".55" stop-color="#5E9A55"/><stop offset="1" stop-color="#3F7639"/></radialGradient>
-<linearGradient id="wgP" x1="0" x2="1"><stop offset="0" stop-color="#3D4B6C"/><stop offset="1" stop-color="#252E46"/></linearGradient>
-<radialGradient id="wgR" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#7C543B"/><stop offset="1" stop-color="#3C241A"/></radialGradient>
-<radialGradient id="wgS" cx=".38" cy=".35" r=".8"><stop offset="0" stop-color="#FBDDC2"/><stop offset="1" stop-color="#E2AF88"/></radialGradient>
-</defs>
-<ellipse class="w-sh" cx="0" cy="0" rx="15" ry="4.4" fill="rgb(52 60 24/.28)"/>
-<g class="w-arm w-arm--far"><rect x="3.5" y="-53" width="8.4" height="16" rx="4.2" fill="#3F7639"/><circle cx="7.7" cy="-36.6" r="3.6" fill="#DDA982"/></g>
-<g class="w-leg w-leg--far"><g class="w-thigh" style="transform-origin:4px -30px"><rect x="-0.6" y="-33" width="9.2" height="17" rx="4.6" fill="#232B42"/>
- <g class="w-shin" style="transform-origin:4px -17px"><rect x="-0.2" y="-19" width="8.4" height="16" rx="4.2" fill="#232B42"/><ellipse cx="6.6" cy="-3.4" rx="7" ry="3.9" fill="#D8CFBD"/></g></g></g>
-<g class="w-leg w-leg--near"><g class="w-thigh" style="transform-origin:-4px -30px"><rect x="-8.8" y="-33" width="9.6" height="17" rx="4.8" fill="url(#wgP)"/>
- <g class="w-shin" style="transform-origin:-4px -17px"><rect x="-8.4" y="-19" width="8.8" height="16" rx="4.4" fill="url(#wgP)"/><ellipse cx="-1.4" cy="-3.4" rx="7.4" ry="4.1" fill="#F1EBDF"/><path d="M-8.4 -1.8h14" stroke="#CFC5B2" stroke-width="1.5" stroke-linecap="round"/></g></g></g>
-<g class="w-up">
- <rect x="-12" y="-35" width="24" height="9" rx="4.5" fill="url(#wgP)"/>
- <path d="M-13 -54Q-15.5 -40 -12.5 -29.5Q0 -25.5 12.5 -29.5Q15.5 -40 13 -54Q0 -60 -13 -54Z" fill="url(#wgH)"/>
- <path d="M-12.4 -31.6Q0 -27.8 12.4 -31.6" stroke="#3F7639" stroke-width="2.6" fill="none" stroke-linecap="round"/>
- <g class="w-back"><path d="M-11.5 -56Q-14 -47 -7 -43Q0 -41 6 -44Q9.5 -50 7 -56Z" fill="#4C8746"/></g>
- <g class="w-front"><path d="M2.5 -53L3.8 -31" stroke="#3F7639" stroke-width="1.3"/><path d="M-2 -37Q4 -35 10 -37" stroke="#3F7639" stroke-width="1.6" fill="none"/></g>
- <g class="w-head"><circle cx="1" cy="-71" r="15" fill="url(#wgS)"/>
-  <g class="w-back"><circle cx="1" cy="-71.5" r="15.2" fill="url(#wgR)"/><ellipse cx="-13.4" cy="-69" rx="2.7" ry="3.6" fill="#E8B892"/></g>
-  <g class="w-front"><path d="M-14 -70Q-15 -86 1 -87Q16 -87 16.6 -76Q9 -81 3.5 -77Q-4.5 -79 -7 -72Q-9 -63 -11.5 -61Q-15 -64 -14 -70Z" fill="url(#wgR)"/><ellipse cx="-9.6" cy="-66.5" rx="2.5" ry="3.3" fill="#E8B892"/>
-   <ellipse cx="4.6" cy="-69.5" rx="1.5" ry="1.9" fill="#2B1C14"/><ellipse cx="11.4" cy="-69.5" rx="1.4" ry="1.8" fill="#2B1C14"/>
-   <ellipse cx="2.6" cy="-64.4" rx="2.5" ry="1.4" fill="#F2A08C" opacity=".6"/><path d="M6.8 -63.8q2.3 1.8 4.6 0" stroke="#7A3B2A" stroke-width="1.2" fill="none" stroke-linecap="round"/></g></g>
-</g>
-<g class="w-arm w-arm--near"><rect x="-11.4" y="-53" width="8.8" height="16" rx="4.4" fill="url(#wgH)"/><circle cx="-7" cy="-36.4" r="3.9" fill="url(#wgS)"/>
- <g class="w-key"><circle cx="-7" cy="-32.4" r="2.8" fill="none" stroke="#C9A04A" stroke-width="2"/><rect x="-7.9" y="-30" width="1.9" height="8" rx=".9" fill="#C9A04A"/><rect x="-6.3" y="-24.6" width="2.4" height="1.5" fill="#C9A04A"/></g></g>
-</svg></button>
-          <button type="button" class="town__keyprop" data-key style="left:66.25%;top:65.52%;width:8.91%;height:17.11%" aria-label="金鑰匙（連點有驚喜）"><img src="../icons/key-clay.webp" alt="" width="221" height="260"></button>
+          <button type="button" class="town__walker" data-walker aria-label="拿著鑰匙的津銓（點我）"><span class="w" aria-hidden="true"></span></button>
         </div>
-        <div class="town__glows" aria-hidden="true"><span class="town__glow" style="left:12.11%;top:33.46%;--d:0ms;--t:2.20s" ></span><span class="town__glow" style="left:14.84%;top:46.62%;--d:137ms;--t:2.57s" ></span><span class="town__glow" style="left:23.44%;top:44.06%;--d:274ms;--t:2.94s" ></span><span class="town__glow" style="left:36.56%;top:13.03%;--d:411ms;--t:3.31s" ></span><span class="town__glow" style="left:41.41%;top:11.75%;--d:548ms;--t:3.68s" ></span><span class="town__glow" style="left:36.72%;top:21.71%;--d:685ms;--t:4.05s" ></span><span class="town__glow" style="left:41.56%;top:20.69%;--d:122ms;--t:2.52s" ></span><span class="town__glow" style="left:44.22%;top:27.33%;--d:259ms;--t:2.89s" ></span><span class="town__glow" style="left:44.22%;top:19.16%;--d:396ms;--t:3.26s" ></span><span class="town__glow" style="left:36.09%;top:30.14%;--d:533ms;--t:3.63s" ></span><span class="town__glow" style="left:60.94%;top:31.93%;--d:670ms;--t:4.00s" ></span><span class="town__glow" style="left:70.70%;top:30.40%;--d:107ms;--t:2.47s" ></span><span class="town__glow" style="left:79.30%;top:45.98%;--d:244ms;--t:2.84s" ></span><span class="town__glow" style="left:89.06%;top:44.96%;--d:381ms;--t:3.21s" ></span><span class="town__glow" style="left:31.09%;top:59.77%;--d:518ms;--t:3.58s" ></span><span class="town__glow" style="left:37.66%;top:57.73%;--d:655ms;--t:3.95s" ></span><span class="town__glow" style="left:59.38%;top:47.25%;--d:92ms;--t:2.42s" ></span><span class="town__glint" style="left:71.68%;top:68.43%"></span></div>
-        <div class="town__smoke" aria-hidden="true"><span class="town__puff" style="left:37.81%;top:41.12%;animation-delay:0s"></span><span class="town__puff" style="left:37.81%;top:41.12%;animation-delay:-1.5s"></span><span class="town__puff" style="left:37.81%;top:41.12%;animation-delay:-3s"></span><span class="town__puff" style="left:20.00%;top:21.46%;animation-delay:-0.8s"></span><span class="town__puff" style="left:20.00%;top:21.46%;animation-delay:-2.6s"></span></div>
+        <div class="town__glows" aria-hidden="true"><span class="town__glow" style="left:12.11%;top:33.46%;--d:0ms;--t:2.20s" ></span><span class="town__glow" style="left:14.84%;top:46.62%;--d:137ms;--t:2.57s" ></span><span class="town__glow" style="left:23.44%;top:44.06%;--d:274ms;--t:2.94s" ></span><span class="town__glow" style="left:36.56%;top:13.03%;--d:411ms;--t:3.31s" ></span><span class="town__glow" style="left:41.41%;top:11.75%;--d:548ms;--t:3.68s" ></span><span class="town__glow" style="left:36.72%;top:21.71%;--d:685ms;--t:4.05s" ></span><span class="town__glow" style="left:41.56%;top:20.69%;--d:122ms;--t:2.52s" ></span><span class="town__glow" style="left:44.22%;top:27.33%;--d:259ms;--t:2.89s" ></span><span class="town__glow" style="left:44.22%;top:19.16%;--d:396ms;--t:3.26s" ></span><span class="town__glow" style="left:36.09%;top:30.14%;--d:533ms;--t:3.63s" ></span><span class="town__glow" style="left:60.94%;top:31.93%;--d:670ms;--t:4.00s" ></span><span class="town__glow" style="left:70.70%;top:30.40%;--d:107ms;--t:2.47s" ></span><span class="town__glow" style="left:79.30%;top:45.98%;--d:244ms;--t:2.84s" ></span><span class="town__glow" style="left:89.06%;top:44.96%;--d:381ms;--t:3.21s" ></span><span class="town__glow" style="left:31.09%;top:59.77%;--d:518ms;--t:3.58s" ></span><span class="town__glow" style="left:37.66%;top:57.73%;--d:655ms;--t:3.95s" ></span><span class="town__glow" style="left:59.38%;top:47.25%;--d:92ms;--t:2.42s" ></span></div>
         <button type="button" class="town__hot" data-bld="house" data-word="透天" data-cat="四房以上" style="left:7.42%;top:17.88%;width:19.53%;height:38.31%" aria-label="透天厝（看四房以上範例物件）"></button><button type="button" class="town__hot" data-bld="apt" data-word="華廈" data-cat="三房" style="left:29.69%;top:1.53%;width:20.31%;height:37.42%" aria-label="華廈大樓（看三房範例物件）"></button><button type="button" class="town__hot" data-bld="shop1" data-word="店面" data-cat="店面・辦公" style="left:55.62%;top:7.92%;width:18.44%;height:36.78%" aria-label="店面（看店面・辦公範例物件）"></button><button type="button" class="town__hot" data-bld="shop2" data-word="店面" data-cat="店面・辦公" style="left:73.59%;top:23.24%;width:19.22%;height:36.78%" aria-label="店面（看店面・辦公範例物件）"></button><button type="button" class="town__hot" data-bld="cottage" data-word="廠房・倉庫" data-cat="廠房" style="left:25.78%;top:42.78%;width:15.47%;height:26.82%" aria-label="平房小廠（看廠房範例物件）"></button>
         <button type="button" class="town__hot town__hot--flag" data-flag style="left:63.44%;top:53.64%;width:9.22%;height:11.75%" aria-label="小旗子（點我）"></button>
       </div>
       <span class="sticker sticker--a" aria-hidden="true">服務區域：桃園</span>
       <span class="sticker sticker--b" aria-hidden="true">買賣 · 出租</span>
+      <button type="button" class="hood__float hood__float--1" data-key aria-label="金鑰匙（連點有驚喜）"><img src="../icons/key.webp" alt="" width="90" height="90"><span class="town__glint" aria-hidden="true"></span></button>
       <button type="button" class="hood__float hood__float--2" data-chat aria-label="手機：用 LINE 聊聊"><img src="../icons/chat.webp" alt="" width="90" height="90"></button>
       <button type="button" class="town__pause" data-town-pause aria-pressed="false" aria-label="暫停小鎮動畫"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path class="p1" d="M8 5v14M16 5v14" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/><path class="p2" d="M7 5l12 7-12 7z" fill="currentColor"/></svg></button>
       <div class="town__say" data-say role="status" aria-live="polite" hidden></div>
@@ -1149,54 +1078,50 @@ var pause=q("[data-town-pause]"), userPaused=false, visible=true;
 pause.addEventListener("click",function(){ userPaused=!userPaused; art.classList.toggle("is-paused",userPaused||!visible); pause.setAttribute("aria-pressed",userPaused); pause.setAttribute("aria-label",userPaused?"播放小鎮動畫":"暫停小鎮動畫"); });
 if("IntersectionObserver" in window){ new IntersectionObserver(function(es){ visible=es[0].isIntersecting; art.classList.toggle("is-paused",userPaused||!visible); }).observe(art); }
 
-/* ---------- walker: route along the isometric path, legs driven by distance ---------- */
+/* ---------- walker: frame-based clay sprite following the isometric path ---------- */
 var P=[[522,628],[660,549],[688,474]];
-var CYCLE=960, STRIDE=58, SPEED=52; /* ms per gait cycle, image px per cycle, image px per s */
-var plan=[
-  {walk:[0,1,2]},
-  {idle:2400, look:true},
-  {walk:[2,1,0]},
-  {idle:2000, wave:true}
-];
-var step=0, segT=0, dist=0, pos=P[0].slice(), dir=[1,-1], walking=false, lastTs=0, gaitDist=0;
-function legAnims(){ return svg.getAnimations?svg.getAnimations({subtree:true}).filter(function(a){return a.animationName!=="wave"}):[]; }
-function setGait(ms){ legAnims().forEach(function(a){ try{a.pause(); a.currentTime=ms;}catch(e){} }); }
+var NF=20, STRIDE=42, SPEED=50; /* frames in sheet, image px per 8-frame gait cycle, image px per s */
+var F={back:0,front:8,backStand:16,frontStand:17,wave:18,hop:19};
+var plan=[{walk:[0,1,2],view:"back"},{idle:2600,look:true},{walk:[2,1,0],view:"front"},{idle:2400,wave:true}];
+var step=0, segT=0, pos=P[0].slice(), lastTs=0, gaitDist=0, cur=-1, hopUntil=0, trip=null;
+function show(i){ if(i===cur)return; cur=i; svg.style.backgroundPosition=(i*100/(NF-1)).toFixed(4)+"% 0"; }
 function place(){
-  var s=town.clientWidth/1280, w=walker.offsetWidth, h=w*96/64;
-  walker.style.transform="translate("+(pos[0]*s-w/2).toFixed(1)+"px,"+(pos[1]*s-h*92/96).toFixed(1)+"px)";
+  var s=town.clientWidth/1280, w=walker.offsetWidth, h=w*234/144;
+  walker.style.transform="translate("+(pos[0]*s-w/2).toFixed(1)+"px,"+(pos[1]*s-h*767/780).toFixed(1)+"px)";
 }
-function face(dx,dy){ svg.classList.toggle("is-flip",dx<0); svg.classList.toggle("is-front",dy>0); }
 function polyLen(ids){ var L=0; for(var i=1;i<ids.length;i++){var a=P[ids[i-1]],b=P[ids[i]];L+=Math.hypot(b[0]-a[0],b[1]-a[1]);} return L; }
-function at(ids,d){ for(var i=1;i<ids.length;i++){var a=P[ids[i-1]],b=P[ids[i]],l=Math.hypot(b[0]-a[0],b[1]-a[1]); if(d<=l||i===ids.length-1){var t=Math.min(d/l,1);return [[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t],[b[0]-a[0],b[1]-a[1]]];} d-=l;} }
+function at(ids,d){ for(var i=1;i<ids.length;i++){var a=P[ids[i-1]],b=P[ids[i]],l=Math.hypot(b[0]-a[0],b[1]-a[1]); if(d<=l||i===ids.length-1){var t=Math.min(d/l,1);return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t];} d-=l;} }
 function ease(t){ return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2; }
-function stand(){ setGait(CYCLE*0.25+0); }
-var trip=null;
+function idleFrame(p){ return p.look?F.backStand:F.frontStand; }
+walker.addEventListener("click",function(){ hopUntil=performance.now()+560; show(F.hop); });
 function tick(ts){
   requestAnimationFrame(tick);
   var dt=lastTs?Math.min(ts-lastTs,50):16; lastTs=ts;
   if(userPaused||!visible) return;
+  if(ts<hopUntil){ show(F.hop); return; }
   var p=plan[step];
   if(p.walk){
-    if(!trip){ var L=polyLen(p.walk); trip={L:L,T:L/SPEED*1000*1.18,t:0,prev:0}; svg.classList.remove("is-look","is-wave"); }
+    if(!trip){ var L=polyLen(p.walk); trip={L:L,T:L/SPEED*1000*1.15,t:0,prev:0}; svg.classList.remove("is-flip","is-tilt"); }
     trip.t=Math.min(trip.t+dt,trip.T);
-    var d=ease(trip.t/trip.T)*trip.L, r=at(p.walk,d); pos=r[0];
-    var dd=Math.abs(d-trip.prev); trip.prev=d; gaitDist+=dd;
-    face(r[1][0],r[1][1]); setGait((gaitDist/STRIDE)*CYCLE % CYCLE + CYCLE*0.25);
+    var d=ease(trip.t/trip.T)*trip.L; pos=at(p.walk,d);
+    gaitDist+=Math.abs(d-trip.prev); trip.prev=d;
+    show(F[p.view]+Math.floor(gaitDist/STRIDE*8)%8);
     place();
-    if(trip.t>=trip.T){ trip=null; gaitDist=0; stand(); step=(step+1)%plan.length; segT=0; }
+    if(trip.t>=trip.T){ trip=null; gaitDist=0; step=(step+1)%plan.length; segT=0; show(idleFrame(plan[step])); }
   } else {
     segT+=dt;
-    if(p.look){ var k=Math.floor(segT/700); svg.classList.toggle("is-flip",k%2===1); svg.classList.toggle("is-look",k%2===0&&segT>300); }
-    if(p.wave){ svg.classList.add("is-front"); svg.classList.toggle("is-flip",true); svg.classList.toggle("is-wave",segT>350&&segT<1700); }
-    if(segT>=p.idle){ svg.classList.remove("is-look","is-wave"); step=(step+1)%plan.length; segT=0; }
+    if(p.look){ var k=Math.floor(segT/800); svg.classList.toggle("is-flip",k%2===1); svg.classList.toggle("is-tilt",k===2); show(F.backStand); }
+    if(p.wave){ svg.classList.remove("is-flip","is-tilt"); show(segT>500&&segT<1800?F.wave:F.frontStand); }
+    if(segT>=p.idle){ svg.classList.remove("is-flip","is-tilt"); step=(step+1)%plan.length; segT=0; }
   }
 }
-function init(){ face(1,-1); stand(); place(); }
-init();
+show(F.backStand); place();
 addEventListener("resize",place);
 if(window.ResizeObserver) new ResizeObserver(place).observe(town);
-if(reduce){ svg.classList.add("is-front","is-flip"); place(); }
-else requestAnimationFrame(tick);
+if(reduce){
+  show(F.frontStand); place();
+  walker.addEventListener("click",function(){ show(F.hop); setTimeout(function(){show(F.frontStand)},700); });
+} else requestAnimationFrame(tick);
 
 /* parallax tilt: pointer / gyro (subtle) */
 if(!reduce){
