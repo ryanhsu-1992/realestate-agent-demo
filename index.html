@@ -54,10 +54,9 @@
 
     #intro { position: fixed; inset: 0; z-index: 200; background: var(--green-deep); display: grid; place-items: center; color: var(--gold); transition: opacity .45s ease, visibility .45s ease; }
     #intro.done { opacity: 0; visibility: hidden; pointer-events: none; }
-    #intro svg { width: 120px; height: 100px; overflow: visible; }
-    #intro path, #intro rect, #intro line { fill: none; stroke: var(--gold); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 360; stroke-dashoffset: 360; animation: draw 1s ease forwards; }
+    #intro svg { width: 132px; height: 110px; overflow: visible; animation: introPop .9s ease both; }
+    @keyframes introPop { from { opacity: 0; transform: translateY(8px) scale(.96); } to { opacity: 1; transform: none; } }
     #intro .intro-skip { position: absolute; bottom: calc(28px + var(--safe-b)); left: 50%; transform: translateX(-50%); color: var(--gold-soft); font-size: 12px; letter-spacing: .16em; opacity: .75; padding: 8px 16px; }
-    @keyframes draw { to { stroke-dashoffset: 0; } }
     @media (prefers-reduced-motion: reduce) {
       #intro { display: none !important; }
       .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
@@ -95,7 +94,8 @@
     .hero-ctas .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
     .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 11px; padding: 12px 16px; font-weight: 700; font-size: 15px; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease, border-color .15s ease; box-shadow: 0 4px 14px rgba(0,0,0,.12); }
-    .btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.7; }
+    .btn svg { width: 22px; height: 22px; overflow: visible; flex: 0 0 22px; }
+    .btn-gold svg { background: var(--green-deep); border-radius: 7px; padding: 1px; box-sizing: content-box; width: 20px; height: 20px; }
     .btn:active { transform: translateY(1px) scale(.99); }
     .btn-gold { background: var(--gold); color: var(--green-deep); box-shadow: 0 6px 18px rgba(201,164,92,.28); }
     .btn-gold:hover { background: var(--gold-soft); }
@@ -111,7 +111,7 @@
     @media (min-width: 720px) { body.view-home .cta-bar { display: none; } }
     .cta-bar a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; text-decoration: none; color: var(--gold-soft); font-size: 11px; font-weight: 600; letter-spacing: .04em; border-radius: 10px; padding: 6px 4px; }
     .cta-bar a.primary { background: var(--gold); color: var(--green-deep); }
-    .cta-bar a svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.7; }
+    .cta-bar a svg { width: 22px; height: 22px; overflow: visible; }
 
     .section { padding: 36px 0 8px; }
     .section-kicker { font-size: 12px; color: var(--gold-dim); font-weight: 600; letter-spacing: .14em; margin-bottom: 6px; }
@@ -119,16 +119,21 @@
     .section .sub { font-size: 14px; color: var(--ink-soft); margin-bottom: 18px; }
     .gold-line { width: 48px; height: 1px; background: var(--gold); margin: 0 0 18px; }
     .gold-rule { border: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: .55; margin: 28px 0; }
-    .services-main { display: grid; gap: 12px; }
-    .service { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; display: grid; grid-template-columns: 44px 1fr; gap: 14px; box-shadow: var(--shadow); }
-    .service-ico { width: 44px; height: 44px; border-radius: 10px; background: var(--green); color: var(--gold); display: grid; place-items: center; }
-    .service-ico svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.6; }
-    .service h3 { font-size: 16px; font-weight: 700; color: var(--green); margin-bottom: 2px; font-family: var(--serif); }
-    .service p { font-size: 13px; color: var(--ink-soft); }
+    .services-main { display: grid; gap: 14px; }
+    .service, .copy-card { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 18px 16px; display: grid; grid-template-columns: 56px 1fr; gap: 14px; align-items: start; box-shadow: var(--shadow); color: inherit; text-decoration: none; }
+    .copy-card { grid-template-columns: 1fr; gap: 8px; }
+    .service-ico { width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(180deg, #F7F1E4, #E8DCC0); border: 1px solid rgba(201,164,92,.35); display: grid; place-items: center; }
+    .copy-card .service-ico { width: 58px; height: 58px; }
+    .service-ico svg { width: 44px; height: 44px; overflow: visible; }
+    .copy-card .en { font-size: 11px; letter-spacing: .12em; font-weight: 700; color: var(--gold-dim); text-transform: uppercase; }
+    .service h3, .copy-card h3 { font-size: 18px; font-weight: 700; color: var(--green); margin-bottom: 2px; font-family: var(--serif); }
+    .service p, .copy-card p { font-size: 14px; color: var(--ink-soft); }
+    .copy-card .go { font-size: 12px; font-weight: 700; color: var(--gold-dim); margin-top: 4px; }
+    a.copy-card:hover, a.service:hover { border-color: var(--gold); }
     .expertise { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
     .exp { background: var(--cream); border: 1px solid var(--line); border-radius: 11px; padding: 12px; }
-    .exp .ico { color: var(--gold-dim); margin-bottom: 6px; }
-    .exp .ico svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+    .exp .ico { margin-bottom: 6px; width: 36px; height: 36px; }
+    .exp .ico svg { width: 32px; height: 32px; overflow: visible; }
     .exp h3 { font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 2px; }
     .exp p { font-size: 12px; color: var(--ink-soft); line-height: 1.55; }
     @media (min-width: 720px) {
@@ -175,7 +180,7 @@
     textarea { min-height: 88px; resize: vertical; }
     input:focus, select:focus, textarea:focus { border-color: var(--gold-dim); box-shadow: 0 0 0 3px rgba(201,164,92,.28); }
     .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .choice-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .choice-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 8px; }
     .choice { position: relative; }
     .choice input { position: absolute; opacity: 0; pointer-events: none; }
     .choice span { display: block; text-align: center; border: 1px solid var(--line-strong); background: #fff; border-radius: 11px; padding: 10px 6px; font-size: 13px; font-weight: 600; }
@@ -335,15 +340,15 @@
     .cat-chips { display: flex; gap: 8px; overflow-x: auto; padding: 0 0 12px; -webkit-overflow-scrolling: touch; }
     .cat-chips button { flex: 0 0 auto; border: 1px solid var(--line-strong); background: #fff; border-radius: 999px; padding: 7px 12px; font-size: 12px; font-weight: 600; color: var(--ink-soft); display: inline-flex; align-items: center; gap: 6px; }
     .cat-chips button.on { background: var(--green); color: var(--gold-soft); border-color: var(--green); }
-    .cat-chips button svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.7; }
+    .cat-chips button svg { width: 18px; height: 18px; overflow: visible; }
     .listing-addr { font-size: 12px; color: var(--muted); margin-top: 2px; }
     .listing-spec { font-size: 12px; color: var(--ink-soft); margin-top: 4px; }
     .listing-extra { font-size: 12px; color: var(--green); margin-top: 4px; font-weight: 600; }
     .ph-grid { display: grid; gap: 12px; }
     @media (min-width: 560px) { .ph-grid { grid-template-columns: 1fr 1fr; } }
     .ph-card { background: var(--paper); border: 1px dashed var(--line-strong); border-radius: 14px; overflow: hidden; }
-    .ph-card .ph-art { height: 110px; background: var(--green); display: grid; place-items: center; color: var(--gold); position: relative; }
-    .ph-card .ph-art svg { width: 48px; height: 48px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+    .ph-card .ph-art { height: 132px; background: var(--green); position: relative; overflow: hidden; }
+    .ph-card .ph-art svg { width: 100%; height: 100%; display: block; }
     .ph-card .ph-art .sample { position: absolute; top: 10px; right: 10px; font-size: 10px; font-weight: 700; background: rgba(255,252,246,.92); color: var(--muted); padding: 2px 6px; border-radius: 4px; }
     .ph-card .body { padding: 12px 14px 14px; }
     .ph-card h3 { font-family: var(--serif); font-size: 15px; color: var(--green); }
@@ -368,22 +373,30 @@
 <body>
   <div id="intro" role="dialog" aria-label="開場動畫">
     <svg viewBox="0 0 120 100" aria-hidden="true">
-      <path d="M8 52 L60 10 L112 52" />
-      <path d="M22 50 V92 H98 V50" />
-      <path d="M50 92 V66 H70 V92" />
-      <rect x="30" y="60" width="14" height="12" />
-      <rect x="76" y="60" width="14" height="12" />
-      <line x1="60" y1="10" x2="60" y2="4" />
+      <defs>
+        <linearGradient id="ig" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F6E7B8"/><stop offset="100%" stop-color="#C9A45C"/></linearGradient>
+        <linearGradient id="igb" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3F6E54"/><stop offset="100%" stop-color="#1F3D2E"/></linearGradient>
+        <linearGradient id="iw" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFF3C2"/><stop offset="100%" stop-color="#E8C86A"/></linearGradient>
+      </defs>
+      <ellipse cx="18" cy="86" rx="10" ry="6" fill="#2F543A"/>
+      <path d="M18 86 C12 86 11 70 18 70 S24 86 18 86Z" fill="#3F6B4A"/>
+      <path d="M10 54 L60 14 L110 54" fill="url(#ig)" stroke="#8A641F" stroke-width="1.4" stroke-linejoin="round"/>
+      <rect x="24" y="52" width="72" height="40" rx="2" fill="url(#igb)" stroke="#15281F" stroke-width="1"/>
+      <rect x="32" y="60" width="14" height="12" rx="1.5" fill="url(#iw)"/>
+      <rect x="74" y="60" width="14" height="12" rx="1.5" fill="url(#iw)"/>
+      <path d="M52 92 V70 H68 V92" fill="url(#ig)" stroke="#8A641F" stroke-width="1"/>
+      <circle cx="65" cy="82" r="1.6" fill="#1F3D2E"/>
+      <rect x="86" y="22" width="5" height="14" fill="#8A641F"/>
+      <path d="M84 20 c4-6 10-3 8 4" fill="none" stroke="#D9D4C8" stroke-width="1.6" stroke-linecap="round"/>
     </svg>
     <button class="intro-skip" type="button" id="intro-skip">略過</button>
   </div>
 
   <div class="demo-ribbon">
     <span>示範版 · 案件與報表皆為<b>範例資料</b></span>
-    <nav aria-label="示範頁面切換">
-      <a href="#/" id="nav-home">屋主留資料</a>
+    <nav aria-label="示範頁面切換" id="demo-nav">
+      <a href="#/" id="nav-home">首頁</a>
       <a href="#/admin" id="nav-admin">業務後台</a>
-      <a href="#/report" id="nav-report">屋主月報</a>
     </nav>
   </div>
 
@@ -391,15 +404,15 @@
 
   <nav class="cta-bar no-print" aria-label="快速聯絡">
     <a href="tel:0983553849">
-      <svg viewBox="0 0 24 24"><path d="M7 3h3l1.5 4-2 1.5a12 12 0 0 0 6 6L17 13l4 1.5V18a2 2 0 0 1-2 2A16 16 0 0 1 4 7a2 2 0 0 1 2-2z"/></svg>
+      <span data-icon="phone"></span>
       電話
     </a>
     <a href="https://line.me/R/ti/p/@652ddpuz" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24"><path d="M5 7.5C5 5 8.13 3 12 3s7 2 7 4.5S15.87 12 12 12c-.5 0-1 0-1.5-.1L7 14l.8-2.4C6 10.7 5 9.2 5 7.5z"/><path d="M8.2 7.2h7.6M8.2 9.2h5.2"/></svg>
+      <span data-icon="line"></span>
       LINE
     </a>
     <a href="#form-section" class="primary" id="cta-form">
-      <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+      <span data-icon="form"></span>
       委託
     </a>
   </nav>
@@ -422,13 +435,14 @@
     lineUrl: "https://line.me/R/ti/p/@652ddpuz",
     area: "桃園",
     photo: "photo.jpg",
-    tagline: "買賣 · 出租 · 代管",
+    tagline: "買賣 · 出租",
     headline: "桃園在地房仲・許津銓",
     slogan: "把房子的事，交給認得的人。",
-    intro: "您好，我是許津銓，目前於【住商不動產RM團隊】服務。之後會以房屋買賣為主；若您在桃園有房子想賣、想出租，或希望有人幫忙代管、按月整理收支，都可以把資料留給我，我會再親自跟您聯繫。",
+    intro: "您好，我是許津銓，目前於【住商不動產RM團隊】服務。之後會以房屋買賣為主；若您在桃園有房子想賣或想出租，都可以把資料留給我，我會再親自跟您聯繫。",
     reportMonth: "2026-11",
     reportMonthLabel: "2026年11月",
     storageKey: "realtor-demo-leads-v1",
+    showManagement: false,
     legalDisclosure: "營業員證號：許津銓 (110)登字第403846號\n新誼不動產經紀股份有限公司\n不動產經紀人：許藝馨 (108)年桃市經字001217\n致善豐格不動產經紀有限公司\n不動產經紀人：楊上譽 (114)年桃市經字002067",
     listings: [
       { id: "a1", title: "桃園經國商圈電梯三房", district: "桃園區", address: "桃園市桃園區經國路一帶", type: "出售", category: "住宅", rooms: 3, propertyType: "電梯大樓", layout: "3房2廳2衛", ping: 32.5, price: "1,388萬", floor: "8/15樓", year: "屋齡 8 年", highlight: "近經國轉運站，採光良好，適合首購或換屋。" },
@@ -473,25 +487,190 @@
       { q: "現在適合進場，還是再等看看？", a: "這要看您是自住還是置產，以及能接受的總價與月付。行情會波動，但適合的房子出現時，條件比「等一個完美時間點」更重要。歡迎先聊聊您的時間表。" },
       { q: "首購貸款大概可以貸多少？", a: "常見會依信用、收入與物件條件來評估，成數因人而異。我可以先幫您估一個大概範圍，並提醒相關稅費，讓您比較有底。實際核貸仍以銀行審核為準。" },
       { q: "想賣房子，從委託到成交大概要多久？", a: "要看物件條件、定價和當時市場。有的幾週就談成，有的需要多一些時間調整策略。委託前我會先跟您說明行情與建議開價，過程也會定期回報。" },
-      { q: "代管跟自己收租，差在哪裡？", a: "自己收租彈性大，但催租、修繕和合約到期都要自己跟。代管的話，這些日常事由我協助處理，並按月整理收支給您看。適合人在外地，或不想花時間處理雜事的屋主。" },
+      { q: "想把房子出租，需要先準備什麼？", a: "先整理房屋現況與期望租金，再決定委託範圍。我可以幫忙估租金、拍攝與上架，並協助安排看房與合約注意事項。人在外地或不方便時常往返，也可以先用電話或 LINE 溝通。" },
       { q: "人不在桃園，或不方便常常來看屋，怎麼配合？", a: "可以先用電話或 LINE 溝通需求，我再依條件幫您篩選、說明現況，必要時補照片或視訊。真正合適再安排看屋，減少來回奔波。" }
     ]
   };
 
   const ICONS = {
-    phone: '<svg viewBox="0 0 24 24"><path d="M7 3h3l1.5 4-2 1.5a12 12 0 0 0 6 6L17 13l4 1.5V18a2 2 0 0 1-2 2A16 16 0 0 1 4 7a2 2 0 0 1 2-2z"/></svg>',
-    line: '<svg viewBox="0 0 24 24"><path d="M5 7.5C5 5 8.13 3 12 3s7 2 7 4.5S15.87 12 12 12c-.5 0-1 0-1.5-.1L7 14l.8-2.4C6 10.7 5 9.2 5 7.5z"/><path d="M8.2 7.2h7.6M8.2 9.2h5.2"/></svg>',
-    buy: '<svg viewBox="0 0 24 24"><path d="M3 11.5L12 4l9 7.5"/><path d="M6 10.5V20h12v-9.5"/><path d="M14.5 14.5h5l-1 3h-3z"/><path d="M17 14.5V13"/></svg>',
-    rent: '<svg viewBox="0 0 24 24"><path d="M5 4h10a1 1 0 0 1 1 1v15H6a1 1 0 0 1-1-1V4z"/><path d="M16 8h3a1 1 0 0 1 1 1v11h-4"/><path d="M9 20v-5h4v5"/><path d="M9 8h4M9 11h3"/></svg>',
-    manage: '<svg viewBox="0 0 24 24"><path d="M4 19V6a1 1 0 0 1 1-1h6v14H5a1 1 0 0 1-1-1z"/><path d="M11 5h8a1 1 0 0 1 1 1v4h-9zM11 10h10v8a1 1 0 0 1-1 1h-9"/></svg>',
-    match: '<svg viewBox="0 0 24 24"><path d="M8 13c-2 0-4 1.2-4 3.2V19h8v-2.8C12 14.2 10 13 8 13z"/><circle cx="8" cy="8.5" r="2.5"/><path d="M16 13c-1.1 0-2.1.4-2.8 1"/><circle cx="16" cy="8.5" r="2.5"/><path d="M14 19h6v-2.6c0-1.7-1.6-2.9-3.2-3.2"/><path d="M10.5 15.5h3"/></svg>',
-    tax: '<svg viewBox="0 0 24 24"><path d="M4 19h16M6 16l3.5-5 3 3L17 8"/><path d="M17 8h3v3"/></svg>',
-    reno: '<svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M4 10h16M10 4v16M14 13h3M14 16h3"/></svg>',
-    globe: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c2.5 2.8 3.5 5.8 3.5 8S14.5 17.2 12 20c-2.5-2.8-3.5-5.8-3.5-8S9.5 6.8 12 4z"/><path d="M16.5 6.5h3.5v4"/></svg>',
-    land: '<svg viewBox="0 0 24 24"><path d="M3 19h18"/><path d="M5 19V11l3-2 3 3 4-5 4 4v8"/><path d="M14 19v-5h4v5"/></svg>',
-    factory: '<svg viewBox="0 0 24 24"><path d="M3 20V10l5 3V10l5 3V8l8-3v15z"/><path d="M7 20v-3h3v3M14 20v-3h3v3"/></svg>',
-    form: '<svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>'
-  };
+      _n: 0,
+      svg(name) {
+        const fn = this[name];
+        if (typeof fn !== "function") return "";
+        return fn.call(this, "ic" + (++this._n));
+      },
+      _defs(id) {
+        return `<defs>
+          <linearGradient id="og-${id}" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#F6E7B8"/>
+            <stop offset="42%" stop-color="#C9A45C"/>
+            <stop offset="100%" stop-color="#8A641F"/>
+          </linearGradient>
+          <linearGradient id="og2-${id}" x1="1" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#E8D7A8"/>
+            <stop offset="100%" stop-color="#A6853F"/>
+          </linearGradient>
+          <linearGradient id="gn-${id}" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3F6E54"/>
+            <stop offset="100%" stop-color="#1F3D2E"/>
+          </linearGradient>
+          <linearGradient id="sg-${id}" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#B7C9B0"/>
+            <stop offset="100%" stop-color="#5E7A5C"/>
+          </linearGradient>
+          <linearGradient id="hl-${id}" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#fff" stop-opacity=".55"/>
+            <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="win-${id}" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#F8E7A8"/>
+            <stop offset="100%" stop-color="#E2C36A"/>
+          </linearGradient>
+          <filter id="ds-${id}" x="-25%" y="-15%" width="150%" height="150%">
+            <feDropShadow dx="0" dy=".7" stdDeviation=".45" flood-color="#15281F" flood-opacity=".32"/>
+          </filter>
+        </defs>`;
+      },
+      _wrap(id, inner) {
+        return `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" overflow="visible">${this._defs(id)}<g filter="url(#ds-${id})" stroke-linejoin="round" stroke-linecap="round">${inner}</g></svg>`;
+      },
+      phone(id) {
+        return this._wrap(id, `
+          <rect x="7.2" y="2.8" width="9.6" height="18.4" rx="2.4" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".4"/>
+          <rect x="8.1" y="4.6" width="7.8" height="11.6" rx="1" fill="url(#gn-${id})"/>
+          <rect x="8.1" y="4.6" width="7.8" height="5" rx="1" fill="url(#hl-${id})"/>
+          <circle cx="12" cy="18.6" r="1.05" fill="url(#og2-${id})" stroke="#8A641F" stroke-width=".3"/>
+          <path d="M10.2 6.2h3.6" stroke="#E8D7A8" stroke-width=".7"/>`);
+      },
+      line(id) {
+        return this._wrap(id, `
+          <path d="M5.2 8.2c0-3.1 3.1-5.5 6.8-5.5s6.8 2.4 6.8 5.5-3.1 5.5-6.8 5.5c-.6 0-1.2-.06-1.8-.2L6.2 16.2 7.2 13.2C5.9 12.2 5.2 10.3 5.2 8.2z" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".4"/>
+          <path d="M8.2 11.2c0-2.2 1.8-3.6 3.8-3.6" fill="none" stroke="url(#gn-${id})" stroke-width=".6" opacity=".35"/>
+          <circle cx="9.4" cy="8.2" r=".7" fill="url(#gn-${id})"/>
+          <circle cx="12" cy="8.2" r=".7" fill="url(#gn-${id})"/>
+          <circle cx="14.6" cy="8.2" r=".7" fill="url(#gn-${id})"/>
+          <path d="M6.8 15.4l.7-2" fill="#8A641F" opacity=".15"/>`);
+      },
+      buy(id) { /* house + key + chimney smoke + tree */
+        return this._wrap(id, `
+          <ellipse cx="5.1" cy="19.6" rx="2.1" ry=".7" fill="url(#sg-${id})" opacity=".8"/>
+          <path d="M5.1 19.2C4 19.2 3.6 16.4 5.1 16.4S6.2 19.2 5.1 19.2z" fill="url(#gn-${id})"/>
+          <path d="M3.2 12.4 L12 4.6 L20.8 12.4" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".45"/>
+          <path d="M4.6 11.8h15.2" stroke="#F6E7B8" stroke-width=".4" opacity=".5"/>
+          <path d="M16.6 6.2v-2" stroke="url(#og2-${id})" stroke-width="1.2"/>
+          <path d="M16.2 3.4c.6-.6 1.4-.3 1.2.5M15.6 4.2c.5-.5 1.2-.2 1 .5" stroke="#C9C4B6" stroke-width=".7" fill="none"/>
+          <rect x="6.4" y="12" width="11.2" height="8.4" rx=".6" fill="url(#gn-${id})" stroke="#15281F" stroke-width=".35"/>
+          <rect x="6.4" y="12" width="11.2" height="3.2" fill="url(#hl-${id})" opacity=".35"/>
+          <rect x="8.1" y="13.4" width="2.3" height="2.3" rx=".3" fill="url(#win-${id})"/>
+          <rect x="13.6" y="13.4" width="2.3" height="2.3" rx=".3" fill="url(#win-${id})"/>
+          <path d="M8.1 14.55h2.3M14.75 13.4v2.3" stroke="#8A641F" stroke-width=".25" opacity=".4"/>
+          <path d="M11 20.4v-4.1h2.2v4.1" fill="url(#og2-${id})" stroke="#8A641F" stroke-width=".35"/>
+          <circle cx="12.8" cy="18.6" r=".28" fill="#1F3D2E"/>
+          <path d="M16.8 16.6c1.5 0 2.6 1.1 2.2 1.9h-1.8c-.7-1.2.1-1.9-.4-1.9z" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".3"/>
+          <rect x="19.2" y="16.8" width="1.15" height="2.8" rx=".3" fill="url(#og2-${id})" stroke="#8A641F" stroke-width=".25"/>
+          <path d="M20.35 17.3h.8M20.35 18.2h.7M20.35 19.1h.8" stroke="#8A641F" stroke-width=".35"/>`);
+      },
+      rent(id) { /* door + key */
+        return this._wrap(id, `
+          <rect x="5.2" y="3.2" width="11.2" height="17.6" rx="1" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".4"/>
+          <rect x="6.3" y="4.6" width="9" height="15.2" rx=".5" fill="url(#gn-${id})"/>
+          <rect x="6.3" y="4.6" width="9" height="4.4" fill="url(#hl-${id})" opacity=".3"/>
+          <rect x="7.4" y="6.2" width="3" height="3.2" rx=".3" fill="url(#win-${id})"/>
+          <rect x="11.2" y="6.2" width="3" height="3.2" rx=".3" fill="url(#win-${id})"/>
+          <path d="M10.2 19.8v-5.2h3.2v5.2" fill="url(#og2-${id})" stroke="#8A641F" stroke-width=".35"/>
+          <circle cx="12.6" cy="17.5" r=".32" fill="#1F3D2E"/>
+          <path d="M17.2 14.8c1.4 0 2.5 1 2.1 1.85h-1.7c-.7-1.15.1-1.85-.4-1.85z" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".3"/>
+          <rect x="19.4" y="15" width="1.1" height="2.6" rx=".25" fill="url(#og2-${id})" stroke="#8A641F" stroke-width=".25"/>
+          <path d="M20.5 15.5h.75M20.5 16.3h.65M20.5 17.1h.75" stroke="#8A641F" stroke-width=".35"/>`);
+      },
+      match(id) { /* handshake with cuffs */
+        return this._wrap(id, `
+          <path d="M3.6 13.4c0-1.2.8-2 2-2h2.1l3.6 3.4c.5.5 1.3.5 1.8 0l.3-.3" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".4"/>
+          <path d="M20.4 13.4c0-1.2-.8-2-2-2h-2.1l-3.6 3.4c-.5.5-1.3.5-1.8 0l-.3-.3" fill="url(#og2-${id})" stroke="#8A641F" stroke-width=".4"/>
+          <path d="M8.2 14.2l2.4 2.5c.8.8 2 .8 2.8 0l2.4-2.5" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".4"/>
+          <path d="M9.2 15.2l1.6 1.6c.6.6 1.6.6 2.2 0l1.6-1.6" fill="none" stroke="#F6E7B8" stroke-width=".45" opacity=".7"/>
+          <rect x="2.4" y="10.6" width="4.2" height="3.6" rx=".6" fill="url(#gn-${id})" stroke="#15281F" stroke-width=".3"/>
+          <rect x="17.4" y="10.6" width="4.2" height="3.6" rx=".6" fill="url(#gn-${id})" stroke="#15281F" stroke-width=".3"/>
+          <path d="M3 11.4h3M18 11.4h3" stroke="#F6E7B8" stroke-width=".4" opacity=".5"/>`);
+      },
+      tax(id) { /* chart + coin */
+        return this._wrap(id, `
+          <path d="M3.6 19.4h16.8" stroke="url(#og-${id})" stroke-width="1.1"/>
+          <rect x="5.2" y="12.4" width="3" height="7" rx=".5" fill="url(#gn-${id})" stroke="#15281F" stroke-width=".3"/>
+          <rect x="9.4" y="8.6" width="3" height="10.8" rx=".5" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".3"/>
+          <rect x="13.6" y="10.6" width="3" height="8.8" rx=".5" fill="url(#sg-${id})" stroke="#1F3D2E" stroke-width=".3"/>
+          <rect x="5.2" y="12.4" width="3" height="2.2" fill="url(#hl-${id})" opacity=".35"/>
+          <rect x="9.4" y="8.6" width="3" height="2.6" fill="url(#hl-${id})" opacity=".4"/>
+          <circle cx="18.6" cy="6.6" r="3.1" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".4"/>
+          <circle cx="18.6" cy="6.6" r="2.05" fill="none" stroke="#8A641F" stroke-width=".35"/>
+          <path d="M18.6 5.2v2.8M17.7 5.7h1.8M17.7 7.5h1.8" stroke="#1F3D2E" stroke-width=".4"/>`);
+      },
+      reno(id) { /* blueprint with house */
+        return this._wrap(id, `
+          <rect x="3.4" y="3.6" width="17.2" height="16.8" rx="1.2" fill="url(#gn-${id})" stroke="#15281F" stroke-width=".4"/>
+          <path d="M3.4 7.2h17.2M8.6 3.6v16.8" stroke="#C9A45C" stroke-width=".35" opacity=".55"/>
+          <path d="M7.4 14.8 L12.2 10.2 L17 14.8" fill="none" stroke="url(#og-${id})" stroke-width="1.15"/>
+          <rect x="9.4" y="14.8" width="5.6" height="3.6" fill="none" stroke="url(#og-${id})" stroke-width=".9"/>
+          <rect x="11.2" y="16.2" width="2" height="2.2" fill="url(#win-${id})" stroke="#8A641F" stroke-width=".25"/>`);
+      },
+      globe(id) { /* globe + speech */
+        return this._wrap(id, `
+          <circle cx="10.2" cy="12" r="7.1" fill="url(#gn-${id})" stroke="#15281F" stroke-width=".4"/>
+          <path d="M10.2 4.9c2.1 2.3 3.1 4.6 3.1 7.1s-1 4.8-3.1 7.1c-2.1-2.3-3.1-4.6-3.1-7.1s1-4.8 3.1-7.1z" fill="none" stroke="url(#og-${id})" stroke-width=".7"/>
+          <path d="M3.4 12h13.6M5.2 8.4h10M5.2 15.6h10" stroke="#C9A45C" stroke-width=".45" opacity=".8"/>
+          <path d="M15.2 5.6h6.2c.7 0 1.2.5 1.2 1.2v3.4c0 .7-.5 1.2-1.2 1.2h-3.4L15 13.2v-1.8h-.2c-.6 0-1-.5-1-1.1V6.8c0-.7.6-1.2 1.4-1.2z" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".35"/>
+          <path d="M16.4 7.6h3.4M16.4 9.3h2.4" stroke="#1F3D2E" stroke-width=".45"/>`);
+      },
+      land(id) { /* plot, grass, survey flag */
+        return this._wrap(id, `
+          <path d="M3 18.6 L8.5 13.2 L15 16.2 L21 11.4 V20.2 H3 Z" fill="url(#sg-${id})" stroke="#1F3D2E" stroke-width=".35"/>
+          <path d="M3 18.6 L8.5 13.2 L15 16.2 L21 11.4" fill="none" stroke="url(#og-${id})" stroke-width=".7"/>
+          <path d="M5.2 17.8c.4-1.5 1.2-1.6 1.2 0M9.2 16.4c.4-1.6 1.3-1.7 1.2 0M13.6 17.2c.4-1.5 1.2-1.6 1.2 0" fill="url(#gn-${id})"/>
+          <path d="M17.4 13.2 V6.2" stroke="#8A641F" stroke-width=".9"/>
+          <path d="M17.5 6.2 L22 7.6 L17.5 9.4z" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".3"/>
+          <circle cx="17.4" cy="13.2" r=".55" fill="#8A641F"/>`);
+      },
+      factory(id) { /* sawtooth + windows */
+        return this._wrap(id, `
+          <path d="M2.8 19.6 V12.2 L6.4 8.6 V12.2 L10 8.6 V12.2 L13.6 8.6 V19.6 Z" fill="url(#gn-${id})" stroke="#15281F" stroke-width=".4"/>
+          <path d="M2.8 12.2 L6.4 8.6 L10 12.2 L13.6 8.6" fill="none" stroke="url(#og-${id})" stroke-width=".8"/>
+          <rect x="13.6" y="12.4" width="7.6" height="7.2" fill="url(#og2-${id})" stroke="#8A641F" stroke-width=".35"/>
+          <rect x="4.1" y="13.6" width="2" height="2.2" rx=".25" fill="url(#win-${id})"/>
+          <rect x="7.7" y="13.6" width="2" height="2.2" rx=".25" fill="url(#win-${id})"/>
+          <rect x="11.2" y="13.6" width="2" height="2.2" rx=".25" fill="url(#win-${id})"/>
+          <rect x="15.2" y="14.2" width="2" height="2" rx=".25" fill="url(#win-${id})"/>
+          <rect x="18" y="14.2" width="2" height="2" rx=".25" fill="url(#win-${id})"/>
+          <path d="M19.6 12.4v-3.2" stroke="#8A641F" stroke-width=".8"/>
+          <path d="M19.2 8c.5-.6 1.3-.3 1.1.5" stroke="#C9C4B6" stroke-width=".7" fill="none"/>`);
+      },
+      form(id) {
+        return this._wrap(id, `
+          <path d="M7.2 3.4h7.2l4.4 4.4V20.4c0 .7-.6 1.2-1.2 1.2H7.2c-.7 0-1.2-.5-1.2-1.2V4.6c0-.7.5-1.2 1.2-1.2z" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".4"/>
+          <path d="M14.4 3.5v3.6c0 .5.4.9.9.9h3.4" fill="url(#og2-${id})" stroke="#8A641F" stroke-width=".35"/>
+          <path d="M8.6 11.2h6.8M8.6 14h6.8M8.6 16.8h4.4" stroke="url(#gn-${id})" stroke-width=".85"/>`);
+      },
+      entrust(id) { /* house + gold seal / key */
+        return this._wrap(id, `
+          <path d="M3.4 11.6 L11.2 4.8 L19 11.6" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".45"/>
+          <rect x="5.4" y="11.2" width="11.6" height="8.4" rx=".5" fill="url(#gn-${id})" stroke="#15281F" stroke-width=".35"/>
+          <rect x="5.4" y="11.2" width="11.6" height="2.6" fill="url(#hl-${id})" opacity=".3"/>
+          <rect x="7" y="12.8" width="2.1" height="2.1" rx=".25" fill="url(#win-${id})"/>
+          <path d="M10.2 19.6v-3.6h2.2v3.6" fill="url(#og2-${id})" stroke="#8A641F" stroke-width=".3"/>
+          <circle cx="18.4" cy="16.2" r="3.2" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".4"/>
+          <circle cx="18.4" cy="16.2" r="1.7" fill="none" stroke="#8A641F" stroke-width=".4"/>
+          <path d="M18.4 15v2.5M17.6 15.6h1.6M17.6 17.2h1.6" stroke="#1F3D2E" stroke-width=".35"/>`);
+      },
+      manage(id) {
+        return this._wrap(id, `
+          <rect x="3.2" y="6.2" width="8.2" height="13.2" rx=".6" fill="url(#gn-${id})" stroke="#15281F" stroke-width=".35"/>
+          <rect x="12.4" y="4.4" width="8.4" height="15" rx=".6" fill="url(#og-${id})" stroke="#8A641F" stroke-width=".35"/>
+          <rect x="4.4" y="8" width="2" height="2" rx=".25" fill="url(#win-${id})"/>
+          <rect x="7.2" y="8" width="2" height="2" rx=".25" fill="url(#win-${id})"/>
+          <rect x="14" y="6.6" width="2" height="2" rx=".25" fill="url(#win-${id})"/>
+          <rect x="17" y="6.6" width="2" height="2" rx=".25" fill="url(#win-${id})"/>`);
+      }
+    };
+  
 
   const LEGAL_NOTICE = `【個人資料蒐集告知事項】（範本，正式使用前請確認）
 
@@ -499,7 +678,7 @@
 
 蒐集者：許津銓（住商不動產RM團隊）
 
-一、蒐集目的：提供房屋買賣、租賃、委託代管之諮詢、免費估價與後續聯絡服務。
+一、蒐集目的：提供房屋買賣、租賃之諮詢、免費估價與後續聯絡服務。
 
 二、蒐集之個人資料類別：識別類資訊（姓名、電話、LINE ID、現居地）、購屋或委託需求（區域、坪數、格局、總價與資金、物件類型、房屋條件）及您主動提供之備註與方便聯絡時間。
 
@@ -522,7 +701,7 @@
 
   const SAMPLE_LEADS = [
     { id: "s1", kind: "賣方", name: "陳美玲", phone: "0912-345-678", lineId: "mlchen88", address: "桃園市桃園區經國路（附近）", type: "住宅大樓", areaPing: "32", age: "8", need: "想賣", price: "1,388萬（期望）", time: "平日晚上", note: "先了解行情，尚未決定是否出售。", status: "新進", notes: ["11/20 名單進入，待回電。"], createdAt: "2026-11-20", sample: true },
-    { id: "s2", kind: "代管", name: "林志偉", phone: "0928-111-222", lineId: "", address: "桃園市中壢區過嶺", type: "套房", areaPing: "12", age: "15", need: "想委託代管", price: "", time: "週末", note: "人在南部，希望有人幫忙收租與修繕。", status: "已聯絡", notes: ["11/18 已通話，約本週傳現況照片。"], createdAt: "2026-11-18", sample: true },
+    { id: "s2", kind: "出租", name: "林志偉", phone: "0928-111-222", lineId: "", address: "桃園市中壢區過嶺", type: "套房", areaPing: "12", age: "15", need: "想出租", price: "", time: "週末", note: "人在南部，希望幫忙出租這間套房。", status: "已聯絡", notes: ["11/18 已通話，約本週傳現況照片。"], createdAt: "2026-11-18", sample: true },
     { id: "s3", kind: "出租", name: "黃淑芬", phone: "0933-555-666", lineId: "sufin_h", address: "桃園市蘆竹區南崁", type: "公寓", areaPing: "24", age: "22", need: "想出租", price: "月租 2.2–2.4萬", time: "皆可", note: "目前空屋，希望盡快找到適合房客。", status: "約看", notes: ["11/19 已帶兩組看房。", "11/21 其中一組考慮中。"], createdAt: "2026-11-15", sample: true },
     { id: "s4", kind: "賣方", name: "吳建宏", phone: "0910-888-999", lineId: "", address: "桃園市龜山區文化一路", type: "辦公室", areaPing: "45", age: "6", need: "想賣", price: "2,480萬", time: "平日白天", note: "公司遷移，希望這季處理。", status: "已委託", notes: ["11/10 簽委託，已上架。"], createdAt: "2026-11-10", sample: true },
     { id: "s6", kind: "買方", name: "劉家豪", phone: "0970-333-221", lineId: "chiahao_liu", residence: "桃園市桃園區", address: "希望區域：桃園區、蘆竹區", need: "想買", buyNeed: "首購", sellNeed: "", buyNeedOther: "", district: "桃園區、蘆竹區", areaPing: "25–35", rooms: "3", halls: "2", baths: "2", parking: "是", priceMin: "1000", priceMax: "1400", downPayment: "300", loan: "1100", otherNeed: "希望近捷運或轉運站。", types: ["電梯", "公寓"], age: "15 年內", floor: "4樓以上", facingSit: "北", facingToward: "南", transit: "近地鐵或公車", time: "平日晚上", status: "新進", notes: ["11/21 填寫線上買方需求表（範例）。"], createdAt: "2026-11-21", sample: true },
@@ -561,32 +740,172 @@
     </g>
   </svg>`;
 
-  function listingArt(item) {
-    const palettes = { 出售: ["#1F3D2E", "#C9A45C"], 出租: ["#234536", "#E8D7A8"] };
-    const [bg, gold] = palettes[item.type] || palettes["出售"];
-    const variants = {
-      a1: `<rect x="48" y="54" width="84" height="70" fill="none" stroke="${gold}" stroke-width="1.6"/><path d="M48 54 L90 28 L132 54" fill="none" stroke="${gold}" stroke-width="1.6"/><path d="M80 124 V96 H100 V124" stroke="${gold}" fill="none" stroke-width="1.5"/>`,
-      a2: `<rect x="50" y="40" width="90" height="84" fill="none" stroke="${gold}" stroke-width="1.6"/><path d="M62 58 h18 v14 h-18z M90 58 h18 v14 h-18z M62 82 h18 v14 h-18z M90 82 h18 v14 h-18z" fill="none" stroke="${gold}" stroke-width="1.3"/>`,
-      a3: `<path d="M40 124 V60 H90 V36 H120 V60 H150 V124" fill="none" stroke="${gold}" stroke-width="1.6"/><path d="M70 80 h20 v16 h-20z M110 80 h20 v16 h-20z" fill="none" stroke="${gold}" stroke-width="1.3"/>`,
-      a4: `<path d="M45 124 V52 H145 V124" fill="none" stroke="${gold}" stroke-width="1.6"/><path d="M45 52 L95 22 L145 52" fill="none" stroke="${gold}" stroke-width="1.6"/><circle cx="95" cy="70" r="10" fill="none" stroke="${gold}" stroke-width="1.4"/>`,
-      a5: `<path d="M36 124 V78 L70 50 L104 78 V124" fill="none" stroke="${gold}" stroke-width="1.6"/><path d="M104 90 H154 V124 H104" fill="none" stroke="${gold}" stroke-width="1.6"/><path d="M64 124 v-22 h16 v22" stroke="${gold}" fill="none" stroke-width="1.4"/>`,
-      a6: `<rect x="36" y="70" width="128" height="54" fill="none" stroke="${gold}" stroke-width="1.6"/><path d="M36 70 L80 42 H120 L164 70" fill="none" stroke="${gold}" stroke-width="1.6"/><path d="M86 124 V92 H114 V124" stroke="${gold}" fill="none" stroke-width="1.4"/>`,
-      a7: `<rect x="58" y="48" width="70" height="76" fill="none" stroke="${gold}" stroke-width="1.6"/><path d="M70 70 h14 v14 h-14z M96 70 h14 v14 h-14z M84 124 v-22 h18 v22" fill="none" stroke="${gold}" stroke-width="1.3"/>`,
-      a8: `<path d="M40 124 V58 H160 V124" fill="none" stroke="${gold}" stroke-width="1.6"/><path d="M40 58 L100 28 L160 58" fill="none" stroke="${gold}" stroke-width="1.6"/>`,
-      a11: `<rect x="36" y="40" width="128" height="84" fill="none" stroke="${gold}" stroke-width="1.6"/><path d="M52 58 h20 v12 h-20z M86 58 h20 v12 h-20z M120 58 h20 v12 h-20z M52 80 h20 v12 h-20z M86 80 h20 v12 h-20z M120 80 h20 v12 h-20z" fill="none" stroke="${gold}" stroke-width="1.2"/>`,
-      a9: `<path d="M28 124 V78 L58 60 V78 L88 60 V78 L118 60 V124" fill="none" stroke="${gold}" stroke-width="1.6"/><rect x="118" y="86" width="50" height="38" fill="none" stroke="${gold}" stroke-width="1.6"/>`,
-      a12: `<path d="M24 124 V82 L54 64 V82 L84 64 V82 L114 64 V124 H176 V90 H114" fill="none" stroke="${gold}" stroke-width="1.6"/>`,
-      a10: `<path d="M24 104 L70 70 L120 88 L176 60 V124 H24 Z" fill="none" stroke="${gold}" stroke-width="1.6"/><path d="M24 124 H176" stroke="${gold}" stroke-width="1.3"/>`,
-      a13: `<rect x="30" y="86" width="140" height="38" fill="none" stroke="${gold}" stroke-width="1.6"/><path d="M30 86 L80 50 H130 L170 86" fill="none" stroke="${gold}" stroke-width="1.6"/>`,
-      a14: `<path d="M20 110 C60 86 90 96 120 80 C145 68 165 74 180 64" fill="none" stroke="${gold}" stroke-width="1.6"/><path d="M20 124 H180" stroke="${gold}" stroke-width="1.3"/>`
-    };
-    return `<svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <rect width="200" height="140" fill="${bg}"/>
-      <circle cx="168" cy="22" r="16" fill="none" stroke="${gold}" stroke-width="1" opacity=".35"/>
-      ${variants[item.id] || variants.a1}
-      <line x1="20" y1="124" x2="180" y2="124" stroke="${gold}" stroke-width="1.2" opacity=".8"/>
-    </svg>`;
-  }
+    function listingArt(item) {
+      const id = "la-" + item.id;
+      const kind = item.category || "住宅";
+      const seed = [...String(item.id)].reduce((a, c) => a + c.charCodeAt(0), 0);
+      const rent = item.type === "出租";
+      const sky = `<defs>
+        <linearGradient id="sky-${id}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="${rent ? "#F3E4C8" : "#E9F0E6"}"/>
+          <stop offset="55%" stop-color="${rent ? "#D7C4A0" : "#C9D6C4"}"/>
+          <stop offset="100%" stop-color="${rent ? "#8FA0A4" : "#9AABB0"}"/>
+        </linearGradient>
+        <linearGradient id="gd-${id}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#6E8A64"/>
+          <stop offset="100%" stop-color="#3E5A3C"/>
+        </linearGradient>
+        <linearGradient id="bld-${id}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#2C4A3A"/>
+          <stop offset="100%" stop-color="#1A3226"/>
+        </linearGradient>
+        <linearGradient id="gold-${id}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#E8D7A8"/>
+          <stop offset="100%" stop-color="#C9A45C"/>
+        </linearGradient>
+        <linearGradient id="lit-${id}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#FFF3C2"/>
+          <stop offset="100%" stop-color="#E8C86A"/>
+        </linearGradient>
+      </defs>
+      <rect width="200" height="140" fill="url(#sky-${id})"/>
+      <circle cx="${156 + (seed % 26)}" cy="${24 + (seed % 8)}" r="16" fill="${rent ? "#F0C27A" : "#F6E7B8"}" opacity=".9"/>
+      <circle cx="${156 + (seed % 26)}" cy="${24 + (seed % 8)}" r="11" fill="${rent ? "#FFE0A0" : "#FFF6D6"}"/>`;
+      const ground = `<path d="M0 116 C40 108 80 120 120 112 C150 106 175 114 200 108 V140 H0 Z" fill="url(#gd-${id})"/>`;
+      const tree = (x, s=1) => `<g transform="translate(${x},0) scale(${s})">
+        <rect x="0" y="96" width="5" height="20" rx="1" fill="#5A3E28"/>
+        <ellipse cx="2.5" cy="90" rx="12" ry="16" fill="#3F6B4A"/>
+        <ellipse cx="-4" cy="96" rx="8" ry="11" fill="#2F543A"/>
+        <ellipse cx="9" cy="97" rx="7" ry="10" fill="#4E7C55"/>
+      </g>`;
+      const win = (x,y,w=8,h=9) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="1" fill="url(#lit-${id})" stroke="#C9A45C" stroke-width=".6"/>`;
+  
+      let mid = "";
+      if (kind === "廠房") {
+        mid = `
+          ${tree(18,.8)}
+          <path d="M40 116 V78 L62 58 V78 L84 58 V78 L106 58 V116 Z" fill="url(#bld-${id})" stroke="#C9A45C" stroke-width="1.2"/>
+          <path d="M40 78 L62 58 L84 78 L106 58" fill="none" stroke="#E8D7A8" stroke-width="1.6"/>
+          ${win(50,86)}${win(72,86)}${win(94,86)}
+          <rect x="106" y="86" width="52" height="30" fill="#2A4636" stroke="#C9A45C" stroke-width="1"/>
+          ${win(116,94,10,10)}${win(134,94,10,10)}
+          <rect x="158" y="70" width="5" height="16" fill="#8A641F"/>
+          <path d="M156 66c4-6 10-3 8 3" fill="none" stroke="#D9D4C8" stroke-width="1.4"/>`;
+      } else if (kind === "土地") {
+        mid = `
+          <path d="M18 116 L58 78 L110 96 L188 64 V116 Z" fill="#6F8F62" stroke="#C9A45C" stroke-width="1.3"/>
+          <path d="M18 116 L58 78 L110 96 L188 64" fill="none" stroke="#E8D7A8" stroke-width="1.6"/>
+          <path d="M40 108c2-8 6-8 6 0M70 98c2-9 7-9 6 0M100 104c2-8 6-8 6 0M140 92c2-9 7-8 6 0" fill="#2F543A"/>
+          <path d="M150 88 V48" stroke="#8A641F" stroke-width="2"/>
+          <path d="M151 48 L178 58 L151 68 Z" fill="url(#gold-${id})" stroke="#8A641F" stroke-width=".8"/>
+          ${tree(24,.7)}`;
+      } else if (kind === "店面・辦公") {
+        mid = `
+          ${tree(16,.75)}
+          <rect x="46" y="52" width="118" height="64" fill="url(#bld-${id})" stroke="#C9A45C" stroke-width="1.2"/>
+          <rect x="46" y="52" width="118" height="14" fill="#2A4A38"/>
+          ${win(58,76,16,14)}${win(82,76,16,14)}${win(106,76,16,14)}${win(130,76,16,14)}
+          <path d="M46 98 H164" stroke="#E8D7A8" stroke-width="3"/>
+          <rect x="86" y="100" width="28" height="16" fill="url(#gold-${id})" stroke="#8A641F" stroke-width=".8"/>
+          ${tree(176,.7)}`;
+      } else {
+        /* residential: house or mid-rise */
+        const rooms = item.rooms || 3;
+        if (rooms <= 1) {
+          mid = `${tree(22,.75)}
+            <rect x="70" y="58" width="70" height="58" fill="url(#bld-${id})" stroke="#C9A45C" stroke-width="1.2"/>
+            <path d="M64 60 L105 32 L146 60" fill="url(#gold-${id})" stroke="#8A641F" stroke-width="1.2"/>
+            ${win(84,72,12,12)}${win(114,72,12,12)}
+            <rect x="98" y="94" width="16" height="22" fill="url(#gold-${id})" stroke="#8A641F" stroke-width=".7"/>
+            ${tree(168,.85)}`;
+        } else if (rooms >= 4 && (item.propertyType || "").includes("透天")) {
+          mid = `${tree(14,.7)}
+            <path d="M44 116 V78 L78 52 L112 78 V116" fill="url(#bld-${id})" stroke="#C9A45C" stroke-width="1.2"/>
+            <path d="M44 78 L78 52 L112 78" fill="url(#gold-${id})" stroke="#8A641F" stroke-width="1.2"/>
+            ${win(58,84)}${win(90,84)}
+            <rect x="112" y="86" width="46" height="30" fill="#243E32" stroke="#C9A45C" stroke-width="1"/>
+            ${win(122,94,10,10)}${win(138,94,10,10)}
+            <rect x="72" y="98" width="14" height="18" fill="url(#gold-${id})"/>
+            ${tree(170,.8)}`;
+        } else {
+          mid = `${tree(6 + (seed % 10),.65)}
+            <rect x="48" y="36" width="96" height="80" fill="url(#bld-${id})" stroke="#C9A45C" stroke-width="1.2"/>
+            ${win(60,48)}${win(80,48)}${win(100,48)}${win(120,48)}
+            ${win(60,66)}${win(80,66)}${win(100,66)}${win(120,66)}
+            ${win(60,84)}${win(80,84)}${win(100,84)}${win(120,84)}
+            <rect x="84" y="100" width="22" height="16" fill="url(#gold-${id})" stroke="#8A641F" stroke-width=".7"/>
+            ${tree(158 + (seed % 14),.9)}`;
+        }
+      }
+      return `<svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${sky}${mid}${ground}</svg>`;
+    }
+  
+    function sceneArt(kind, key) {
+      const id = "sc-" + String(key || kind).replace(/[^\w\u4e00-\u9fff]/g, "").slice(0, 12) + "-" + (++ICONS._n);
+      const seed = [...String(key || kind)].reduce((a, c) => a + c.charCodeAt(0), 0);
+      const sky = `<defs>
+        <linearGradient id="sky-${id}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#E9F0E6"/>
+          <stop offset="55%" stop-color="#C9D6C4"/>
+          <stop offset="100%" stop-color="#9AABB0"/>
+        </linearGradient>
+        <linearGradient id="gd-${id}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#6E8A64"/>
+          <stop offset="100%" stop-color="#3E5A3C"/>
+        </linearGradient>
+        <linearGradient id="bld-${id}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#2C4A3A"/>
+          <stop offset="100%" stop-color="#1A3226"/>
+        </linearGradient>
+        <linearGradient id="gold-${id}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#E8D7A8"/>
+          <stop offset="100%" stop-color="#C9A45C"/>
+        </linearGradient>
+        <linearGradient id="lit-${id}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#FFF3C2"/>
+          <stop offset="100%" stop-color="#E8C86A"/>
+        </linearGradient>
+      </defs>
+      <rect width="200" height="140" fill="url(#sky-${id})"/>
+      <circle cx="${156 + (seed % 24)}" cy="26" r="16" fill="#F6E7B8" opacity=".85"/>
+      <circle cx="${156 + (seed % 24)}" cy="26" r="11" fill="#FFF6D6"/>`;
+      const ground = `<path d="M0 116 C40 108 80 120 120 112 C150 106 175 114 200 108 V140 H0 Z" fill="url(#gd-${id})"/>`;
+      const tree = (x, s=1) => `<g transform="translate(${x},0) scale(${s})">
+        <rect x="0" y="96" width="5" height="20" rx="1" fill="#5A3E28"/>
+        <ellipse cx="2.5" cy="90" rx="12" ry="16" fill="#3F6B4A"/>
+        <ellipse cx="-4" cy="96" rx="8" ry="11" fill="#2F543A"/>
+        <ellipse cx="9" cy="97" rx="7" ry="10" fill="#4E7C55"/>
+      </g>`;
+      const win = (x,y,w=7,h=8) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="1" fill="url(#lit-${id})" stroke="#C9A45C" stroke-width=".5"/>`;
+      let mid = "";
+      if (kind === "project") {
+        mid = `${tree(8,.65)}
+          <rect x="48" y="42" width="72" height="74" fill="url(#bld-${id})" stroke="#C9A45C" stroke-width="1.1"/>
+          ${win(56,52)}${win(70,52)}${win(84,52)}${win(98,52)}
+          ${win(56,68)}${win(70,68)}${win(84,68)}${win(98,68)}
+          ${win(56,84)}${win(70,84)}${win(84,84)}${win(98,84)}
+          <path d="M130 116 V28" stroke="#8A641F" stroke-width="3"/>
+          <path d="M130 28 H168" stroke="#8A641F" stroke-width="2.4"/>
+          <path d="M168 28 V70" stroke="#C9A45C" stroke-width="1.4"/>
+          <path d="M162 70 L168 86 L174 70 Z" fill="url(#gold-${id})"/>
+          <path d="M130 44 h22 M130 58 h16" stroke="#C9A45C" stroke-width="1.3"/>
+          <rect x="86" y="100" width="18" height="16" fill="url(#gold-${id})"/>
+          ${tree(178,.7)}`;
+      } else {
+        mid = `${tree(6,.6)}
+          <rect x="28" y="54" width="54" height="62" fill="url(#bld-${id})" stroke="#C9A45C" stroke-width="1"/>
+          ${win(36,64)}${win(50,64)}${win(64,64)}
+          ${win(36,80)}${win(50,80)}${win(64,80)}
+          <rect x="86" y="36" width="62" height="80" fill="#243E32" stroke="#C9A45C" stroke-width="1.1"/>
+          ${win(96,48)}${win(110,48)}${win(124,48)}
+          ${win(96,64)}${win(110,64)}${win(124,64)}
+          ${win(96,80)}${win(110,80)}${win(124,80)}
+          <rect x="108" y="100" width="16" height="16" fill="url(#gold-${id})"/>
+          ${tree(162,.85)}`;
+      }
+      return `<svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${sky}${mid}${ground}</svg>`;
+    }
+
 
   const $ = (sel, el = document) => el.querySelector(sel);
   const esc = (s = "") => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -630,9 +949,9 @@
     return `${esc(item.propertyType || item.type)}　·　${esc(item.layout)}　·　${item.ping} 坪`;
   }
   function catIcon(cat) {
-    if (cat === "廠房") return ICONS.factory;
-    if (cat === "土地") return ICONS.land;
-    if (cat === "店面・辦公") return ICONS.reno;
+    if (cat === "廠房") return ICONS.svg("factory");
+    if (cat === "土地") return ICONS.svg("land");
+    if (cat === "店面・辦公") return ICONS.svg("reno");
     return "";
   }
   const consentBlock = () => `
@@ -681,6 +1000,7 @@ ${esc(LEGAL_NOTICE)}</div>
     if (parts[0] === "buy") { formIntent = "buy"; return { view: "home", id: "", scrollForm: true }; }
     if (parts[0] === "sell") { formIntent = "sell"; return { view: "home", id: "", scrollForm: true }; }
     if (parts[0] === "rent") { formIntent = "rent"; return { view: "home", id: "", scrollForm: true }; }
+    if (view === "report" && !CONFIG.showManagement) return { view: "home", id: "", scrollForm: false };
     return { view: ["admin", "report"].includes(view) ? view : "home", id: parts[1] || "", scrollForm: false };
   }
 
@@ -779,10 +1099,10 @@ ${esc(LEGAL_NOTICE)}</div>
           <p class="lead">${esc(CONFIG.intro)}</p>
           <div class="hero-ctas">
             <div class="row">
-              <a class="btn btn-gold" href="${esc(CONFIG.phoneTel)}">${ICONS.phone} 撥打電話</a>
-              <a class="btn btn-outline-gold" href="${esc(CONFIG.lineUrl)}" target="_blank" rel="noopener">${ICONS.line} 加官方 LINE</a>
+              <a class="btn btn-gold" href="${esc(CONFIG.phoneTel)}">${ICONS.svg("phone")} 撥打電話</a>
+              <a class="btn btn-outline-gold" href="${esc(CONFIG.lineUrl)}" target="_blank" rel="noopener">${ICONS.svg("line")} 加官方 LINE</a>
             </div>
-            <a class="btn btn-gold" href="#form-section">${ICONS.form} 免費委託估價</a>
+            <a class="btn btn-gold" href="#form-section">${ICONS.svg("form")} 免費委託估價</a>
           </div>
           <div class="hero-intents">
             <a href="#/buy">我想買房</a>
@@ -796,25 +1116,54 @@ ${esc(LEGAL_NOTICE)}</div>
         <div class="hero-legal">${legalCard()}</div>
       </div>
 
+      <section class="section wrap" id="form-section">
+        <div class="form-card reveal">
+          <div class="section-kicker">留下您的需求</div>
+          <h2>告訴我，您想怎麼處理房子</h2>
+          <div class="gold-line"></div>
+          <p class="sub">先選一項，再依表單留下資料。我會再用電話或 LINE 跟您聯絡。</p>
+          ${intentSwitch()}
+          ${formIntent === "buy" ? renderBuyerForm() : formIntent === "rent" ? renderTenantForm() : renderSellerForm()}
+        </div>
+      </section>
+
+      <hr class="gold-rule wrap-wide" />
+
       <section class="section wrap">
         <div class="reveal">
           <div class="section-kicker">專業服務</div>
-          <h2>買賣、出租、代管</h2>
+          <h2>房屋配對 · 買賣 · 委託</h2>
           <div class="gold-line"></div>
-          <p class="sub">從估價、委託到交屋，以及之後的收租與修繕，都可以找${esc(CONFIG.agentHonorific)}。</p>
+          <p class="sub">從找房、估價到委託曝光，都可以找${esc(CONFIG.agentHonorific)}。</p>
         </div>
         <div class="services-main">
-          <article class="service reveal"><div class="service-ico">${ICONS.buy}</div><div><h3>買賣</h3><p>免費估價、行情分析，以及委託出售的全程陪同。</p></div></article>
-          <article class="service reveal"><div class="service-ico">${ICONS.rent}</div><div><h3>出租</h3><p>協助找適合的房客、看房與合約、交屋注意事項。</p></div></article>
-          <article class="service reveal"><div class="service-ico">${ICONS.manage}</div><div><h3>代管</h3><p>收租、修繕協調，每月為您整理一份清楚的收支報表。</p></div></article>
+          <article class="copy-card reveal">
+            <div class="service-ico">${ICONS.svg("match")}</div>
+            <div class="en">Property Matching</div>
+            <h3>💯房屋配對</h3>
+            <p>輕鬆找房不煩惱</p>
+          </article>
+          <article class="copy-card reveal">
+            <div class="service-ico">${ICONS.svg("buy")}</div>
+            <div class="en">Residential Sales</div>
+            <h3>🏠房產買賣</h3>
+            <p>為您推薦一輩子的家</p>
+          </article>
+          <a class="copy-card reveal" href="#form-section">
+            <div class="service-ico">${ICONS.svg("entrust")}</div>
+            <div class="en">Property Entrustment</div>
+            <h3>🎯歡迎委託</h3>
+            <p>資產配置找津銓</p>
+            <p>六大房仲網站、六大賞屋平台曝光！</p>
+            <div class="go">前往委託估價 →</div>
+          </a>
         </div>
         <div class="expertise">
-          <article class="exp reveal"><div class="ico">${ICONS.match}</div><h3>配對</h3><p>依需求媒合買賣雙方，減少無效看屋。</p></article>
-          <article class="exp reveal"><div class="ico">${ICONS.tax}</div><h3>稅務分析</h3><p>協助梳理買賣與出租的稅務注意事項。</p></article>
-          <article class="exp reveal"><div class="ico">${ICONS.reno}</div><h3>裝修規劃</h3><p>交易前後的修繕與格局建議，對接熟悉廠商。</p></article>
-          <article class="exp reveal"><div class="ico">${ICONS.globe}</div><h3>外國人英文溝通</h3><p>可提供英文溝通，協助外籍人士看屋與簽約。</p></article>
+          <article class="exp reveal"><div class="ico">${ICONS.svg("match")}</div><h3>配對</h3><p>依需求媒合買賣雙方，減少無效看屋。</p></article>
+          <article class="exp reveal"><div class="ico">${ICONS.svg("tax")}</div><h3>稅務分析</h3><p>協助梳理買賣與出租的稅務注意事項。</p></article>
+          <article class="exp reveal"><div class="ico">${ICONS.svg("reno")}</div><h3>裝修規劃</h3><p>交易前後的修繕與格局建議，對接熟悉廠商。</p></article>
+          <article class="exp reveal"><div class="ico">${ICONS.svg("globe")}</div><h3>外國人英文溝通</h3><p>可提供英文溝通，協助外籍人士看屋與簽約。</p></article>
         </div>
-        <article class="service reveal" style="margin-top:10px"><div class="service-ico">${ICONS.land}</div><div><h3>廠房、店面、土地</h3><p>廠房、店面與土地買賣仲介，歡迎先留言說明需求。</p></div></article>
       </section>
 
       <hr class="gold-rule wrap-wide" />
@@ -833,7 +1182,7 @@ ${esc(LEGAL_NOTICE)}</div>
         <div class="ph-grid">
           ${CONFIG.communities.map(c => `
             <article class="ph-card reveal">
-              <div class="ph-art">${ICONS.buy}<span class="sample">待補內容</span></div>
+              <div class="ph-art">${sceneArt("community", c.name)}<span class="sample">待補內容</span></div>
               <div class="body"><h3>${esc(c.name)}</h3><p>桃園市${esc(c.area)}　·　${esc(c.note)}</p></div>
             </article>
           `).join("")}
@@ -850,7 +1199,7 @@ ${esc(LEGAL_NOTICE)}</div>
         <div class="ph-grid">
           ${CONFIG.projects.map(c => `
             <article class="ph-card reveal">
-              <div class="ph-art">${ICONS.reno}<span class="sample">待補內容</span></div>
+              <div class="ph-art">${sceneArt("project", c.name)}<span class="sample">待補內容</span></div>
               <div class="body"><h3>${esc(c.name)}</h3><p>桃園市${esc(c.area)}　·　${esc(c.note)}</p></div>
             </article>
           `).join("")}
@@ -882,17 +1231,7 @@ ${esc(LEGAL_NOTICE)}</div>
         </div>
       </section>
 
-      <hr class="gold-rule wrap" />
-
-      <section class="section wrap" id="form-section">
-        <div class="form-card reveal">
-          <div class="section-kicker">留下您的需求</div>
-          <h2>告訴我，您想怎麼處理房子</h2>
-          <div class="gold-line"></div>
-          <p class="sub">先選一項，再依表單留下資料。我會再用電話或 LINE 跟您聯絡。</p>
-          ${intentSwitch()}
-          ${formIntent === "buy" ? renderBuyerForm() : formIntent === "rent" ? renderTenantForm() : renderSellerForm()}
-        </div>
+      <section class="section wrap">
         ${legalCard()}
         <footer class="site">${esc(CONFIG.title)}　示範模板　表單與報表數字為範例資料</footer>
       </section>`;
@@ -900,7 +1239,7 @@ ${esc(LEGAL_NOTICE)}</div>
 
   function renderSellerForm() {
     return `<form id="lead-form">
-      <p class="sub">想賣、想出租或想委託代管都可以。標示 <span class="req">*</span> 的是必要欄位。</p>
+      <p class="sub">想賣或想出租都可以${CONFIG.showManagement ? "，也可以委託代管" : ""}。標示 <span class="req">*</span> 的是必要欄位。</p>
       <label class="fld"><span>姓名 <i class="req">*</i></span><input type="text" name="name" required placeholder="怎麼稱呼您" autocomplete="name" /></label>
       <label class="fld"><span>電話 <i class="req">*</i></span><input type="tel" name="phone" required placeholder="09xx-xxx-xxx" autocomplete="tel" /></label>
       <label class="fld"><span>LINE ID <i class="opt">選填</i></span><input type="text" name="lineId" placeholder="方便的話可以留 LINE" /></label>
@@ -922,7 +1261,7 @@ ${esc(LEGAL_NOTICE)}</div>
         <div class="choice-grid">
           <label class="choice"><input type="radio" name="need" value="想賣" required /><span>想賣</span></label>
           <label class="choice"><input type="radio" name="need" value="想出租" /><span>想出租</span></label>
-          <label class="choice"><input type="radio" name="need" value="想委託代管" /><span>想代管</span></label>
+          ${CONFIG.showManagement ? `<label class="choice"><input type="radio" name="need" value="想委託代管" /><span>想代管</span></label>` : ""}
         </div>
       </div>
       <label class="fld"><span>期望價格 <i class="opt">選填</i></span><input type="text" name="price" placeholder="例如：售價 1,200 萬，或月租 2.2 萬" /></label>
@@ -1145,19 +1484,19 @@ ${esc(LEGAL_NOTICE)}</div>
           <div class="section-kicker">僅經紀人可見</div>
           <h1>業務後台</h1>
           <div class="gold-line"></div>
-          <p>開發名單與代管物件都在這裡。正式使用時會加上登入保護。以下含範例資料。</p>
+          <p>${CONFIG.showManagement ? "開發名單與代管物件都在這裡。" : "開發名單都在這裡。"}正式使用時會加上登入保護。以下含範例資料。</p>
         </header>
         <div class="stats">
           <div class="stat"><b>${counts["新進"]}</b><span>新進名單</span></div>
           <div class="stat"><b>${buyN}</b><span>買方需求</span></div>
-          <div class="stat"><b>${PROPERTIES.length}</b><span>代管物件</span></div>
-          <div class="stat warn"><b>${unpaid} / ${soon}</b><span>未收租<br>將到期</span></div>
+          ${CONFIG.showManagement ? `<div class="stat"><b>${PROPERTIES.length}</b><span>代管物件</span></div>
+          <div class="stat warn"><b>${unpaid} / ${soon}</b><span>未收租<br>將到期</span></div>` : ""}
         </div>
-        <div class="subtabs">
+        ${CONFIG.showManagement ? `<div class="subtabs">
           <button data-tab="leads" class="${adminTab === "leads" ? "on" : ""}">開發名單</button>
           <button data-tab="props" class="${adminTab === "props" ? "on" : ""}">代管物件</button>
-        </div>
-        <div id="admin-body">${adminTab === "leads" ? leadsHtml : byLandlord}</div>
+        </div>` : ""}
+        <div id="admin-body">${(CONFIG.showManagement && adminTab === "props") ? byLandlord : leadsHtml}</div>
         ${legalCard()}
         <footer class="site">示範版　資料與金額皆為範例　本機儲存的名單不會同步到雲端</footer>
       </div>`;
@@ -1165,7 +1504,7 @@ ${esc(LEGAL_NOTICE)}</div>
 
   function leadCard(l) {
     const tag = l.sample ? "範例" : "新送出";
-    const kind = l.kind || (l.need === "想委託代管" ? "代管" : l.need === "想出租" ? "出租" : l.need === "想買" || l.need === "想租房" ? (l.need === "想租房" ? "租客" : "買方") : "賣方");
+    const kind = l.kind || ((CONFIG.showManagement && l.need === "想委託代管") ? "代管" : l.need === "想出租" ? "出租" : l.need === "想買" || l.need === "想租房" ? (l.need === "想租房" ? "租客" : "買方") : "賣方");
     let extra = "";
     if (kind === "買方") {
       const layout = [l.rooms && l.rooms + "房", l.halls && l.halls + "廳", l.baths && l.baths + "衛"].filter(Boolean).join("");
@@ -1209,6 +1548,7 @@ ${esc(LEGAL_NOTICE)}</div>
   }
 
   function propertyCard(p) {
+    if (!CONFIG.showManagement) return "";
     const soon = expiringSoon(p);
     const days = daysUntil(p.contractEnd);
     return `<article class="card">
@@ -1236,6 +1576,7 @@ ${esc(LEGAL_NOTICE)}</div>
   }
 
   function renderReport(landlordId) {
+    if (!CONFIG.showManagement) return "";
     const landlord = LANDLORDS.find(l => l.id === landlordId) || LANDLORDS[0];
     const props = PROPERTIES.filter(p => p.landlordId === landlord.id);
     const collected = props.filter(p => p.collected);
@@ -1574,7 +1915,7 @@ ${esc(LEGAL_NOTICE)}</div>
     const fd = new FormData(e.target);
     if (!fd.get("consent")) { toast("請先勾選個資同意"); return; }
     const need = fd.get("need");
-    const kind = need === "想委託代管" ? "代管" : need === "想出租" ? "出租" : "賣方";
+    const kind = (CONFIG.showManagement && need === "想委託代管") ? "代管" : need === "想出租" ? "出租" : "賣方";
     saveLeads([{
       id: "u" + Date.now(), kind, name: fd.get("name").trim(), phone: fd.get("phone").trim(),
       lineId: (fd.get("lineId") || "").trim(), address: fd.get("address").trim(), type: fd.get("type"),
@@ -1641,8 +1982,17 @@ ${esc(LEGAL_NOTICE)}</div>
     }
   });
 
+  function setupChrome() {
+    const nav = document.getElementById("demo-nav");
+    if (CONFIG.showManagement && nav && !document.getElementById("nav-report")) {
+      nav.insertAdjacentHTML("beforeend", '<a href="#/report" id="nav-report">屋主月報</a>');
+    }
+    document.querySelectorAll("[data-icon]").forEach(el => { el.innerHTML = ICONS.svg(el.dataset.icon); });
+  }
+
   window.addEventListener("hashchange", render);
   setupIntro();
+  setupChrome();
   render();
   </script>
 </body>
