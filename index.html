@@ -468,6 +468,21 @@ h1,h2,h3,h4{font-weight:400}
 }
 
 </style>
+<script>
+/* ===== 試算表後台設定（全部空白＝使用網站內建內容，跟原本一模一樣） =====
+   APPS_SCRIPT_URL：Apps Script「網頁應用程式」網址（…/exec）。填這一個就能讀物件、網站文字，也能收表單。
+   CSV_LISTINGS_URL / CSV_COPY_URL：（可選）「檔案 → 共用 → 發布到網路」的 CSV 網址，只發布「物件」「網站文字」兩個分頁。
+   SHEET_ID：（可選，不建議）試算表 ID，需設成「知道連結的人可檢視」，會連「客戶留言」一起公開。
+   FORM_ENDPOINT：表單送出網址；空白時用 APPS_SCRIPT_URL。 */
+window.SITE_CONFIG={
+  APPS_SCRIPT_URL:"",
+  CSV_LISTINGS_URL:"",
+  CSV_COPY_URL:"",
+  SHEET_ID:"",
+  FORM_ENDPOINT:"",
+  ICON_BASE:""
+};
+</script>
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body class="v7 " id="top">
@@ -971,13 +986,15 @@ $$("form.lead").forEach(function(f){
 });
 
 /* ---------- listings filter ---------- */
-var deal="全部", cat="全部", cards=$$(".lst"), cnt=$("[data-count]"), empty=$("[data-empty]");
+var deal="全部", cat="全部", cnt=$("[data-count]"), empty=$("[data-empty]");
 function filt(){
-  var n=0; cards.forEach(function(c){var ok=(deal==="全部"||c.dataset.deal===deal)&&(cat==="全部"||c.dataset.cat===cat); c.hidden=!ok; if(ok)n++;});
-  if(cnt)cnt.textContent=n?("共 "+n+" 件範例物件"):"沒有符合的範例物件"; if(empty)empty.hidden=n>0;
+  var n=0, noun=window.__lstNoun||"範例物件"; $$(".lst").forEach(function(c){var ok=(deal==="全部"||c.dataset.deal===deal)&&(cat==="全部"||c.dataset.cat===cat); c.hidden=!ok; if(ok)n++;});
+  if(cnt)cnt.textContent=n?("共 "+n+" 件"+noun):"沒有符合的"+noun; if(empty)empty.hidden=n>0;
 }
+function bindCat(b){b.addEventListener("click",function(){cat=b.dataset.cat;$$("[data-cat]").forEach(function(x){x.setAttribute("aria-pressed",x===b)});filt();})}
 $$("[data-deal]").forEach(function(b){b.addEventListener("click",function(){deal=b.dataset.deal;$$("[data-deal]").forEach(function(x){x.setAttribute("aria-pressed",x===b)});filt();})});
-$$("[data-cat]").forEach(function(b){b.addEventListener("click",function(){cat=b.dataset.cat;$$("[data-cat]").forEach(function(x){x.setAttribute("aria-pressed",x===b)});filt();})});
+$$("[data-cat]").forEach(bindCat);
+window.__lst={filt:filt,bindCat:bindCat};
 
 /* ---------- unsaved-changes guard ---------- */
 var dirty=false, sent=false;
@@ -1154,5 +1171,6 @@ addEventListener("keydown",function(e){ if(e.key==="Escape"&&!say.hidden){say.hi
 })();
 
 </script>
+<script src="sheet.js?v=20261123"></script>
 </body>
 </html>
