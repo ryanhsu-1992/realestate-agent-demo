@@ -206,6 +206,32 @@ body.pv-open .pv{display:flex;position:fixed;inset:0;z-index:60}
   body.is-split .pv{display:flex;position:fixed;top:0;right:0;bottom:0;left:var(--lw);z-index:55;border-left:2px solid var(--fg)}
   body.is-split [data-pv-open],body.is-split [data-pv-close]{display:none!important}
 }
+
+/* export-to-brother (demo only) */
+.exportbar{padding:0 0 10px;display:grid;gap:6px}
+.exportbar .btn{width:100%;background:var(--sun);color:var(--fg);border:2px solid var(--fg);box-shadow:0 4px 0 var(--fg);font-size:16px;min-height:50px}
+.exportbar .btn:active{box-shadow:0 2px 0 var(--fg)}
+.exportbar p{margin:0;font-size:12.5px;color:var(--muted);text-align:center}
+.xsheet{position:fixed;left:0;right:0;bottom:0;top:var(--xtop,0px);z-index:70;display:flex;align-items:flex-end;justify-content:center}
+.xsheet__scrim{position:absolute;inset:0;background:rgb(30 43 43/.45);opacity:0;transition:opacity .25s}
+.xsheet__p{position:relative;width:min(100%,760px);max-height:calc(100% - 8px);overflow:auto;overscroll-behavior:contain;background:var(--bg);border-radius:26px 26px 0 0;border:2px solid var(--fg);border-bottom:0;transform:translateY(100%);transition:transform .35s var(--ease);display:flex;flex-direction:column}
+.xsheet.is-open .xsheet__scrim{opacity:1}.xsheet.is-open .xsheet__p{transform:none}
+@media (min-width:900px){.xsheet{align-items:center;padding:12px}.xsheet__p{border-radius:26px;border-bottom:2px solid var(--fg);max-height:86%}}
+body.is-split .xsheet{right:auto;width:var(--lw);align-items:stretch;padding:0}
+body.is-split .xsheet__p{max-height:none;height:100%;border-radius:0;border-bottom:0;border-right:2px solid var(--fg)}
+body.export-open .toast{bottom:calc(88px + env(safe-area-inset-bottom))}
+body.is-split.export-open .toast{bottom:88px}
+.xsheet__h{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:10px;padding:14px 16px;background:var(--bg);border-bottom:2px solid var(--border);flex:none}
+.xsheet__h h2{flex:1;font-size:20px}
+.xsheet__body{padding:16px;display:grid;gap:12px}
+.xsheet__text{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;background:#fff;border:2px solid var(--border);border-radius:16px;padding:14px;font-family:var(--fb);font-size:14.5px;line-height:1.65}
+.xsheet details{background:#fff;border:2px dashed var(--border);border-radius:16px;padding:10px 14px}
+.xsheet details summary{cursor:pointer;font-weight:700;font-size:14px;color:var(--muted)}
+.xsheet details pre{margin:10px 0 0;white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;line-height:1.45;color:var(--muted);font-family:ui-monospace,Menlo,Consolas,monospace}
+.xsheet__f{position:sticky;bottom:0;display:flex;gap:10px;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:#fff;border-top:2px solid var(--border);flex:none;flex-wrap:wrap}
+.xsheet__f .btn{flex:1;min-width:120px}
+.xsheet__f [data-export-line]{display:none}
+@media (max-width:899px){.xsheet__f [data-export-line]{display:inline-flex}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
 </style>
 </head>
@@ -238,6 +264,10 @@ body.pv-open .pv{display:flex;position:fixed;inset:0;z-index:60}
     <button type="button" class="pv-btn" data-pv-open aria-label="預覽網站"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></svg>預覽<span class="dot" data-pending-dot hidden></span></button>
     <a class="icon-btn" data-site-link href="../" target="_blank" rel="noopener" aria-label="打開網站看看"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>
     <button class="icon-btn" type="button" data-logout aria-label="登出"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l-5-5 5-5M5 12h11"/></svg></button>
+  </div>
+  <div class="wrap exportbar" data-export-bar hidden>
+    <button type="button" class="btn" data-export>把我的修改傳給哥哥</button>
+    <p>按一下會整理你改過的內容並複製，貼到 LINE 傳給哥哥就好</p>
   </div></header>
   <nav class="tabs" role="tablist" aria-label="後台功能">
     <button type="button" role="tab" aria-selected="true" data-tab="listings"><img data-ico="house" alt=""><span>物件</span></button>
@@ -330,6 +360,24 @@ body.pv-open .pv{display:flex;position:fixed;inset:0;z-index:60}
 <datalist id="bts"><option>電梯大樓</option><option>華廈</option><option>公寓</option><option>透天</option><option>套房</option><option>店面</option><option>辦公</option><option>廠房</option><option>建地</option><option>農地</option><option>工業地</option></datalist>
 <div class="toast" role="status" aria-live="polite" data-toast></div>
 
+<div class="xsheet" data-export-sheet hidden>
+  <div class="xsheet__scrim" data-export-close></div>
+  <div class="xsheet__p" role="dialog" aria-modal="true" aria-labelledby="ex-h" tabindex="-1">
+    <div class="xsheet__h"><h2 id="ex-h">傳給哥哥的修改摘要</h2><button type="button" class="icon-btn" data-export-close aria-label="關閉"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <div class="xsheet__body">
+      <pre class="xsheet__text" data-export-text></pre>
+      <details data-export-json-wrap hidden>
+        <summary>給網站管理員用的資料</summary>
+        <pre data-export-json></pre>
+      </details>
+    </div>
+    <div class="xsheet__f">
+      <button type="button" class="btn btn--o" data-export-line>用 LINE 分享</button>
+      <button type="button" class="btn btn--p" data-export-copy>複製</button>
+    </div>
+  </div>
+</div>
+
 <script>
 (function(){
 "use strict";
@@ -418,7 +466,7 @@ function logout(expired){ if(token&&!expired)call("logout").catch(function(){});
   $("[data-view=app]").hidden=true; $("[data-view=login]").hidden=false; $("[data-pv]").hidden=true; document.body.classList.remove("is-split","pv-open"); if(expired)toast("登入過期了，請重新登入",true); }
 $("[data-logout]").addEventListener("click",function(){logout()});
 
-function enter(){ $("[data-view=login]").hidden=true; $("[data-view=app]").hidden=false; $("[data-pv]").hidden=false; setSplit(); loadAll(); }
+function enter(){ $("[data-view=login]").hidden=true; $("[data-view=app]").hidden=false; $("[data-pv]").hidden=false; if(MOCK){$("[data-export-bar]").hidden=false;loadOrig();} setSplit(); loadAll(); }
 function loadAll(){
   $("[data-cards]").innerHTML='<li class="loading"><span class="spin"></span>讀取中…</li>';
   call("list").then(function(j){state.listings=j.listings||[];state.copy=j.copy||[];renderListings();renderCopy();sendDraft();}).catch(function(x){$("[data-cards]").innerHTML='<li class="empty">讀不到資料：'+esc(x.message)+'</li>'});
@@ -622,6 +670,317 @@ $("[data-publish]").addEventListener("click",function(){
   if(Object.keys(dirtyCopy).length)p=p.then(saveCopy);
   b.disabled=true; p.then(function(){sendDraft()}).catch(function(){}).then(function(){b.disabled=false});
 });
+
+
+/* ================= 把我的修改傳給哥哥（僅範例模式） ================= */
+var ORIG_KEY=MK+"-orig", origCache=null, origP=null, lastExport={text:"",json:""};
+function loadOrig(){
+  if(!MOCK)return Promise.resolve(null);
+  if(origCache)return Promise.resolve(origCache);
+  if(origP)return origP;
+  var B=CFG.DEMO_BASE||"../demo/";
+  origP=Promise.all(["listings","copy","leads"].map(function(n){
+    return fetch(B+n+".csv",{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("讀不到原本的範例資料");return r.text();}).then(function(t){return objs(parseCSV(t));});
+  })).then(function(r){
+    origCache={listings:r[0],copy:r[1].map(function(o){return {key:o["代碼"],label:o["位置說明"],value:o["內容"]}}),leads:r[2].reverse()};
+    try{localStorage.setItem(ORIG_KEY,JSON.stringify(origCache));}catch(e){}
+    return origCache;
+  }).catch(function(e){
+    origP=null;
+    try{var s=JSON.parse(localStorage.getItem(ORIG_KEY)||"null"); if(s&&s.listings){origCache=s;return s;}}catch(x){}
+    throw e;
+  });
+  return origP;
+}
+function nv(v){return String(v==null?"":v).trim();}
+function isEmbPhoto(u){return /^(data:|blob:)/i.test(nv(u));}
+function skipField(k){return k==="_row"||k==="更新時間";}
+function photoHuman(v){
+  var list=splitPhotos(v);
+  if(!list.length)return "（沒有照片）";
+  var emb=list.filter(isEmbPhoto).length;
+  return emb?("有 "+list.length+" 張（含這台裝置上的照片，請另外用 LINE 傳）"):("有 "+list.length+" 張");
+}
+function fieldHuman(k,v){
+  if(k==="照片網址")return photoHuman(v);
+  if(k==="上架")return yes(v)?"上架":"下架";
+  if(k==="範例")return yes(v)?"是":"否";
+  return nv(v)||"（空白）";
+}
+function sameField(k,a,b){
+  if(k==="上架"||k==="範例")return yes(a)===yes(b);
+  if(k==="照片網址"){
+    var A=splitPhotos(a),B=splitPhotos(b);
+    if(A.length!==B.length)return false;
+    for(var i=0;i<A.length;i++)if(A[i]!==B[i])return false;
+    return true;
+  }
+  return nv(a)===nv(b);
+}
+function photosAdded(oldV,newV){
+  var A=splitPhotos(oldV), B=splitPhotos(newV), added=false, need=false;
+  B.forEach(function(u){ if(A.indexOf(u)<0){ added=true; if(isEmbPhoto(u))need=true; } });
+  return {added:added,needLine:need};
+}
+function stripListing(o){
+  var x=clone(o||{}), list=splitPhotos(x["照片網址"]);
+  if(x._row!=null)delete x._row;
+  if(list.length)x["照片網址"]=list.map(function(u){return isEmbPhoto(u)?"__PHOTO_VIA_LINE__":u;}).join("\n");
+  return x;
+}
+function workingData(){
+  var listings=state.listings.map(function(o){return Object.assign({},o);});
+  var unpublished=Object.keys(dirtyCopy).length>0;
+  if(typeof editorDirty==="function"&&editorDirty()){
+    unpublished=true;
+    var o=readEditor();
+    if(editing){
+      var i=state.listings.indexOf(editing);
+      if(i>=0)listings[i]=Object.assign({},editing,o);
+    }else{
+      if(!o["編號"])o["編號"]="__new__";
+      listings.push(o);
+    }
+  }
+  var copy=state.copy.map(function(c){return {key:c.key,label:c.label,value:c.value};});
+  Object.keys(dirtyCopy).forEach(function(k){
+    var hit=false;
+    copy.forEach(function(c){if(c.key===k){c.value=dirtyCopy[k];hit=true;}});
+    if(!hit)copy.push({key:k,label:"",value:dirtyCopy[k]});
+  });
+  return {listings:listings,copy:copy,leads:(state.leads||[]).map(function(l){return Object.assign({},l);}),unpublished:unpublished};
+}
+function nowTW(){
+  var parts=new Intl.DateTimeFormat("zh-TW",{timeZone:"Asia/Taipei",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hour12:false}).formatToParts(new Date());
+  var g={}; parts.forEach(function(p){g[p.type]=p.value;});
+  return g.year+"/"+g.month+"/"+g.day+" "+g.hour+":"+g.minute;
+}
+function buildExport(orig,cur){
+  var lines=[], json={v:1,source:"preview-sheet-admin",time:nowTW()+"（台北時間）",unpublished:!!cur.unpublished,photosNeedLine:false,
+    listings:{added:[],edited:[],removed:[],hidden:[],shown:[]},copy:[],leads:[]};
+  var oMap={}, cMap={};
+  (orig.listings||[]).forEach(function(o){oMap[nv(o["編號"])]=o;});
+  (cur.listings||[]).forEach(function(o){cMap[nv(o["編號"])]=o;});
+
+  var added=[], edited=[], removed=[], hidden=[], shown=[];
+  Object.keys(cMap).forEach(function(id){
+    var now=cMap[id], was=oMap[id];
+    if(!id||id==="__new__"||!was){
+      added.push(now);
+      var ph=photosAdded("",now["照片網址"]); if(ph.needLine)json.photosNeedLine=true;
+      json.listings.added.push(stripListing(now));
+      return;
+    }
+    var changes={}, keys=[], seen={};
+    COLS.concat(Object.keys(was),Object.keys(now)).forEach(function(k){
+      if(skipField(k)||seen[k])return; seen[k]=1;
+      if(!sameField(k,was[k],now[k])){changes[k]={from:nv(was[k]),to:nv(now[k])};keys.push(k);}
+    });
+    if(!keys.length)return;
+    var ph=photosAdded(was["照片網址"],now["照片網址"]); if(ph.needLine)json.photosNeedLine=true;
+    if(keys.length===1&&keys[0]==="上架"){
+      if(yes(was["上架"])&&!yes(now["上架"])){hidden.push(now);json.listings.hidden.push({id:id,title:nv(now["標題"])});return;}
+      if(!yes(was["上架"])&&yes(now["上架"])){shown.push(now);json.listings.shown.push({id:id,title:nv(now["標題"])});return;}
+    }
+    edited.push({id:id,item:now,was:was,keys:keys,changes:changes});
+    var rec={id:id,title:nv(now["標題"]),changes:changes};
+    if(ph.needLine)rec.photosNeedLine=true;
+    json.listings.edited.push(rec);
+    if(yes(was["上架"])&&!yes(now["上架"]))json.listings.hidden.push({id:id,title:nv(now["標題"])});
+    if(!yes(was["上架"])&&yes(now["上架"]))json.listings.shown.push({id:id,title:nv(now["標題"])});
+  });
+  Object.keys(oMap).forEach(function(id){
+    if(!cMap[id]){removed.push(oMap[id]);json.listings.removed.push({id:id,title:nv(oMap[id]["標題"])});}
+  });
+
+  var copyChanges=[];
+  var oCopy={}, cCopy={};
+  (orig.copy||[]).forEach(function(c){oCopy[c.key]=c;});
+  (cur.copy||[]).forEach(function(c){cCopy[c.key]=c;});
+  Object.keys(cCopy).forEach(function(k){
+    var a=oCopy[k]?oCopy[k].value:"", b=cCopy[k].value;
+    if(nv(a)===nv(b))return;
+    var label=cCopy[k].label||(oCopy[k]&&oCopy[k].label)||k;
+    copyChanges.push({key:k,label:label,from:nv(a),to:nv(b)});
+    json.copy.push({key:k,label:label,from:nv(a),to:nv(b)});
+  });
+  Object.keys(oCopy).forEach(function(k){
+    if(!cCopy[k]&&nv(oCopy[k].value)){
+      var label=oCopy[k].label||k;
+      copyChanges.push({key:k,label:label,from:nv(oCopy[k].value),to:""});
+      json.copy.push({key:k,label:label,from:nv(oCopy[k].value),to:""});
+    }
+  });
+
+  var leadChanges=[];
+  var oLead={}, cLead={};
+  function leadId(l){return l._row!=null?String(l._row):[l["時間"],l["姓名"],l["電話"]].join("|");}
+  (orig.leads||[]).forEach(function(l){oLead[leadId(l)]=l;});
+  (cur.leads||[]).forEach(function(l){cLead[leadId(l)]=l;});
+  Object.keys(cLead).forEach(function(id){
+    var now=cLead[id], was=oLead[id];
+    if(!was){
+      leadChanges.push({name:nv(now["姓名"])||"（沒留名字）",kind:"new",item:now});
+      json.leads.push({row:now._row,name:nv(now["姓名"]),change:"added",item:{姓名:nv(now["姓名"]),電話:nv(now["電話"]),需求類型:nv(now["需求類型"]),處理狀態:nv(now["處理狀態"])}});
+      return;
+    }
+    if(nv(was["處理狀態"])!==nv(now["處理狀態"])){
+      leadChanges.push({name:nv(now["姓名"])||"（沒留名字）",kind:"status",from:nv(was["處理狀態"])||"新留言",to:nv(now["處理狀態"])});
+      json.leads.push({row:now._row,name:nv(now["姓名"]),change:"status",from:nv(was["處理狀態"])||"新留言",to:nv(now["處理狀態"])});
+    }
+  });
+
+  var empty=!added.length&&!edited.length&&!removed.length&&!hidden.length&&!shown.length&&!copyChanges.length&&!leadChanges.length;
+  if(empty)return {empty:true,text:"目前沒有修改",json:null,full:"目前沒有修改"};
+
+  lines.push("範例後台修改摘要");
+  lines.push("產生時間："+json.time);
+  lines.push("（只存在這台裝置，還沒上到正式網站）");
+  if(cur.unpublished)lines.push("裡面也含還沒按「發布」的修改。");
+  lines.push("");
+
+  function dumpNew(o){
+    var title=nv(o["標題"])||"（未命名）";
+    var id=nv(o["編號"]);
+    lines.push("・"+title+(id&&id!=="__new__"?"（"+id+"）":""));
+    COLS.forEach(function(k){
+      if(skipField(k)||k==="標題"||k==="編號")return;
+      var v=o[k];
+      if(k!=="上架"&&k!=="類型"&&!nv(v))return;
+      lines.push("　"+k+"："+fieldHuman(k,v));
+    });
+  }
+  if(added.length){
+    lines.push("【新增物件】");
+    added.forEach(dumpNew);
+    lines.push("");
+  }
+  if(edited.length){
+    lines.push("【修改物件】");
+    edited.forEach(function(e){
+      lines.push("・"+(nv(e.item["標題"])||"（未命名）")+"（"+e.id+"）");
+      e.keys.forEach(function(k){
+        lines.push("　"+k+"：原本 "+fieldHuman(k,e.was[k])+"，改成 "+fieldHuman(k,e.item[k]));
+      });
+    });
+    lines.push("");
+  }
+  if(removed.length||hidden.length){
+    lines.push("【下架或刪除】");
+    removed.forEach(function(o){lines.push("・已刪除「"+(nv(o["標題"])||"（未命名）")+"」（"+nv(o["編號"])+"）");});
+    hidden.forEach(function(o){lines.push("・已下架「"+(nv(o["標題"])||"（未命名）")+"」（"+nv(o["編號"])+"）");});
+    lines.push("");
+  }
+  if(shown.length){
+    lines.push("【重新上架】");
+    shown.forEach(function(o){lines.push("・「"+(nv(o["標題"])||"（未命名）")+"」（"+nv(o["編號"])+"）已改為上架");});
+    lines.push("");
+  }
+  if(copyChanges.length){
+    lines.push("【網站文字】");
+    copyChanges.forEach(function(c){
+      lines.push("・"+c.label);
+      lines.push("　原本："+(c.from||"（空白）"));
+      lines.push("　改成："+(c.to||"（空白）"));
+    });
+    lines.push("");
+  }
+  if(leadChanges.length){
+    lines.push("【客戶留言】");
+    leadChanges.forEach(function(l){
+      if(l.kind==="new")lines.push("・新增「"+l.name+"」的留言");
+      else lines.push("・"+l.name+"：處理狀態原本「"+l.from+"」，改成「"+l.to+"」");
+    });
+    lines.push("");
+  }
+  if(json.photosNeedLine){
+    lines.push("有物件加了新照片。範例後台的照片沒辦法一起傳過去，照片請另外用 LINE 傳。");
+    lines.push("");
+  }
+  var human=lines.join("\n").replace(/\n+$/,"")+"\n";
+  var jsonText=JSON.stringify(json,null,2);
+  var full=human+"\n（以下給網站管理員用）\n"+jsonText+"\n";
+  return {empty:false,text:human,json:jsonText,full:full,data:json};
+}
+function copyText(text){
+  function fallback(){
+    return new Promise(function(res,rej){
+      var ta=document.createElement("textarea");
+      ta.value=text; ta.setAttribute("readonly","");
+      ta.style.cssText="position:fixed;top:0;left:0;width:1px;height:1px;opacity:0";
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      try{ ta.setSelectionRange(0,text.length); }catch(e){}
+      var ok=false;
+      try{ok=document.execCommand("copy");}catch(e){}
+      document.body.removeChild(ta);
+      ok?res():rej(new Error("copy"));
+    });
+  }
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    return navigator.clipboard.writeText(text).catch(function(){return fallback();});
+  }
+  return fallback();
+}
+function openExport(ex){
+  lastExport=ex;
+  var sheet=$("[data-export-sheet]"), bar=$("[data-export-bar]"), top=$(".top");
+  var y=0;
+  if(top){var r=top.getBoundingClientRect(); y=Math.max(0,Math.round(r.bottom));}
+  else if(bar){var r2=bar.getBoundingClientRect(); y=Math.max(0,Math.round(r2.bottom));}
+  sheet.style.setProperty("--xtop",y+"px");
+  $("[data-export-text]").textContent=ex.text;
+  var wrap=$("[data-export-json-wrap]");
+  if(ex.json){wrap.hidden=false;$("[data-export-json]").textContent=ex.json;wrap.open=false;}
+  else {wrap.hidden=true;$("[data-export-json]").textContent="";}
+  sheet.hidden=false;
+  document.body.classList.add("export-open");
+  requestAnimationFrame(function(){sheet.classList.add("is-open");});
+  var btn=$("[data-export-copy]"); if(btn)btn.focus();
+}
+function closeExport(){
+  var sheet=$("[data-export-sheet]");
+  sheet.classList.remove("is-open");
+  document.body.classList.remove("export-open");
+  setTimeout(function(){if(!sheet.classList.contains("is-open"))sheet.hidden=true;},300);
+}
+function shareLine(text){
+  if(navigator.share){
+    return navigator.share({title:"範例後台修改摘要",text:text}).catch(function(e){
+      if(e&&e.name==="AbortError")return;
+      fallback();
+    });
+  }
+  fallback();
+  function fallback(){
+    var url="https://line.me/R/share?text="+encodeURIComponent(text);
+    if(url.length>1800){toast("內容比較長，沒辦法直接開 LINE，請用「複製」後到 LINE 貼上",true);return;}
+    var a=document.createElement("a"); a.href=url; a.target="_blank"; a.rel="noopener"; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  }
+}
+function doExport(){
+  if(!MOCK){toast("這個功能只在範例後台使用",true);return;}
+  var btn=$("[data-export]");
+  btn.disabled=true;
+  loadOrig().then(function(orig){
+    if(!orig)throw new Error("讀不到原本的範例資料");
+    var ex=buildExport(orig,workingData());
+    if(ex.empty){toast("目前沒有修改");return;}
+    openExport(ex);
+    return copyText(ex.full).then(function(){toast("已複製，貼到 LINE 傳給哥哥就好");},function(){toast("請按「複製」把內容拷起來",true);});
+  }).catch(function(x){toast((x&&x.message)||"整理修改時出錯了",true);})
+  .then(function(){btn.disabled=false;});
+}
+if(MOCK){
+  $("[data-export]").addEventListener("click",doExport);
+  $("[data-export-copy]").addEventListener("click",function(){
+    if(!lastExport.full)return;
+    copyText(lastExport.full).then(function(){toast("已複製，貼到 LINE 傳給哥哥就好");},function(){toast("複製失敗，請長按文字自行選取",true);});
+  });
+  $("[data-export-line]").addEventListener("click",function(){ if(lastExport.full)shareLine(lastExport.full); });
+  $$("[data-export-close]").forEach(function(b){b.addEventListener("click",closeExport);});
+  addEventListener("keydown",function(e){if(e.key==="Escape"&&$("[data-export-sheet]")&&!$("[data-export-sheet]").hidden)closeExport();});
+  loadOrig();
+}
 
 /* 同一個分頁重新整理時保持登入 */
 try{var t=sessionStorage.getItem("xjq-admin-tok"); if(t&&(MOCK||API)){token=t;enter();}}catch(e){}
