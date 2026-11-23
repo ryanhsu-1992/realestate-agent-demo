@@ -157,11 +157,14 @@ select.input{appearance:none;background-image:linear-gradient(45deg,transparent 
 
 /* services */
 .svc-list{display:grid;gap:clamp(16px,2.5vw,28px)}
-.svc{display:grid;gap:18px;padding:clamp(22px,3.5vw,36px);border-radius:calc(var(--radius) + 8px);background:var(--card);border:1px solid var(--border)}
-.svc__ico{width:112px;height:112px}
+.svc{display:grid;gap:16px;padding:clamp(22px,3.5vw,36px);border-radius:calc(var(--radius) + 8px);background:var(--card);border:1px solid var(--border)}
+.svc__head{display:flex;align-items:center;gap:12px;min-width:0}
+.svc__art{flex:none;line-height:0}
+.svc__ico{width:64px;height:64px}
+.svc__titles{min-width:0;flex:1}
 .svc__title{font-size:clamp(20px,2.6vw,25px);letter-spacing:-.005em}
-.svc__en{margin-top:4px;font-family:var(--font-latin);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-foreground)}
-.dots{margin-top:16px;display:grid;gap:10px}
+.svc__en{margin-top:2px;font-family:var(--font-latin);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-foreground)}
+.dots{margin-top:2px;display:grid;gap:10px}
 .dots li{position:relative;padding-left:1.2em;font-size:15.5px;line-height:1.7}
 .dots li::before{content:"・";position:absolute;left:-.25em;top:0;color:var(--primary);font-weight:700}
 .svc__go{display:inline-flex;align-items:center;gap:6px;margin-top:18px;min-height:44px;font-weight:700;text-decoration:none;color:var(--primary)}
@@ -337,12 +340,12 @@ h1,h2,h3,h4{font-weight:400}
 .chip span{border-width:2px}
 .input{border-width:2px;border-radius:14px}
 .svc-list{gap:22px}
-@media (min-width:860px){.svc-list{grid-template-columns:repeat(6,1fr)}.svc--match{grid-column:span 3}.svc--sales{grid-column:span 3}.svc--entrust{grid-column:1/-1;grid-template-columns:180px 1fr;align-items:center}}
+@media (min-width:860px){.svc-list{grid-template-columns:repeat(6,1fr)}.svc--match{grid-column:span 3}.svc--sales{grid-column:span 3}.svc--entrust{grid-column:1/-1}.svc__head{gap:16px}.svc__ico{width:72px;height:72px}}
 .svc{border:3px solid var(--foreground);border-radius:28px;box-shadow:0 8px 0 var(--foreground)}
 .svc--match{background:#E3F4F1}
 .svc--sales{background:#FFF0C7}
 .svc--entrust{background:#FFE3DA}
-.svc__ico{width:120px;height:120px;filter:drop-shadow(0 10px 10px rgb(0 0 0/.15))}
+.svc__ico{filter:drop-shadow(0 6px 6px rgb(0 0 0/.15))}
 .svc__en{color:var(--primary);font-weight:700}
 .dots li::before{color:var(--coral)}
 .sec--services{background:#fff}
@@ -713,18 +716,18 @@ h1,h2,h3,h4{font-weight:400}
 <section class="sec sec--services" id="services" aria-labelledby="svc-h"><div class="wrap">
   <div class="sec-head "><h2 class="sec-h" id="svc-h">房屋配對 · 買賣 · 委託</h2><p class="sec-sub">從找房、估價到委託曝光，都可以找許先生。</p></div>
   <div class="svc-list"><article class="svc svc--match reveal">
-  <div class="svc__art"><img class="svc__ico" src="icons/handshake.webp" alt="" width="160" height="160" loading="lazy" decoding="async"></div>
-  <div class="svc__body"><h3 class="svc__title">房屋配對｜輕鬆找房不煩惱</h3><p class="svc__en" lang="en">Property Matching</p>
+  <div class="svc__head"><div class="svc__art"><img class="svc__ico" src="icons/handshake.webp" alt="" width="72" height="72" loading="lazy" decoding="async"></div><div class="svc__titles"><h3 class="svc__title">房屋配對｜輕鬆找房不煩惱</h3><p class="svc__en" lang="en">Property Matching</p></div></div>
+  <div class="svc__body">
   <ul class="dots"><li>提供優質房子，嚴選房客住戶，能夠英文溝通對外國人友善！</li><li>歡迎公司行號、人力仲介洽詢房屋、廠房、店面、土地！</li><li>短期租屋租金另議！租屋成功會收取租金半個月服務費！</li></ul></div>
 </article>
 <article class="svc svc--sales reveal">
-  <div class="svc__art"><img class="svc__ico" src="icons/house.webp" alt="" width="160" height="160" loading="lazy" decoding="async"></div>
-  <div class="svc__body"><h3 class="svc__title">房產買賣｜為您精選好房屋</h3><p class="svc__en" lang="en">Residential Sales</p>
+  <div class="svc__head"><div class="svc__art"><img class="svc__ico" src="icons/house.webp" alt="" width="72" height="72" loading="lazy" decoding="async"></div><div class="svc__titles"><h3 class="svc__title">房產買賣｜為您精選好房屋</h3><p class="svc__en" lang="en">Residential Sales</p></div></div>
+  <div class="svc__body">
   <ul class="dots"><li>為您做市場趨勢、稅務分析、投資方向建議！</li><li>室內裝修、格局規劃推薦，一齊打造理想生活樣貌！</li><li>開價不等於成交價，勇敢出價、先享受世界！</li></ul></div>
 </article>
 <article class="svc svc--entrust reveal">
-  <div class="svc__art"><img class="svc__ico" src="icons/key.webp" alt="" width="160" height="160" loading="lazy" decoding="async"></div>
-  <div class="svc__body"><h3 class="svc__title">歡迎委託｜資產配置找津銓</h3><p class="svc__en" lang="en">Property Entrustment</p>
+  <div class="svc__head"><div class="svc__art"><img class="svc__ico" src="icons/key.webp" alt="" width="72" height="72" loading="lazy" decoding="async"></div><div class="svc__titles"><h3 class="svc__title">歡迎委託｜資產配置找津銓</h3><p class="svc__en" lang="en">Property Entrustment</p></div></div>
+  <div class="svc__body">
   <ul class="dots"><li>誠摯邀請您：若剛好有不動產買賣／稅務規劃／周遭行情分析等需求</li><li>歡迎隨時聯絡，請給津銓服務的機會，共創房產價值！</li><li>一人委託即享受團隊服務！住商機構聯賣全台約650家分店！</li><li>六大房仲網站、六大賞屋平台曝光！</li></ul><a class="svc__go" href="#form" data-go-intent="sell">前往委託估價<svg class="i i--arrow" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12h15M14 6.5l5.5 5.5-5.5 5.5"/></svg></a></div>
 </article></div></div></section>
 <section class="sec sec--listings" id="listings" aria-labelledby="lst-h"><div class="wrap">
