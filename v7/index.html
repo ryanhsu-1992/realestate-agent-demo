@@ -320,7 +320,8 @@ h1,h2,h3,h4{font-weight:400}
 .sticker--a{left:2%;top:6%;transform:rotate(-6deg);color:var(--primary)}
 .sticker--b{right:2%;bottom:8%;transform:rotate(5deg);background:var(--coral);color:#fff}
 .hood__float{position:absolute;z-index:2;width:76px;filter:drop-shadow(0 10px 10px rgb(0 0 0/.18));animation:bob 5s ease-in-out infinite}
-.hood__float--1{right:6%;top:2%}
+.hood__float--1{right:-2%;top:-6%}
+@media (max-width:979px){.hood__float--1{width:60px;right:-3.5%;top:-7%}}
 .hood__float--2{left:12%;bottom:4%;animation-delay:-2.5s}
 @keyframes bob{50%{transform:translateY(-8px) rotate(4deg)}}
 .wave{display:block;width:100%;height:36px}
@@ -405,8 +406,12 @@ h1,h2,h3,h4{font-weight:400}
 /* walker (rigged SVG, driven by JS) */
 .town__walker{position:absolute;left:0;top:0;z-index:4;width:7.07%;padding:0;border:0;background:none;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;will-change:transform}
 /* walker: frame-based clay sprite (20 frames) */
-.town__walker::before{content:"";position:absolute;left:30%;right:30%;bottom:.4%;height:4.5%;border-radius:50%;background:radial-gradient(closest-side,rgb(52 60 24/.38),rgb(52 60 24/0))}
-.town__walker .w{position:relative;display:block;width:100%;aspect-ratio:144/234;background:url(../icons/walker-sprite.webp) 0 0/2000% 100% no-repeat;transform-origin:50% 98%}
+/* grounded clay walker: per-frame ground shadow (contact AO under each sole + soft cast shadow toward lower-right, same light as the town) */
+.town__walker .sh{position:absolute;left:-33.333%;width:200%;top:88.462%;aspect-ratio:3/1;background:url(../icons/walker-shadow.webp?v=20261123) 0 0/2100% 100% no-repeat;pointer-events:none;transform-origin:23.6% 22.9%;transition:opacity .8s ease}
+.town__walker.is-hop .sh{animation:shop .6s linear}
+@keyframes shop{0%{scale:1;opacity:1}15%{scale:1.06 1;opacity:1}50%{scale:.72;opacity:.5}80%,100%{scale:1;opacity:1}}
+[data-town].is-night .town__walker .sh{opacity:.72}
+.town__walker .w{position:relative;display:block;width:100%;aspect-ratio:144/234;background:url(../icons/walker-lit-sprite.webp?v=20261123) 0 0/2100% 100% no-repeat;transform-origin:50% 98%}
 .town__walker .w.is-flip{transform:scaleX(-1)}
 .town__walker .w.is-tilt{transform:rotate(-4deg)}
 .town__walker .w.is-flip.is-tilt{transform:scaleX(-1) rotate(-4deg)}
@@ -442,7 +447,7 @@ h1,h2,h3,h4{font-weight:400}
 .town__banner{position:absolute;z-index:8;left:50%;top:38%;translate:-50% -50%;background:var(--coral);color:#fff;border:3px solid var(--foreground);border-radius:22px;padding:12px 22px;font-family:var(--font-display);font-size:clamp(22px,5vw,32px);box-shadow:5px 5px 0 var(--foreground);white-space:nowrap;animation:say .4s cubic-bezier(.22,1,.36,1)}
 .town__banner small{display:block;font-family:var(--font-body);font-size:14px;font-weight:700;color:#FFE9A8}
 [data-town].is-paused *,[data-town].is-paused{animation-play-state:paused!important}
-[data-town].is-paused .town__say,[data-town].is-paused .town__banner,[data-town].is-paused .town__pop,[data-town].is-paused .town__gg,[data-town].is-paused .town__shd,[data-town].is-paused .town__party i,[data-town].is-paused .is-jig img,[data-town].is-paused .is-hop .w{animation-play-state:running!important}
+[data-town].is-paused .town__say,[data-town].is-paused .town__banner,[data-town].is-paused .town__pop,[data-town].is-paused .town__gg,[data-town].is-paused .town__shd,[data-town].is-paused .town__party i,[data-town].is-paused .is-jig img,[data-town].is-paused .is-hop .w,[data-town].is-paused .is-hop .sh{animation-play-state:running!important}
 /* night: the whole diorama (incl. key pedestal, walker) shares one filter */
 [data-town].is-night .town__sun{background:#1F3557}
 [data-town].is-night .town__scene{filter:brightness(.56) saturate(.72) hue-rotate(-14deg)}
@@ -455,7 +460,7 @@ h1,h2,h3,h4{font-weight:400}
 @media (prefers-reduced-motion:reduce){
  .town{transition:none;transform:none!important}
  .town__amb,.sticker,.hood__float,.hood__blob,.town__glow,.town__glint{animation:none!important}
- .town__pop.is-pop,.town__gg.is-pop,.town__shd.is-pop,.is-jig img,.is-hop .w{animation:none!important}
+ .town__pop.is-pop,.town__gg.is-pop,.town__shd.is-pop,.is-jig img,.is-hop .w,.is-hop .sh{animation:none!important}
  .town__pause{display:none}
 }
 
@@ -511,7 +516,7 @@ h1,h2,h3,h4{font-weight:400}
           <span class="town__amb town__amb--tree" style="clip-path:polygon(2.34% 32.57%,5.47% 31.29%,8.44% 33.46%,8.75% 44.06%,7.03% 49.17%,3.91% 49.17%,2.34% 43.42%);transform-origin:5.47% 48.53%;animation-duration:4.6s;animation-delay:-1.1s" aria-hidden="true"></span><span class="town__amb town__amb--tree" style="clip-path:polygon(48.44% 12.13%,51.72% 11.24%,54.69% 14.05%,54.84% 26.18%,52.50% 33.46%,50.39% 33.46%,48.28% 25.54%);transform-origin:51.56% 32.95%;animation-duration:5.3s;animation-delay:-3.4s" aria-hidden="true"></span><span class="town__amb town__amb--tree" style="clip-path:polygon(44.53% 31.29%,47.27% 30.40%,50.00% 32.57%,50.16% 42.15%,48.05% 46.62%,46.48% 46.62%,44.38% 41.51%);transform-origin:47.27% 45.98%;animation-duration:4.1s;animation-delay:-0.6s" aria-hidden="true"></span><span class="town__amb town__amb--tree" style="clip-path:polygon(92.58% 34.23%,95.47% 33.21%,98.28% 35.76%,98.44% 47.25%,96.25% 52.11%,94.14% 52.11%,92.34% 46.62%);transform-origin:95.31% 51.34%;animation-duration:5.8s;animation-delay:-2.2s" aria-hidden="true"></span>
           <span class="town__amb town__amb--flag town__pop--flag" data-pop="flag" style="clip-path:polygon(64.77% 54.66%,72.27% 56.96%,70.78% 61.05%,72.03% 65.64%,64.77% 64.62%);transform-origin:64.77% 60.03%" aria-hidden="true"></span>
           <span class="town__shd" data-shd="apt" style="left:39.22%;top:33.97%;width:15.81%" aria-hidden="true"></span><span class="town__shd" data-shd="shop1" style="left:66.33%;top:38.95%;width:17.03%" aria-hidden="true"></span><span class="town__shd" data-shd="house" style="left:16.95%;top:52.23%;width:18.47%" aria-hidden="true"></span><span class="town__shd" data-shd="shop2" style="left:85.16%;top:55.68%;width:17.68%" aria-hidden="true"></span><span class="town__shd" data-shd="cottage" style="left:33.75%;top:66.79%;width:14.59%" aria-hidden="true"></span><span class="town__pop" data-pop="apt" style="transform-origin:39.45% 39.59%" aria-hidden="true"><img class="town__cut" src="../icons/bld-apt.webp" alt="" style="left:30.16%;top:1.02%;width:17.66%;height:38.06%" decoding="async"></span><img class="town__cut town__over" src="../icons/bld-pot.webp" alt="" style="left:39.69%;top:35.25%;width:3.20%;height:5.24%" decoding="async" aria-hidden="true"><span class="town__pop" data-pop="shop1" style="transform-origin:64.84% 45.34%" aria-hidden="true"><img class="town__cut" src="../icons/bld-shop1.webp" alt="" style="left:55.47%;top:7.66%;width:19.14%;height:36.78%" decoding="async"><span class="town__amb town__amb--awn" style="clip-path:polygon(55.62% 23.24%,57.42% 17.88%,66.56% 21.71%,66.56% 30.14%,64.84% 30.65%,55.62% 26.56%);transform-origin:60.94% 20.43%;animation-duration:3.3s;animation-delay:-0.9s" aria-hidden="true"></span></span><span class="town__pop" data-pop="house" style="transform-origin:16.80% 56.19%" aria-hidden="true"><img class="town__cut" src="../icons/bld-house.webp" alt="" style="left:6.72%;top:16.99%;width:20.62%;height:40.61%" decoding="async"></span><span class="town__pop" data-pop="shop2" style="transform-origin:82.81% 60.03%" aria-hidden="true"><img class="town__cut" src="../icons/bld-shop2.webp" alt="" style="left:73.28%;top:22.86%;width:19.92%;height:38.44%" decoding="async"><span class="town__amb town__amb--awn" style="clip-path:polygon(74.61% 36.02%,76.17% 32.18%,85.62% 36.40%,85.62% 46.62%,83.59% 47.00%,74.61% 40.61%);transform-origin:79.69% 34.48%;animation-duration:3.9s;animation-delay:-2.6s" aria-hidden="true"></span></span><span class="town__pop" data-pop="cottage" style="transform-origin:33.59% 69.60%" aria-hidden="true"><img class="town__cut" src="../icons/bld-cottage.webp" alt="" style="left:25.08%;top:40.87%;width:16.56%;height:30.52%" decoding="async"></span>
-          <button type="button" class="town__walker" data-walker aria-label="拿著鑰匙的津銓（點我）"><span class="w" aria-hidden="true"></span></button>
+          <button type="button" class="town__walker" data-walker aria-label="拿著鑰匙的津銓（點我）"><span class="sh" aria-hidden="true"></span><span class="w" aria-hidden="true"></span></button>
         </div>
         <div class="town__glows" aria-hidden="true"><span class="town__glow" style="left:59.38%;top:47.25%;--d:92ms;--t:2.42s" ></span><span class="town__gg" data-gg="apt" style="transform-origin:39.45% 39.59%"><span class="town__glow" style="left:36.56%;top:13.03%;--d:411ms;--t:3.31s" ></span><span class="town__glow" style="left:41.41%;top:11.75%;--d:548ms;--t:3.68s" ></span><span class="town__glow" style="left:36.72%;top:21.71%;--d:685ms;--t:4.05s" ></span><span class="town__glow" style="left:41.56%;top:20.69%;--d:122ms;--t:2.52s" ></span><span class="town__glow" style="left:44.22%;top:27.33%;--d:259ms;--t:2.89s" ></span><span class="town__glow" style="left:44.22%;top:19.16%;--d:396ms;--t:3.26s" ></span><span class="town__glow" style="left:36.09%;top:30.14%;--d:533ms;--t:3.63s" ></span></span><span class="town__gg" data-gg="shop1" style="transform-origin:64.84% 45.34%"><span class="town__glow" style="left:60.94%;top:31.93%;--d:670ms;--t:4.00s" ></span><span class="town__glow" style="left:70.70%;top:30.40%;--d:107ms;--t:2.47s" ></span></span><span class="town__gg" data-gg="house" style="transform-origin:16.80% 56.19%"><span class="town__glow" style="left:12.11%;top:33.46%;--d:0ms;--t:2.20s" ></span><span class="town__glow" style="left:14.84%;top:46.62%;--d:137ms;--t:2.57s" ></span><span class="town__glow" style="left:23.44%;top:44.06%;--d:274ms;--t:2.94s" ></span></span><span class="town__gg" data-gg="shop2" style="transform-origin:82.81% 60.03%"><span class="town__glow" style="left:79.30%;top:45.98%;--d:244ms;--t:2.84s" ></span><span class="town__glow" style="left:89.06%;top:44.96%;--d:381ms;--t:3.21s" ></span></span><span class="town__gg" data-gg="cottage" style="transform-origin:33.59% 69.60%"><span class="town__glow" style="left:31.09%;top:59.77%;--d:518ms;--t:3.58s" ></span><span class="town__glow" style="left:37.66%;top:57.73%;--d:655ms;--t:3.95s" ></span></span></div>
         <button type="button" class="town__hot" data-bld="house" data-word="透天" data-cat="四房以上" style="left:7.42%;top:17.88%;width:19.53%;height:38.31%" aria-label="透天厝（看四房以上範例物件）"></button><button type="button" class="town__hot" data-bld="apt" data-word="華廈" data-cat="三房" style="left:29.69%;top:1.53%;width:20.31%;height:37.42%" aria-label="華廈大樓（看三房範例物件）"></button><button type="button" class="town__hot" data-bld="shop1" data-word="店面" data-cat="店面・辦公" style="left:55.62%;top:7.92%;width:18.44%;height:36.78%" aria-label="店面（看店面・辦公範例物件）"></button><button type="button" class="town__hot" data-bld="shop2" data-word="店面" data-cat="店面・辦公" style="left:73.59%;top:23.24%;width:19.22%;height:36.78%" aria-label="店面（看店面・辦公範例物件）"></button><button type="button" class="town__hot" data-bld="cottage" data-word="廠房・倉庫" data-cat="廠房" style="left:25.78%;top:42.78%;width:15.47%;height:26.82%" aria-label="平房小廠（看廠房範例物件）"></button>
@@ -1087,11 +1092,11 @@ if("IntersectionObserver" in window){ new IntersectionObserver(function(es){ vis
 
 /* ---------- walker: frame-based clay sprite following the isometric path ---------- */
 var P=[[522,628],[660,549],[688,474]];
-var NF=20, STRIDE=42, SPEED=50; /* frames in sheet, image px per 8-frame gait cycle, image px per s */
-var F={back:0,front:8,backStand:16,frontStand:17,wave:18,hop:19};
+var NF=21, STRIDE=42, SPEED=50; /* frames in sheet, image px per 8-frame gait cycle, image px per s */
+var F={back:0,front:8,backStand:16,frontStand:17,wave:18,hop:19,look:20}, shEl=walker.querySelector(".sh");
 var plan=[{walk:[0,1,2],view:"back"},{idle:2600,look:true},{walk:[2,1,0],view:"front"},{idle:2400,wave:true}];
 var step=0, segT=0, pos=P[0].slice(), lastTs=0, gaitDist=0, cur=-1, hopUntil=0, trip=null;
-function show(i){ if(i===cur)return; cur=i; svg.style.backgroundPosition=(i*100/(NF-1)).toFixed(4)+"% 0"; }
+function show(i){ if(i===cur)return; cur=i; var bp=(i*100/(NF-1)).toFixed(4)+"% 0"; svg.style.backgroundPosition=bp; if(shEl) shEl.style.backgroundPosition=bp; }
 function place(){
   var s=town.clientWidth/1280, w=walker.offsetWidth, h=w*234/144;
   walker.style.transform="translate("+(pos[0]*s-w/2).toFixed(1)+"px,"+(pos[1]*s-h*767/780).toFixed(1)+"px)";
@@ -1117,7 +1122,7 @@ function tick(ts){
     if(trip.t>=trip.T){ trip=null; gaitDist=0; step=(step+1)%plan.length; segT=0; show(idleFrame(plan[step])); }
   } else {
     segT+=dt;
-    if(p.look){ var k=Math.floor(segT/800); svg.classList.toggle("is-flip",k%2===1); svg.classList.toggle("is-tilt",k===2); show(F.backStand); }
+    if(p.look){ var k=Math.floor(segT/800); svg.classList.toggle("is-tilt",k===2); show(k%2===1?F.look:F.backStand); }
     if(p.wave){ svg.classList.remove("is-flip","is-tilt"); show(segT>500&&segT<1800?F.wave:F.frontStand); }
     if(segT>=p.idle){ svg.classList.remove("is-flip","is-tilt"); step=(step+1)%plan.length; segT=0; }
   }
