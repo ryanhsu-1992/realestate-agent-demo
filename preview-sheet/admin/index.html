@@ -174,6 +174,38 @@ main{padding:16px 0 calc(170px + env(safe-area-inset-bottom))}
 @keyframes sp{to{transform:rotate(360deg)}}
 .loading{display:grid;place-items:center;padding:60px 0;color:var(--muted);gap:10px}
 .loading .spin{border-color:rgb(11 110 110/.25);border-top-color:var(--primary)}
+/* live preview */
+.pv{display:none;flex-direction:column;background:#E9F2EF}
+.pv__h{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 14px;background:#fff;border-bottom:2px solid var(--border)}
+.pv__t{flex:1;min-width:140px;display:grid;line-height:1.35}
+.pv__t b{font-family:var(--fd);font-weight:400;font-size:18px}
+.pv__t span{font-size:12.5px;color:var(--muted)}
+.pv__t span.is-pending{color:var(--coral);font-weight:700}
+.pv .seg button{min-height:38px;padding:0 14px;font-size:13.5px}
+.pv__stage{flex:1;position:relative;overflow:hidden}
+.pv__frame{position:absolute;top:0;left:50%;border:0;background:#fff;transform-origin:top center}
+.pv__stage.is-phone .pv__frame{border:2px solid var(--fg);border-top:0;border-bottom:0;box-shadow:0 10px 40px -20px rgb(0 0 0/.4)}
+.pv__load{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:14px;pointer-events:none}
+.btn--sm{min-height:40px;padding:0 16px;font-size:14.5px}
+.pv-btn{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border-radius:14px;border:2px solid var(--fg);background:var(--sun);font-weight:700;font-size:14.5px;cursor:pointer;box-shadow:0 3px 0 var(--fg);color:var(--fg)}
+.pv-btn .dot{position:static;min-width:18px;height:18px;line-height:18px;font-size:11px;padding:0 5px;border-radius:999px;background:var(--coral);color:#fff}
+body.pv-open{overflow:hidden}
+@media (max-width:1099px){.pv .seg{display:none}.pv__h{flex-wrap:nowrap;padding:8px 10px;gap:8px}.pv__t b{font-size:16px}.pv__t span{font-size:12px}}
+body.pv-open .pv{display:flex;position:fixed;inset:0;z-index:60}
+@media (min-width:1100px){
+  body.is-split{--lw:560px}
+  body.is-split [data-view=app]{width:var(--lw)}
+  body.is-split .wrap{max-width:none}
+  body.is-split .tabs{position:fixed;top:auto;inset:auto auto 0 0;width:var(--lw);margin:0;border:0;border-top:2px solid var(--border);border-radius:0}
+  body.is-split .fab{right:auto;left:calc(var(--lw) - 16px);bottom:96px;transform:translateX(-100%)}
+  body.is-split .savebar{bottom:96px}
+  body.is-split .sheet{right:auto;width:var(--lw);align-items:stretch}
+  body.is-split .sheet__p{max-height:none;height:100dvh;border-radius:0;border:0;border-right:2px solid var(--fg);transform:translateX(-100%)}
+  body.is-split .sheet.is-open .sheet__p{transform:none}
+  body.is-split .toast{left:calc(var(--lw)/2)}
+  body.is-split .pv{display:flex;position:fixed;top:0;right:0;bottom:0;left:var(--lw);z-index:55;border-left:2px solid var(--fg)}
+  body.is-split [data-pv-open],body.is-split [data-pv-close]{display:none!important}
+}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
 </style>
 </head>
@@ -203,6 +235,7 @@ main{padding:16px 0 calc(170px + env(safe-area-inset-bottom))}
 <div data-view="app" hidden>
   <header class="top"><div class="wrap top__in">
     <div class="top__t"><h1 data-title>物件管理</h1><p data-sub>上架、下架、新增或修改物件</p></div>
+    <button type="button" class="pv-btn" data-pv-open aria-label="預覽網站"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></svg>預覽<span class="dot" data-pending-dot hidden></span></button>
     <a class="icon-btn" data-site-link href="../" target="_blank" rel="noopener" aria-label="打開網站看看"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>
     <button class="icon-btn" type="button" data-logout aria-label="登出"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l-5-5 5-5M5 12h11"/></svg></button>
   </div></header>
@@ -222,9 +255,9 @@ main{padding:16px 0 calc(170px + env(safe-area-inset-bottom))}
       <button class="btn btn--p fab" type="button" data-new><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>新增物件</button>
     </section>
     <section data-panel="copy" hidden>
-      <p class="count">改完按下方「儲存」。空白＝網站用原本的文字。</p>
+      <p class="count">邊改邊看右邊（手機按「預覽」）的網站，滿意了按「發布」。空白＝網站用原本的文字。</p>
       <div class="cg" data-copy></div>
-      <div class="savebar" data-copybar hidden><span data-copydirty>有 0 處還沒儲存</span><button class="btn btn--p" type="button" data-copysave>儲存</button></div>
+      <div class="savebar" data-copybar hidden><span data-copydirty>有 0 處還沒發布</span><button class="btn btn--p" type="button" data-copysave>發布</button></div>
     </section>
     <section data-panel="leads" hidden>
       <div class="bar"><div class="seg" role="group" aria-label="狀態"><button type="button" aria-pressed="true" data-s="">全部</button><button type="button" aria-pressed="false" data-s="新留言">新留言</button><button type="button" aria-pressed="false" data-s="已聯絡">已聯絡</button></div></div>
@@ -233,6 +266,17 @@ main{padding:16px 0 calc(170px + env(safe-area-inset-bottom))}
     </section>
   </main>
 </div>
+
+<!-- ============ 即時預覽 ============ -->
+<aside class="pv" data-pv aria-label="網站即時預覽" hidden>
+  <div class="pv__h">
+    <button type="button" class="btn btn--o btn--sm" data-pv-close style="box-shadow:0 3px 0 var(--fg)">← 回到編輯</button>
+    <div class="pv__t"><b>網站即時預覽</b><span data-pv-state role="status">和網站目前一樣</span></div>
+    <div class="seg" role="group" aria-label="預覽尺寸"><button type="button" aria-pressed="true" data-dev="phone">手機</button><button type="button" aria-pressed="false" data-dev="desktop">電腦</button></div>
+    <button type="button" class="btn btn--p btn--sm" data-publish hidden>發布</button>
+  </div>
+  <div class="pv__stage is-phone" data-stage><p class="pv__load" data-pv-load>網站載入中…</p><iframe class="pv__frame" data-frame title="網站即時預覽（尚未發布的修改也看得到）"></iframe></div>
+</aside>
 
 <!-- ============ 編輯物件 ============ -->
 <div class="sheet" data-sheet hidden>
@@ -279,7 +323,7 @@ main{padding:16px 0 calc(170px + env(safe-area-inset-bottom))}
       </div>
       <button type="button" class="btn btn--danger" data-del hidden>刪除這個物件</button>
     </div>
-    <div class="sheet__f"><button type="button" class="btn btn--o" data-close>取消</button><button type="submit" class="btn btn--p" data-save>儲存</button></div>
+    <div class="sheet__f"><button type="button" class="btn btn--o" data-close>取消</button><button type="button" class="pv-btn" data-pv-open>預覽</button><button type="submit" class="btn btn--p" data-save>發布</button></div>
   </form>
 </div>
 <datalist id="dists"><option>桃園市桃園區</option><option>桃園市中壢區</option><option>桃園市平鎮區</option><option>桃園市八德區</option><option>桃園市楊梅區</option><option>桃園市蘆竹區</option><option>桃園市龜山區</option><option>桃園市大園區</option><option>桃園市觀音區</option><option>桃園市新屋區</option><option>桃園市大溪區</option><option>桃園市龍潭區</option><option>桃園市復興區</option></datalist>
@@ -295,7 +339,7 @@ var CATS=["一房","兩房","三房","四房以上","店面・辦公","廠房","
 var COLS=["編號","上架","類型","分類","標題","區域","地址或路段","價格","坪數","建物型態","格局","樓層","屋齡","特色","說明","照片網址","範例","排序","備註","更新時間"];
 var LOCKED={"legal.agent":1,"legal.company1":1,"legal.broker1":1,"legal.company2":1,"legal.broker2":1};
 var GROUPS=[["首頁上方",/^(notice|hero\.)/],["服務",/^(services|service\d)/],["物件、表單、常見問題",/^(listings|form|faq)\./],["頁尾",/^footer\./],["法定揭露（證號，除非真的換了，否則不要改）",/^legal\./]];
-var token="", state={listings:[],copy:[],leads:[]}, editing=null, photos=[], dirtyCopy={};
+var token="", state={listings:[],copy:[],leads:[]}, editing=null, photos=[], dirtyCopy={}, edSnap="", focusKey="listings";
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 function yes(v){v=String(v||"").trim().toLowerCase();return v==="是"||v==="yes"||v==="y"||v==="true"||v==="1"||v==="上架"||v==="✓"}
 function num(v){var n=parseFloat(String(v||"").replace(/[,，\s]/g,""));return isFinite(n)?n:NaN}
@@ -371,13 +415,13 @@ $("[data-login]").addEventListener("submit",function(e){
   .then(function(){btn.disabled=false;btn.textContent="登入";});
 });
 function logout(expired){ if(token&&!expired)call("logout").catch(function(){}); token=""; try{sessionStorage.removeItem("xjq-admin-tok")}catch(e){}
-  $("[data-view=app]").hidden=true; $("[data-view=login]").hidden=false; if(expired)toast("登入過期了，請重新登入",true); }
+  $("[data-view=app]").hidden=true; $("[data-view=login]").hidden=false; $("[data-pv]").hidden=true; document.body.classList.remove("is-split","pv-open"); if(expired)toast("登入過期了，請重新登入",true); }
 $("[data-logout]").addEventListener("click",function(){logout()});
 
-function enter(){ $("[data-view=login]").hidden=true; $("[data-view=app]").hidden=false; loadAll(); }
+function enter(){ $("[data-view=login]").hidden=true; $("[data-view=app]").hidden=false; $("[data-pv]").hidden=false; setSplit(); loadAll(); }
 function loadAll(){
   $("[data-cards]").innerHTML='<li class="loading"><span class="spin"></span>讀取中…</li>';
-  call("list").then(function(j){state.listings=j.listings||[];state.copy=j.copy||[];renderListings();renderCopy();}).catch(function(x){$("[data-cards]").innerHTML='<li class="empty">讀不到資料：'+esc(x.message)+'</li>'});
+  call("list").then(function(j){state.listings=j.listings||[];state.copy=j.copy||[];renderListings();renderCopy();sendDraft();}).catch(function(x){$("[data-cards]").innerHTML='<li class="empty">讀不到資料：'+esc(x.message)+'</li>'});
   loadLeads();
 }
 
@@ -387,7 +431,7 @@ $$("[data-tab]").forEach(function(b){b.addEventListener("click",function(){
   if(Object.keys(dirtyCopy).length&&b.dataset.tab!=="copy"&&!confirm("網站文字還沒儲存，確定要離開嗎？"))return;
   $$("[data-tab]").forEach(function(x){x.setAttribute("aria-selected",x===b)}); $$("[data-panel]").forEach(function(p){p.hidden=p.dataset.panel!==b.dataset.tab});
   $("[data-title]").textContent=TITLES[b.dataset.tab][0]; $("[data-sub]").textContent=TITLES[b.dataset.tab][1]; scrollTo(0,0);
-  if(b.dataset.tab==="leads")loadLeads();
+  if(b.dataset.tab==="leads")loadLeads(); if(b.dataset.tab==="listings"){focusKey="listings";sendDraft()}
 })});
 
 /* ================= 物件列表 ================= */
@@ -411,7 +455,7 @@ function renderListings(){
 $("[data-cards]").addEventListener("change",function(e){
   var cb=e.target.closest("[data-pub]"); if(!cb)return; var li=cb.closest("[data-id]"), id=li.dataset.id, o=state.listings.filter(function(x){return x["編號"]===id})[0];
   var v=cb.checked; cb.disabled=true;
-  call("setPublished",{id:id,published:v}).then(function(){o["上架"]=v?"是":"否";renderListings();toast(v?"已上架，網站重新整理就看得到":"已下架，網站上不會顯示")})
+  call("setPublished",{id:id,published:v}).then(function(){o["上架"]=v?"是":"否";renderListings();focusKey=v?"listing:"+id:"listings";sendDraft();toast(v?"已上架並發布":"已下架，網站上不會顯示")})
     .catch(function(x){cb.checked=!v;cb.disabled=false;toast(x.message,true)});
 });
 $("[data-cards]").addEventListener("click",function(e){var b=e.target.closest("[data-edit]");if(!b)return;var id=b.closest("[data-id]").dataset.id;openEditor(state.listings.filter(function(x){return x["編號"]===id})[0])});
@@ -422,7 +466,7 @@ var ed=$("[data-editor]"), sheet=$("[data-sheet]"), lastFocus=null;
 $("[data-cat]").innerHTML=CATS.map(function(c){return '<button type="button" aria-pressed="false" data-v="'+c+'">'+c+'</button>'}).join("");
 function pick(group,v){$$("button",group).forEach(function(b){b.setAttribute("aria-pressed",b.dataset.v===v)})}
 function picked(group){var b=$('button[aria-pressed="true"]',group);return b?b.dataset.v:""}
-$$("[data-type] button,[data-cat] button").forEach(function(b){b.addEventListener("click",function(){var g=b.parentNode;if(g.hasAttribute("data-cat")&&b.getAttribute("aria-pressed")==="true"){b.setAttribute("aria-pressed","false");return;}pick(g,b.dataset.v);if(g.hasAttribute("data-type"))unit()})});
+$$("[data-type] button,[data-cat] button").forEach(function(b){b.addEventListener("click",function(){var g=b.parentNode;if(g.hasAttribute("data-cat")&&b.getAttribute("aria-pressed")==="true"){b.setAttribute("aria-pressed","false");sendDraft();return;}pick(g,b.dataset.v);if(g.hasAttribute("data-type"))unit();sendDraft()})});
 function unit(){var rent=picked($("[data-type]"))==="出租";$("[data-price-unit]").textContent=rent?"元/月":"萬";$("[data-price-label]").textContent=rent?"月租":"總價";$("#e-price").placeholder=rent?"16800":"1388"}
 function openEditor(o){
   editing=o; ed.reset(); var src=o||{"上架":"是","類型":"買賣"};
@@ -431,17 +475,17 @@ function openEditor(o){
   ed.elements["編號"].readOnly=!!o;
   ed.elements["上架"].checked=yes(src["上架"]); ed.elements["範例"].checked=yes(src["範例"]);
   pick($("[data-type]"),/租/.test(src["類型"])?"出租":"買賣"); pick($("[data-cat]"),src["分類"]||""); unit();
-  photos=splitPhotos(src["照片網址"]); renderPhotos();
+  photos=splitPhotos(src["照片網址"]); renderPhotos(); edSnap=JSON.stringify(readEditor());
   lastFocus=document.activeElement; sheet.hidden=false; requestAnimationFrame(function(){sheet.classList.add("is-open")}); document.body.style.overflow="hidden";
   setTimeout(function(){ed.elements["標題"].focus({preventScroll:true})},300);
 }
-function closeEditor(){ sheet.classList.remove("is-open"); document.body.style.overflow=""; setTimeout(function(){sheet.hidden=true},300); lastFocus&&lastFocus.focus&&lastFocus.focus(); }
-$$("[data-close]",sheet).forEach(function(b){b.addEventListener("click",closeEditor)});
-document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!sheet.hidden)closeEditor()});
+function closeEditor(saved){ if(!saved&&editorDirty()&&!confirm("這個物件改到一半還沒發布，確定要放棄嗎？"))return; edSnap=""; sheet.classList.remove("is-open"); setTimeout(sendDraft,0); document.body.style.overflow=""; setTimeout(function(){sheet.hidden=true},300); lastFocus&&lastFocus.focus&&lastFocus.focus(); }
+$$("[data-close]",sheet).forEach(function(b){b.addEventListener("click",function(){closeEditor()})});
+document.addEventListener("keydown",function(e){if(e.key!=="Escape")return; if(document.body.classList.contains("pv-open"))closePreview(); else if(!sheet.hidden)closeEditor()});
 function renderPhotos(){
   $("[data-photos]").innerHTML=photos.map(function(u,i){return '<div class="ph-i">'+(u==="…"?'<div class="ph-busy"><span class="spin" style="border-color:rgb(11 110 110/.25);border-top-color:var(--primary)"></span></div>':'<img src="'+esc(imgURL(u,300))+'" alt="照片 '+(i+1)+'" referrerpolicy="no-referrer">')+(i===0?'<span class="cover">封面</span>':'')+
     '<div class="acts">'+(i>0?'<button type="button" data-front="'+i+'" aria-label="設為封面">★</button>':'<span></span>')+'<button type="button" data-rm="'+i+'" aria-label="移除照片 '+(i+1)+'">✕</button></div></div>'}).join("")+
-    '<label class="ph-add"><input type="file" accept="image/*" multiple data-file><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:28px;height:28px"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>上傳照片</label>';
+    (setTimeout(sendDraft,0),'')+'<label class="ph-add"><input type="file" accept="image/*" multiple data-file><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:28px;height:28px"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>上傳照片</label>';
 }
 $("[data-photos]").addEventListener("click",function(e){var r=e.target.closest("[data-rm]"),f=e.target.closest("[data-front]");
   if(r){photos.splice(+r.dataset.rm,1);renderPhotos()} if(f){var i=+f.dataset.front;photos.unshift(photos.splice(i,1)[0]);renderPhotos()}});
@@ -455,20 +499,26 @@ $("[data-photos]").addEventListener("change",function(e){
       .then(function(j){photos[slot]=j.url;renderPhotos()}).catch(function(x){photos.splice(slot,1);renderPhotos();toast("照片上傳失敗："+x.message,true)});
   })},Promise.resolve()).then(function(){toast("照片已上傳")});
 });
-ed.addEventListener("submit",function(e){
-  e.preventDefault(); if(photos.indexOf("…")>=0){toast("照片還在上傳，等一下喔",true);return}
-  var t=ed.elements["標題"]; if(!t.value.trim()){t.focus();toast("請填標題",true);return}
+function readEditor(){
   var o={}; ["編號","標題","價格","坪數","區域","地址或路段","建物型態","格局","樓層","屋齡","排序","特色","說明","備註"].forEach(function(k){o[k]=ed.elements[k].value.trim()});
   o["價格"]=o["價格"].replace(/[,，\s]|萬|元/g,""); o["坪數"]=o["坪數"].replace(/坪|\s/g,"");
   o["上架"]=ed.elements["上架"].checked?"是":"否"; o["範例"]=ed.elements["範例"].checked?"是":"否";
-  o["類型"]=picked($("[data-type]")); o["分類"]=picked($("[data-cat]")); o["照片網址"]=photos.join("\n");
-  var btn=$("[data-save]"); btn.disabled=true; btn.innerHTML='<span class="spin"></span>儲存中…';
-  call("saveListing",{listing:o}).then(function(j){
+  o["類型"]=picked($("[data-type]")); o["分類"]=picked($("[data-cat]")); o["照片網址"]=photos.filter(function(u){return u!=="…"}).join("\n");
+  return o;
+}
+function editorDirty(){ return !sheet.hidden&&sheet.classList.contains("is-open")&&JSON.stringify(readEditor())!==edSnap; }
+function saveEditor(){
+  if(photos.indexOf("…")>=0){toast("照片還在上傳，等一下喔",true);return Promise.reject(new Error("busy"))}
+  var t=ed.elements["標題"]; if(!t.value.trim()){closePreview();t.focus();toast("請填標題",true);return Promise.reject(new Error("title"))}
+  var o=readEditor(), btn=$("[data-save]"); btn.disabled=true; btn.innerHTML='<span class="spin"></span>發布中…';
+  return call("saveListing",{listing:o}).then(function(j){
     var l=Object.assign({},editing||{},o,j.listing||{},{"編號":j.id});
     if(editing){var i=state.listings.indexOf(editing);state.listings[i]=l}else state.listings.push(l);
-    renderListings(); closeEditor(); toast(j.created?"已新增「"+o["標題"]+"」":"已儲存");
-  }).catch(function(x){toast(x.message,true)}).then(function(){btn.disabled=false;btn.textContent="儲存"});
-});
+    edSnap=""; renderListings(); closeEditor(true); toast(j.created?"已發布新物件「"+o["標題"]+"」":"已發布，網站上看得到了");
+  }).catch(function(x){ if(x&&x.message&&x.message!=="busy")toast(x.message,true); throw x; }).then(function(v){btn.disabled=false;btn.textContent="發布";return v},function(x){btn.disabled=false;btn.textContent="發布";throw x});
+}
+ed.addEventListener("submit",function(e){ e.preventDefault(); saveEditor().catch(function(){}); });
+ed.addEventListener("input",function(){sendDraft()}); ed.addEventListener("change",function(){sendDraft()});
 $("[data-del]").addEventListener("click",function(){
   if(!editing)return; if(!confirm("確定要刪除「"+editing["標題"]+"」嗎？刪除後無法復原。\n（只是暫時不想顯示的話，用「下架」就好）"))return;
   call("deleteListing",{id:editing["編號"]}).then(function(){state.listings.splice(state.listings.indexOf(editing),1);renderListings();closeEditor();toast("已刪除")}).catch(function(x){toast(x.message,true)});
@@ -490,14 +540,17 @@ function ci(c){var long=/points|intro|fine/.test(c.key)||String(c.value).length>
   (long?'<textarea class="input" id="'+id+'" rows="'+(/points/.test(c.key)?4:3)+'">'+esc(c.value)+'</textarea>':'<input class="input" id="'+id+'" value="'+esc(c.value)+'">')+(/points/.test(c.key)?'<p class="help">一行一點</p>':'')+'</div>'}
 $("[data-copy]").addEventListener("input",function(e){var w=e.target.closest("[data-key]");if(!w)return;var k=w.dataset.key,orig=(state.copy.filter(function(c){return c.key===k})[0]||{}).value||"";
   if(e.target.value!==orig)dirtyCopy[k]=e.target.value;else delete dirtyCopy[k]; w.classList.toggle("is-dirty",k in dirtyCopy); var n=Object.keys(dirtyCopy).length;
-  $("[data-copybar]").hidden=!n; $("[data-copydirty]").textContent="有 "+n+" 處還沒儲存";});
-$("[data-copysave]").addEventListener("click",function(){
-  var keys=Object.keys(dirtyCopy); if(keys.some(function(k){return LOCKED[k]})&&!confirm("您改到了法定揭露（證號）。確定證號真的變更了嗎？"))return;
-  var b=this; b.disabled=true; b.innerHTML='<span class="spin"></span>';
-  call("updateCopy",{copy:dirtyCopy}).then(function(){keys.forEach(function(k){var c=state.copy.filter(function(x){return x.key===k})[0];if(c)c.value=dirtyCopy[k]});dirtyCopy={};renderCopy();$("[data-copybar]").hidden=true;toast("網站文字已儲存，重新整理網站就看得到")})
-    .catch(function(x){toast(x.message,true)}).then(function(){b.disabled=false;b.textContent="儲存"});
-});
-addEventListener("beforeunload",function(e){if(Object.keys(dirtyCopy).length){e.preventDefault();e.returnValue=""}});
+  $("[data-copybar]").hidden=!n; $("[data-copydirty]").textContent="有 "+n+" 處還沒發布"; focusKey=k; sendDraft();});
+function saveCopy(){
+  var keys=Object.keys(dirtyCopy); if(!keys.length)return Promise.resolve();
+  if(keys.some(function(k){return LOCKED[k]})&&!confirm("您改到了法定揭露（證號）。確定證號真的變更了嗎？"))return Promise.reject(new Error("cancel"));
+  var b=$("[data-copysave]"), sent=Object.assign({},dirtyCopy); b.disabled=true; b.innerHTML='<span class="spin"></span>';
+  return call("updateCopy",{copy:sent}).then(function(){keys.forEach(function(k){var c=state.copy.filter(function(x){return x.key===k})[0];if(c)c.value=sent[k]});dirtyCopy={};renderCopy();$("[data-copybar]").hidden=true;sendDraft();toast("網站文字已發布，網站上看得到了")})
+    .catch(function(x){toast(x.message,true);throw x}).then(function(v){b.disabled=false;b.textContent="發布";return v},function(x){b.disabled=false;b.textContent="發布";throw x});
+}
+$("[data-copysave]").addEventListener("click",function(){saveCopy().catch(function(){})});
+$("[data-copy]").addEventListener("focusin",function(e){var w=e.target.closest("[data-key]");if(w){focusKey=w.dataset.key;sendDraft()}});
+addEventListener("beforeunload",function(e){if(Object.keys(dirtyCopy).length||editorDirty()){e.preventDefault();e.returnValue=""}});
 
 /* ================= 客戶留言 ================= */
 var fS="";
@@ -518,6 +571,57 @@ function renderLeads(){
 $("[data-leads]").addEventListener("click",function(e){var m=e.target.closest("[data-more]");if(m){var a=m.closest(".ld");a.classList.toggle("is-open");m.textContent=a.classList.contains("is-open")?"收起來":"看全部"}});
 $("[data-leads]").addEventListener("change",function(e){var s=e.target.closest("[data-status]");if(!s)return;var row=+s.closest("[data-row]").dataset.row, l=state.leads.filter(function(x){return +x._row===row})[0];
   call("updateLead",{row:row,status:s.value}).then(function(){l["處理狀態"]=s.value;renderLeads();toast("已改成「"+s.value+"」")}).catch(function(x){toast(x.message,true)})});
+
+/* ================= 即時預覽（iframe + postMessage，只傳給同網域的網站） ================= */
+var forceScroll=false, frame=$("[data-frame]"), stage=$("[data-stage]"), mqSplit=matchMedia("(min-width:1100px)"), frameReady=false, dev="phone", dt;
+var SITE=(CFG.SITE_URL||"../"); SITE+=(SITE.indexOf("?")<0?"?":"&")+"admin-preview=1";
+function loadFrame(){ if(frame.getAttribute("src"))return; frame.src=SITE; }
+function setSplit(){ var on=mqSplit.matches&&!$("[data-view=app]").hidden; document.body.classList.toggle("is-split",on); if(on){loadFrame();document.body.classList.remove("pv-open")} fit(); }
+mqSplit.addEventListener&&mqSplit.addEventListener("change",setSplit);
+function fit(){
+  var W=stage.clientWidth, H=stage.clientHeight; if(!W||!H)return;
+  var small=W<=440, w=dev==="phone"?(small?W:390):1280, s=Math.min(1,(W-(dev==="phone"&&!small?24:0))/w);
+  stage.classList.toggle("is-phone",dev==="phone"&&!small);
+  frame.style.width=w+"px"; frame.style.height=(H/s)+"px"; frame.style.transform="translateX(-50%) scale("+s+")";
+}
+addEventListener("resize",fit);
+$$("[data-dev]").forEach(function(b){b.addEventListener("click",function(){dev=b.dataset.dev;$$("[data-dev]").forEach(function(x){x.setAttribute("aria-pressed",x===b)});fit()})});
+function openPreview(){ loadFrame(); document.body.classList.add("pv-open"); fit(); forceScroll=true; sendDraft(); setTimeout(function(){var c=$("[data-pv-close]");c&&c.focus()},50); }
+function closePreview(){ document.body.classList.remove("pv-open"); }
+$$("[data-pv-open]").forEach(function(b){b.addEventListener("click",openPreview)});
+$("[data-pv-close]").addEventListener("click",closePreview);
+function pending(){ return Object.keys(dirtyCopy).length+(editorDirty()?1:0); }
+function draft(){
+  var L=state.listings.map(function(o){return Object.assign({},o)}), focus=focusKey;
+  if(!sheet.hidden&&sheet.classList.contains("is-open")){
+    var o=readEditor();
+    if(editing){ var i=state.listings.indexOf(editing); if(i>=0)L[i]=Object.assign({},editing,o); }
+    else { o["編號"]=o["編號"]||"__new__"; if(!o["排序"])o["排序"]="-1"; L.push(o); }
+    focus="listing:"+(editing?editing["編號"]:o["編號"]);
+  }
+  var copy={}; state.copy.forEach(function(c){copy[c.key]=c.value}); Object.keys(dirtyCopy).forEach(function(k){copy[k]=dirtyCopy[k]});
+  return {type:"xjq-draft",listings:L,copy:copy,focus:focus};
+}
+function sendDraft(){
+  clearTimeout(dt); dt=setTimeout(function(){
+    var n=pending(), st=$("[data-pv-state]"), dot=$("[data-pending-dot]");
+    st.textContent=n?("有 "+n+" 處修改還沒發布（只有你看得到）"):("和網站目前一樣"+(MOCK?"（範例模式）":""));
+    st.classList.toggle("is-pending",!!n); $("[data-publish]").hidden=!n; dot.hidden=!n; dot.textContent=n;
+    if(!frameReady||!frame.contentWindow)return;
+    var d=draft(); d.force=forceScroll; forceScroll=false;
+    try{frame.contentWindow.postMessage(d,location.origin)}catch(e){}
+  },120);
+}
+addEventListener("message",function(e){
+  if(e.origin!==location.origin||e.source!==frame.contentWindow||!e.data)return;
+  if(e.data.type==="xjq-preview-ready"){frameReady=true;$("[data-pv-load]").hidden=true;sendDraft();}
+});
+$("[data-publish]").addEventListener("click",function(){
+  var b=this, p=Promise.resolve();
+  if(editorDirty())p=p.then(saveEditor);
+  if(Object.keys(dirtyCopy).length)p=p.then(saveCopy);
+  b.disabled=true; p.then(function(){sendDraft()}).catch(function(){}).then(function(){b.disabled=false});
+});
 
 /* 同一個分頁重新整理時保持登入 */
 try{var t=sessionStorage.getItem("xjq-admin-tok"); if(t&&(MOCK||API)){token=t;enter();}}catch(e){}

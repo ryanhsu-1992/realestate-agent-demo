@@ -5,9 +5,11 @@
 var C=window.SITE_CONFIG||{};
 var API=(C.APPS_SCRIPT_URL||"").trim();
 var CSV_L=(C.CSV_LISTINGS_URL||"").trim(), CSV_C=(C.CSV_COPY_URL||"").trim(), SID=(C.SHEET_ID||"").trim();
-var FORM=(C.FORM_ENDPOINT||API||"").trim();
+/* 後台即時預覽：只有被同網域的後台用 iframe 打開、網址帶 admin-preview=1 時才啟用；一般訪客永遠不會進入這個模式 */
+var PREVIEW=false; try{PREVIEW=window.parent!==window&&/[?&]admin-preview=1(&|$)/.test(location.search)&&window.parent.location.origin===location.origin}catch(e){PREVIEW=false}
+var FORM=PREVIEW?"":(C.FORM_ENDPOINT||API||"").trim();   // 預覽中不送出任何表單
 var READ=!!(CSV_L||CSV_C||SID||API);
-if(!READ&&!FORM)return;                       // 未設定：什麼都不做
+if(!READ&&!FORM&&!PREVIEW)return;             // 未設定：什麼都不做
 var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
 var CACHE_KEY="xjq-sheet-v1:"+(API||CSV_L||SID), TTL=(C.CACHE_MINUTES||10)*60000;
 
@@ -122,7 +124,7 @@ function card(o){
   var art=ph.length
     ? '<img class="lst__photo" src="'+esc(ph[0])+'" alt="'+esc(o["標題"]||"物件照片")+'" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-fallback="'+esc(ICONS+icon(o,cat)+".webp")+'">'+(ph.length>1?'<span class="badge lst__more">共 '+ph.length+' 張</span>':"")
     : '<img class="lst__ico" src="'+ICONS+icon(o,cat)+'.webp" alt="" width="132" height="132" loading="lazy" decoding="async">';
-  return '<li class="lst reveal in'+(ph.length?' lst--photo':'')+'" data-cat="'+esc(cat)+'" data-deal="'+deal+'">'+
+  return '<li class="lst reveal in'+(ph.length?' lst--photo':'')+'"'+(PREVIEW&&o["編號"]?' data-id="'+esc(o["編號"])+'"':'')+' data-cat="'+esc(cat)+'" data-deal="'+deal+'">'+
    '<div class="lst__art">'+art+'<span class="badge badge--deal '+(rent?"badge--rent":"badge--sale")+'">'+deal+'</span>'+(sample?'<span class="badge badge--sample">範例物件</span>':'')+'</div>'+
    '<div class="lst__body"><h3 class="lst__title">'+esc(o["標題"]||"（未命名物件）")+'</h3>'+
    (addr?'<p class="lst__addr">'+PIN+'<span>'+esc(addr)+'</span></p>':'')+
@@ -149,10 +151,40 @@ function renderListings(list){
 }
 function apply(d){ if(!d)return; try{applyCopy(d.copy)}catch(e){} try{ if(d.listings&&d.listings.length)renderListings(d.listings)}catch(e){ if(window.console)console.warn("sheet render",e)} }
 
+var gotDraft=false;
+if(PREVIEW){
+  var grid0=$("[data-grid]"), snap={grid:grid0?grid0.innerHTML:"",chips:$$(".fchip__n").map(function(n){return n.textContent}),copy:{}};
+  Object.keys(MAP).forEach(function(k){snap.copy[k]=$$(MAP[k][1]).map(function(el){return el.innerHTML})});
+  var restore=function(){
+    Object.keys(snap.copy).forEach(function(k){$$(MAP[k][1]).forEach(function(el,i){if(snap.copy[k][i]!=null)el.innerHTML=snap.copy[k][i]})});
+    var g=$("[data-grid]"); if(g){g.innerHTML=snap.grid; $$(".fchip__n").forEach(function(n,i){n.textContent=snap.chips[i]}); window.__lstNoun=""; if(window.__lst){$$(".lst[data-cat]",g).forEach(window.__lst.bindCat);window.__lst.filt();}}
+  };
+  var lastFocus="";
+  var focusOn=function(f){
+    if(!f||f===lastFocus)return; lastFocus=f; var el=null;
+    if(f.indexOf("listing:")===0){ el=$('.lst[data-id="'+f.slice(8).replace(/["\\]/g,"")+'"]')||$("#listings"); }
+    else if(f==="listings")el=$("#listings");
+    else if(MAP[f])el=$(MAP[f][1]);
+    if(!el)return;
+    if(el.hidden&&window.__lst){ var all=$('.seg__b[data-deal="全部"]'),allc=$('.fchip[data-cat="全部"]'); all&&all.click(); allc&&allc.click(); }
+    el.scrollIntoView({block:"center",behavior:"smooth"});
+    el.style.transition="outline-color .6s"; el.style.outline="3px solid #FFC94A"; el.style.outlineOffset="4px";
+    setTimeout(function(){el.style.outlineColor="transparent"},1400);
+  };
+  addEventListener("message",function(e){
+    if(e.origin!==location.origin||e.source!==window.parent||!e.data||e.data.type!=="xjq-draft")return;
+    gotDraft=true; restore();
+    var d=e.data;
+    try{ if(d.copy)applyCopy(d.copy) }catch(x){}
+    try{ if(d.listings){ if(d.listings.length)renderListings(d.listings); else {var g=$("[data-grid]"); if(g){g.innerHTML="";window.__lst&&window.__lst.filt();}} } }catch(x){ console.warn("preview render",x) }
+    if(d.force)lastFocus=""; setTimeout(function(){focusOn(d.focus||"")},d.force?250:0);
+  });
+  try{window.parent.postMessage({type:"xjq-preview-ready"},location.origin)}catch(e){}
+}
 if(READ){
   var cached=null; try{cached=JSON.parse(localStorage.getItem(CACHE_KEY)||"null")}catch(e){}
-  if(cached&&cached.d)apply(cached.d);
-  load().then(function(d){
+  if(cached&&cached.d&&!PREVIEW)apply(cached.d);
+  if(!PREVIEW) load().then(function(d){
     var s=JSON.stringify(d); if(!cached||JSON.stringify(cached.d)!==s)apply(d);
     try{localStorage.setItem(CACHE_KEY,JSON.stringify({t:Date.now(),d:d}))}catch(e){}
   }).catch(function(e){ if(window.console)console.info("試算表讀取失敗，使用"+(cached?"暫存":"內建")+"內容：",e&&e.message); });
