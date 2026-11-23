@@ -90,7 +90,9 @@ var MAP={
   "legal.company1":[setText,".disclosure > div:nth-child(2) dt"],"legal.broker1":[setText,".disclosure > div:nth-child(2) dd"],
   "legal.company2":[setText,".disclosure > div:nth-child(3) dt"],"legal.broker2":[setText,".disclosure > div:nth-child(3) dd"]
 };
-function applyCopy(m){ if(!m)return; Object.keys(MAP).forEach(function(k){var v=m[k]; if(v==null||String(v).trim()==="")return; try{MAP[k][0](MAP[k][1],String(v).trim())}catch(e){}}); }
+function applyCopy(m){ if(!m)return; Object.keys(MAP).forEach(function(k){var v=m[k]; if(v==null||String(v).trim()==="")return; try{MAP[k][0](MAP[k][1],String(v).trim())}catch(e){}});
+  if(Object.prototype.hasOwnProperty.call(m,"listings.limit")){ window.__lstLimit=String(m["listings.limit"]||"").trim(); if(window.__lst)window.__lst.filt({reset:true}); }
+}
 
 /* ---------- 物件 ---------- */
 var CATS=["一房","兩房","三房","四房以上","店面・辦公","廠房","土地"];
@@ -147,17 +149,17 @@ function renderListings(list){
   var allSample=rows.length&&rows.every(function(o){return yes(o["範例"])});
   window.__lstNoun=allSample?"範例物件":"物件";
   var em=$("[data-empty]"); if(em&&!allSample)em.textContent="這個分類目前沒有物件，請試試其他條件，或直接 LINE 問我。";
-  if(window.__lst){ $$(".lst[data-cat]",grid).forEach(window.__lst.bindCat); window.__lst.filt(); }
+  if(window.__lst){ $$(".lst[data-cat]",grid).forEach(window.__lst.bindCat); window.__lst.filt({reset:true}); }
 }
 function apply(d){ if(!d)return; try{applyCopy(d.copy)}catch(e){} try{ if(d.listings&&d.listings.length)renderListings(d.listings)}catch(e){ if(window.console)console.warn("sheet render",e)} }
 
 var gotDraft=false;
 if(PREVIEW){
-  var grid0=$("[data-grid]"), snap={grid:grid0?grid0.innerHTML:"",chips:$$(".fchip__n").map(function(n){return n.textContent}),copy:{}};
+  var grid0=$("[data-grid]"), snap={grid:grid0?grid0.innerHTML:"",chips:$$(".fchip__n").map(function(n){return n.textContent}),copy:{},limit:window.__lstLimit||""};
   Object.keys(MAP).forEach(function(k){snap.copy[k]=$$(MAP[k][1]).map(function(el){return el.innerHTML})});
   var restore=function(){
     Object.keys(snap.copy).forEach(function(k){$$(MAP[k][1]).forEach(function(el,i){if(snap.copy[k][i]!=null)el.innerHTML=snap.copy[k][i]})});
-    var g=$("[data-grid]"); if(g){g.innerHTML=snap.grid; $$(".fchip__n").forEach(function(n,i){n.textContent=snap.chips[i]}); window.__lstNoun=""; if(window.__lst){$$(".lst[data-cat]",g).forEach(window.__lst.bindCat);window.__lst.filt();}}
+    var g=$("[data-grid]"); if(g){g.innerHTML=snap.grid; $$(".fchip__n").forEach(function(n,i){n.textContent=snap.chips[i]}); window.__lstNoun=""; window.__lstLimit=snap.limit||""; if(window.__lst){$$(".lst[data-cat]",g).forEach(window.__lst.bindCat);window.__lst.filt({reset:true});}}
   };
   var lastFocus="";
   var focusOn=function(f){
@@ -176,7 +178,7 @@ if(PREVIEW){
     gotDraft=true; restore();
     var d=e.data;
     try{ if(d.copy)applyCopy(d.copy) }catch(x){}
-    try{ if(d.listings){ if(d.listings.length)renderListings(d.listings); else {var g=$("[data-grid]"); if(g){g.innerHTML="";window.__lst&&window.__lst.filt();}} } }catch(x){ console.warn("preview render",x) }
+    try{ if(d.listings){ if(d.listings.length)renderListings(d.listings); else {var g=$("[data-grid]"); if(g){g.innerHTML="";window.__lst&&window.__lst.filt({reset:true});}} } }catch(x){ console.warn("preview render",x) }
     if(d.force)lastFocus=""; setTimeout(function(){focusOn(d.focus||"")},d.force?250:0);
   });
   try{window.parent.postMessage({type:"xjq-preview-ready"},location.origin)}catch(e){}

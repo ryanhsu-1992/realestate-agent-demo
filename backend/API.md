@@ -69,8 +69,10 @@
 - **getCopy** `{token}` → `{ok, copy:[{key,label,value}]}`
 - **updateCopy** `{token, copy:{"hero.slogan":"新標語", …}}` → `{ok, changed:[…]}`；value 空白＝網站用原本內建文字
 
-可用代碼：`notice, hero.greeting, hero.sub, hero.slogan, hero.intro, form.title, form.sub, services.title, services.sub, service1~3.title / .en / .points（一行一點）, listings.title, listings.sub, faq.title, faq.sub, footer.team, footer.fine, legal.agent, legal.company1, legal.broker1, legal.company2, legal.broker2`
+可用代碼：`notice, hero.greeting, hero.sub, hero.slogan, hero.intro, form.title, form.sub, services.title, services.sub, service1~3.title / .en / .points（一行一點）, listings.title, listings.sub, listings.limit, faq.title, faq.sub, footer.team, footer.fine, legal.agent, legal.company1, legal.broker1, legal.company2, legal.broker2`
 （legal.* 是法定揭露，除非證號真的變更，否則不要改）
+
+`listings.limit`：精選案件一開始顯示幾間。填 `4,6`＝手機 4 間、電腦 6 間；只填一個數字則兩種螢幕都用這個數量。空白或不填＝預設 4、6。超過的物件會收在「看更多物件（剩 N 間）」後面，點了可展開，再點「收合」會收起來。篩選分類改變後會重新套用這個上限。
 
 ### 照片
 - **uploadPhoto** `{token, filename, mimeType:"image/jpeg", data:"<base64>"}` → 存到雲端硬碟資料夾（`PHOTO_FOLDER_ID`，沒有就自動建立「許津銓網站照片」），設成知道連結的人可檢視。

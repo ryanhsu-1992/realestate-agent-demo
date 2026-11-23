@@ -181,6 +181,9 @@ select.input{appearance:none;background-image:linear-gradient(45deg,transparent 
 .fchip[aria-pressed="true"]{background:var(--foreground);color:var(--background);border-color:var(--foreground)}
 .fchip__n{opacity:.65;font-variant-numeric:tabular-nums;margin-left:2px}
 .filters__count{font-size:13.5px;color:var(--muted-foreground)}
+.lst[data-overflow="1"]{display:none!important}
+.lst-more-wrap{display:flex;justify-content:center;margin:8px 0 0}
+.lst-more{min-width:min(100%,280px)}
 .lst-grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr))}
 .lst{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--border);border-radius:calc(var(--radius) + 4px);overflow:hidden;transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
 .lst:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
@@ -226,9 +229,16 @@ select.input{appearance:none;background-image:linear-gradient(45deg,transparent 
 .ph__body p{font-size:13.5px;color:var(--muted-foreground)}
 
 /* faq */
-.faq{display:grid;gap:10px}
+.faq{display:grid;gap:12px}
+.faq-tabs{display:flex;gap:8px;overflow-x:auto;padding:2px 0 6px;scrollbar-width:thin;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.faq-tab{flex:none;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--border);background:transparent;font:inherit;font-weight:600;font-size:14.5px;color:inherit;cursor:pointer;transition:background-color .2s,border-color .2s,color .2s}
+.faq-tab[aria-selected="true"]{background:var(--foreground);color:var(--background);border-color:var(--foreground)}
+.faq-panel{display:grid;gap:10px}
+.faq-panel[hidden]{display:none}
 .qa{border:1px solid var(--border);border-radius:var(--radius);background:var(--card);overflow:hidden}
 .qa summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:14px;min-height:56px;padding:14px 18px;font-weight:600;font-size:16px}
+.qa summary>span{display:flex;align-items:center;flex-wrap:wrap;gap:8px;min-width:0}
+.qa summary .badge{flex:none;font-weight:600}
 .qa summary::-webkit-details-marker{display:none}
 .qa .i--chev{transition:transform .3s var(--ease);color:var(--muted-foreground)}
 .qa[open] .i--chev{transform:rotate(180deg)}
@@ -358,6 +368,10 @@ h1,h2,h3,h4{font-weight:400}
 .badge--rent{background:var(--coral);color:#fff}
 .fchip{border-width:2px;font-weight:700}
 .fchip[aria-pressed="true"]{background:var(--primary);border-color:var(--primary);color:#fff}
+.faq-tab{border-width:2px;border-color:var(--foreground);font-weight:700}
+.faq-tab[aria-selected="true"]{background:var(--primary);border-color:var(--primary);color:#fff}
+.lst-more{border-width:2px;border-radius:999px;font-weight:700;box-shadow:0 4px 0 var(--foreground)}
+.lst-more:active{transform:translateY(2px);box-shadow:0 2px 0 var(--foreground)}
 .sec--market{background:var(--secondary)}
 .mk__bar{height:16px;background:#fff}
 .mk__bar span{background:var(--primary)}
@@ -752,7 +766,7 @@ window.SITE_CONFIG={
   <div class="fchips" role="group" aria-label="物件類型"><button type="button" class="fchip" aria-pressed="true" data-cat="全部">全部</button><button type="button" class="fchip" aria-pressed="false" data-cat="一房">一房 <span class=fchip__n>2</span></button><button type="button" class="fchip" aria-pressed="false" data-cat="兩房">兩房 <span class=fchip__n>2</span></button><button type="button" class="fchip" aria-pressed="false" data-cat="三房">三房 <span class=fchip__n>1</span></button><button type="button" class="fchip" aria-pressed="false" data-cat="四房以上">四房以上 <span class=fchip__n>2</span></button><button type="button" class="fchip" aria-pressed="false" data-cat="店面・辦公">店面・辦公 <span class=fchip__n>2</span></button><button type="button" class="fchip" aria-pressed="false" data-cat="廠房">廠房 <span class=fchip__n>2</span></button><button type="button" class="fchip" aria-pressed="false" data-cat="土地">土地 <span class=fchip__n>3</span></button></div>
   <p class="filters__count" aria-live="polite" data-count>共 14 件範例物件</p>
 </div>
-<ul class="lst-grid" data-grid><li class="lst reveal" data-cat="三房" data-deal="出售">
+<ul class="lst-grid" id="lst-grid" data-grid><li class="lst reveal" data-cat="三房" data-deal="出售">
   <div class="lst__art"><img class="lst__ico" src="../icons/apartment.webp" alt="" width="132" height="132" loading="lazy" decoding="async"><span class="badge badge--deal badge--sale">出售</span><span class="badge badge--sample">範例物件</span></div>
   <div class="lst__body"><h3 class="lst__title">桃園經國商圈電梯三房</h3>
   <p class="lst__addr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg><span>桃園市桃園區經國路一帶</span></p>
@@ -864,6 +878,7 @@ window.SITE_CONFIG={
   <p class="lst__spec">農地　·　412 坪</p>
   <p class="lst__note">面積完整、進出方便。地目與使用限制請再依法確認。範例物件。</p></div>
 </li></ul>
+<p class="lst-more-wrap" data-lst-more-wrap hidden><button type="button" class="btn btn--outline lst-more" data-lst-more hidden aria-expanded="false" aria-controls="lst-grid">看更多物件</button></p>
 <p class="empty" data-empty hidden>這個分類目前沒有範例物件，請試試其他條件。</p></div></section>
 <section class="sec sec--market" aria-labelledby="market-h"><div class="wrap"><div class="mk">
   <div class="mk__head"><h2 class="sec-h" id="market-h">桃園房價行情 <span class="badge badge--sample">範例數字</span></h2>
@@ -873,7 +888,39 @@ window.SITE_CONFIG={
 </div></div></section>
 <section class="sec sec--faq" id="faq" aria-labelledby="faq-h"><div class="wrap faq-wrap">
   <div class="sec-head"><h2 class="sec-h" id="faq-h">買房、賣房常見問題</h2><p class="sec-sub">先問這幾件。</p></div>
-  <div class="faq"><details class="qa reveal"><summary><span>在桃園買房，要先準備什麼？</span><svg class="i i--chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="qa__a"><p>先想清楚預算、區域和居住需求，再來估價與看屋會比較有效率。自備款、貸款條件與生活圈，都可以先跟我說，我再依您的情況一起整理。</p></div></details><details class="qa reveal"><summary><span>現在適合進場，還是再等看看？</span><svg class="i i--chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="qa__a"><p>這要看您是自住還是置產，以及能接受的總價與月付。行情會波動，但適合的房子出現時，條件比「等一個完美時間點」更重要。歡迎先聊聊您的時間表。</p></div></details><details class="qa reveal"><summary><span>首購貸款大概可以貸多少？</span><svg class="i i--chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="qa__a"><p>常見會依信用、收入與物件條件來評估，成數因人而異。我可以先幫您估一個大概範圍，並提醒相關稅費，讓您比較有底。實際核貸仍以銀行審核為準。</p></div></details><details class="qa reveal"><summary><span>想賣房子，從委託到成交大概要多久？</span><svg class="i i--chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="qa__a"><p>要看物件條件、定價和當時市場。有的幾週就談成，有的需要多一些時間調整策略。委託前我會先跟您說明行情與建議開價，過程也會定期回報。</p></div></details><details class="qa reveal"><summary><span>想把房子出租，需要先準備什麼？</span><svg class="i i--chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="qa__a"><p>先整理房屋現況與期望租金，再決定委託範圍。我可以幫忙估租金、拍攝與上架，並協助安排看房與合約注意事項。人在外地或不方便時常往返，也可以先用電話或 LINE 溝通。</p></div></details><details class="qa reveal"><summary><span>人不在桃園，或不方便常常來看屋，怎麼配合？</span><svg class="i i--chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="qa__a"><p>可以先用電話或 LINE 溝通需求，我再依條件幫您篩選、說明現況，必要時補照片或視訊。真正合適再安排看屋，減少來回奔波。</p></div></details></div></div></section>
+    <div class="faq">
+    <div class="faq-tabs" role="tablist" aria-label="問題分類">
+      <button type="button" class="faq-tab" role="tab" id="faq-tab-buy" aria-controls="faq-panel-buy" aria-selected="true" tabindex="0">買賣</button>
+      <button type="button" class="faq-tab" role="tab" id="faq-tab-rent" aria-controls="faq-panel-rent" aria-selected="false" tabindex="-1">租賃</button>
+      <button type="button" class="faq-tab" role="tab" id="faq-tab-tools" aria-controls="faq-panel-tools" aria-selected="false" tabindex="-1">工具</button>
+      <button type="button" class="faq-tab" role="tab" id="faq-tab-qa" aria-controls="faq-panel-qa" aria-selected="false" tabindex="-1">Q&amp;A</button>
+      <button type="button" class="faq-tab" role="tab" id="faq-tab-partners" aria-controls="faq-panel-partners" aria-selected="false" tabindex="-1">異業合作</button>
+    </div>
+    <div class="faq-panel" role="tabpanel" id="faq-panel-buy" aria-labelledby="faq-tab-buy">
+      <details class="qa reveal"><summary><span>在桃園買房，要先準備什麼？</span><svg class="i i--chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="qa__a"><p>先想清楚預算、區域和居住需求，再來估價與看屋會比較有效率。自備款、貸款條件與生活圈，都可以先跟我說，我再依您的情況一起整理。</p></div></details>
+      <details class="qa reveal"><summary><span>現在適合進場，還是再等看看？</span><svg class="i i--chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="qa__a"><p>這要看您是自住還是置產，以及能接受的總價與月付。行情會波動，但適合的房子出現時，條件比「等一個完美時間點」更重要。歡迎先聊聊您的時間表。</p></div></details>
+      <details class="qa reveal"><summary><span>首購貸款大概可以貸多少？</span><svg class="i i--chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="qa__a"><p>常見會依信用、收入與物件條件來評估，成數因人而異。我可以先幫您估一個大概範圍，並提醒相關稅費，讓您比較有底。實際核貸仍以銀行審核為準。</p></div></details>
+      <details class="qa reveal"><summary><span>想賣房子，從委託到成交大概要多久？</span><svg class="i i--chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="qa__a"><p>要看物件條件、定價和當時市場。有的幾週就談成，有的需要多一些時間調整策略。委託前我會先跟您說明行情與建議開價，過程也會定期回報。</p></div></details>
+    </div>
+    <div class="faq-panel" role="tabpanel" id="faq-panel-rent" aria-labelledby="faq-tab-rent" hidden>
+      <details class="qa reveal"><summary><span>想把房子出租，需要先準備什麼？</span><svg class="i i--chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="qa__a"><p>先整理房屋現況與期望租金，再決定委託範圍。我可以幫忙估租金、拍攝與上架，並協助安排看房與合約注意事項。人在外地或不方便時常往返，也可以先用電話或 LINE 溝通。</p></div></details>
+      <details class="qa reveal"><summary><span>想在桃園租房子，要注意什麼？ <span class="badge badge--sample">範本</span></span><svg class="i i--chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="qa__a"><p>看屋時可先確認屋況、家具家電、管理費是否另計，以及是否可養寵物。簽約前請看清楚租期、押金、提前終止和修復責任。這則是範本說明，實際條件依各物件不同，歡迎用 <a href="https://line.me/R/oaMessage/@652ddpuz/?text=" target="_blank" rel="noopener">LINE</a> 或電話告訴我需求，我再幫您篩選。</p></div></details>
+    </div>
+    <div class="faq-panel" role="tabpanel" id="faq-panel-tools" aria-labelledby="faq-tab-tools" hidden>
+      <details class="qa reveal"><summary><span>有沒有房貸試算可以參考？ <span class="badge badge--sample">範本</span></span><svg class="i i--chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="qa__a"><p>只要有房屋總價、想貸的成數和年限，就能粗估每月大致要繳多少。網站上的試算說明目前是範本，還沒接上正式試算工具。您可以直接用 <a href="https://line.me/R/oaMessage/@652ddpuz/?text=" target="_blank" rel="noopener">LINE</a> 把條件傳給我，我再幫您算一個參考範圍；實際月付仍以銀行核貸為準。</p></div></details>
+      <details class="qa reveal"><summary><span>買房、賣房會有哪些稅費？ <span class="badge badge--sample">範本</span></span><svg class="i i--chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="qa__a"><p>買方常見有契稅、印花稅、代書費；賣方可能會碰到土地增值稅或房地合一稅，要看持有時間與實際情況。租賃則要留意所得稅等相關規定。這則是範本說明。需要我依您的物件列一張費用清單的話，歡迎用 <a href="https://line.me/R/oaMessage/@652ddpuz/?text=" target="_blank" rel="noopener">LINE</a> 或電話找我。</p></div></details>
+    </div>
+    <div class="faq-panel" role="tabpanel" id="faq-panel-qa" aria-labelledby="faq-tab-qa" hidden>
+      <details class="qa reveal"><summary><span>人不在桃園，或不方便常常來看屋，怎麼配合？</span><svg class="i i--chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="qa__a"><p>可以先用電話或 LINE 溝通需求，我再依條件幫您篩選、說明現況，必要時補照片或視訊。真正合適再安排看屋，減少來回奔波。</p></div></details>
+      <details class="qa reveal"><summary><span>看屋或委託，需要先收費嗎？ <span class="badge badge--sample">範本</span></span><svg class="i i--chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="qa__a"><p>一般來看屋、詢問行情或先了解委託方式，都不需要先付諮詢費。若進入買賣或租賃委託，服務費會在簽約前明白說明。這則是範本說明，細節歡迎直接問我。</p></div></details>
+    </div>
+    <div class="faq-panel" role="tabpanel" id="faq-panel-partners" aria-labelledby="faq-tab-partners" hidden>
+      <details class="qa reveal"><summary><span>買好房子後，可以介紹裝修或室內設計嗎？ <span class="badge badge--sample">範本</span></span><svg class="i i--chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="qa__a"><p>可以。若您成交後需要裝修、格局調整或室內設計，我可以依情況介紹配合的廠商，讓交屋到入住比較順。這則是範本說明，合作對象會再依實際需求介紹。歡迎用 <a href="https://line.me/R/oaMessage/@652ddpuz/?text=" target="_blank" rel="noopener">LINE</a> 告訴我您的想法。</p></div></details>
+      <details class="qa reveal"><summary><span>需要搬家或清潔，也可以一起協助嗎？ <span class="badge badge--sample">範本</span></span><svg class="i i--chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="qa__a"><p>可以先跟我說搬家時間、樓層和大致需求，我再協助介紹介認的搬家或清潔服務。這則是範本說明，歡迎用 <a href="https://line.me/R/oaMessage/@652ddpuz/?text=" target="_blank" rel="noopener">LINE</a> 或電話聯絡。</p></div></details>
+      <details class="qa reveal"><summary><span>代書、過戶這些手續怎麼配合？ <span class="badge badge--sample">範本</span></span><svg class="i i--chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="qa__a"><p>買賣成交後的代書、過戶與相關文件，我會說明流程，並可介紹介作的地政士一起配合。這則是範本說明，實際安排依各案件而定。有需要請用 <a href="https://line.me/R/oaMessage/@652ddpuz/?text=" target="_blank" rel="noopener">LINE</a> 找我。</p></div></details>
+      <details class="qa reveal"><summary><span>想找貸款諮詢，或相關行業想合作，怎麼連絡？ <span class="badge badge--sample">範本</span></span><svg class="i i--chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="qa__a"><p>如果您需要貸款方面的諮詢，我可以協助轉介配合的夥伴，讓您多一個詢問管道。也歡迎裝修、搬家、代書、貸款等相關行業來洽談異業合作。這則是範本說明。請用官方 <a href="https://line.me/R/oaMessage/@652ddpuz/?text=" target="_blank" rel="noopener">LINE @652ddpuz</a> 或電話 0983-553-849 與許先生連絡。</p></div></details>
+    </div>
+  </div></div></section>
 </main>
 <footer class="foot" id="contact">
   <div class="wrap foot__in">
@@ -985,16 +1032,82 @@ $$("form.lead").forEach(function(f){
   var c=$("[data-result-close]",f); c&&c.addEventListener("click",function(){$(".result",f).hidden=true;});
 });
 
-/* ---------- listings filter ---------- */
-var deal="全部", cat="全部", cnt=$("[data-count]"), empty=$("[data-empty]");
-function filt(){
-  var n=0, noun=window.__lstNoun||"範例物件"; $$(".lst").forEach(function(c){var ok=(deal==="全部"||c.dataset.deal===deal)&&(cat==="全部"||c.dataset.cat===cat); c.hidden=!ok; if(ok)n++;});
-  if(cnt)cnt.textContent=n?("共 "+n+" 件"+noun):"沒有符合的"+noun; if(empty)empty.hidden=n>0;
+/* ---------- listings filter + limit ---------- */
+var deal="全部", cat="全部", cnt=$("[data-count]"), empty=$("[data-empty]"), lstOpen=false;
+function parseLstLimit(v){
+  var phone=4, desk=6;
+  if(v==null||String(v).trim()==="")return [phone,desk];
+  var nums=String(v).match(/\d+/g);
+  if(!nums||!nums.length)return [phone,desk];
+  var a=parseInt(nums[0],10), b=nums[1]!=null?parseInt(nums[1],10):a;
+  if(a>=1&&a<=99)phone=a;
+  if(b>=1&&b<=99)desk=b;
+  return [phone,desk];
 }
-function bindCat(b){b.addEventListener("click",function(){cat=b.dataset.cat;$$("[data-cat]").forEach(function(x){x.setAttribute("aria-pressed",x===b)});filt();})}
-$$("[data-deal]").forEach(function(b){b.addEventListener("click",function(){deal=b.dataset.deal;$$("[data-deal]").forEach(function(x){x.setAttribute("aria-pressed",x===b)});filt();})});
+function lstLimit(){ var p=parseLstLimit(window.__lstLimit); return innerWidth>=900?p[1]:p[0]; }
+function filt(opts){
+  if(opts&&opts.reset)lstOpen=false;
+  var n=0, noun=window.__lstNoun||"範例物件", matches=[];
+  $$(".lst").forEach(function(c){
+    var ok=(deal==="全部"||c.dataset.deal===deal)&&(cat==="全部"||c.dataset.cat===cat);
+    c.hidden=!ok; c.removeAttribute("data-overflow");
+    if(ok){n++;matches.push(c);}
+  });
+  if(cnt)cnt.textContent=n?("共 "+n+" 件"+noun):"沒有符合的"+noun; if(empty)empty.hidden=n>0;
+  var limit=lstLimit(), more=$("[data-lst-more]"), wrap=$("[data-lst-more-wrap]");
+  var overflow=n>limit;
+  if(!lstOpen&&overflow){
+    matches.forEach(function(c,i){ if(i>=limit)c.setAttribute("data-overflow","1"); });
+  } else {
+    matches.forEach(function(c){ c.classList.add("in"); });
+  }
+  if(more){
+    more.hidden=!overflow;
+    more.setAttribute("aria-expanded", overflow&&lstOpen?"true":"false");
+    if(overflow) more.textContent=lstOpen?"收合":("看更多物件（剩 "+(n-limit)+" 間）");
+  }
+  if(wrap)wrap.hidden=!overflow;
+}
+function bindCat(b){b.addEventListener("click",function(){cat=b.dataset.cat;$$("[data-cat]").forEach(function(x){x.setAttribute("aria-pressed",x===b)});filt({reset:true});})}
+$$("[data-deal]").forEach(function(b){b.addEventListener("click",function(){deal=b.dataset.deal;$$("[data-deal]").forEach(function(x){x.setAttribute("aria-pressed",x===b)});filt({reset:true});})});
 $$("[data-cat]").forEach(bindCat);
+var moreBtn=$("[data-lst-more]");
+if(moreBtn)moreBtn.addEventListener("click",function(){
+  lstOpen=!lstOpen;
+  filt();
+  if(!lstOpen){ var sec=$("#listings"); if(sec)sec.scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"}); }
+});
+var lstRq; addEventListener("resize",function(){ clearTimeout(lstRq); lstRq=setTimeout(function(){ filt(); },150); });
 window.__lst={filt:filt,bindCat:bindCat};
+filt();
+
+/* ---------- FAQ tabs ---------- */
+(function(){
+  var list=$(".faq-tabs"); if(!list)return;
+  var tabs=$$('[role="tab"]',list);
+  function select(tab,focus){
+    tabs.forEach(function(t){
+      var on=t===tab;
+      t.setAttribute("aria-selected",on);
+      t.tabIndex=on?0:-1;
+      var p=document.getElementById(t.getAttribute("aria-controls"));
+      if(p)p.hidden=!on;
+    });
+    if(focus){ tab.focus(); try{ tab.scrollIntoView({inline:"center",block:"nearest",behavior:reduce?"auto":"smooth"}); }catch(e){} }
+  }
+  tabs.forEach(function(t){
+    t.addEventListener("click",function(){select(t)});
+    t.addEventListener("keydown",function(e){
+      var i=tabs.indexOf(t), n=null;
+      if(e.key==="ArrowRight"||e.key==="ArrowDown")n=tabs[(i+1)%tabs.length];
+      else if(e.key==="ArrowLeft"||e.key==="ArrowUp")n=tabs[(i-1+tabs.length)%tabs.length];
+      else if(e.key==="Home")n=tabs[0];
+      else if(e.key==="End")n=tabs[tabs.length-1];
+      if(!n)return;
+      e.preventDefault(); select(n,true);
+    });
+  });
+})();
 
 /* ---------- unsaved-changes guard ---------- */
 var dirty=false, sent=false;
@@ -1171,6 +1284,6 @@ addEventListener("keydown",function(e){ if(e.key==="Escape"&&!say.hidden){say.hi
 })();
 
 </script>
-<script src="../sheet.js?v=20261123"></script>
+<script src="../sheet.js?v=20261123c"></script>
 </body>
 </html>
