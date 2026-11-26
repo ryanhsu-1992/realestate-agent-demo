@@ -199,6 +199,7 @@ select.input{appearance:none;background-image:linear-gradient(45deg,transparent 
 .lst__addr{display:flex;gap:6px;align-items:center;font-size:13.5px;color:var(--muted-foreground)}
 .lst__price{font-family:var(--font-latin);font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
 .lst__spec{font-size:13.5px;color:var(--muted-foreground);font-variant-numeric:tabular-nums}
+.hood__intro,.lst__note{white-space:pre-line}
 .lst__note{font-size:13.5px;line-height:1.6;color:var(--muted-foreground);border-top:1px solid var(--border);padding-top:10px;margin-top:4px}
 .empty{padding:28px;text-align:center;color:var(--muted-foreground);border:1px dashed var(--border);border-radius:var(--radius)}
 
@@ -525,10 +526,11 @@ window.SITE_CONFIG={
 <section class="hood" aria-labelledby="h1">
   <div class="wrap hood__grid">
     <div class="hood__text">
-      <div class="hood__hello"><img src="photo.jpg" alt="許津銓" width="72" height="72"><p class="bubble">您好，我是許津銓！<span>【住商不動產RM團隊】</span></p></div>
-      <h1 id="h1" class="hood__h1"><span class="hood__sub">桃園在地房仲</span>許津銓</h1>
-      <p class="hood__slogan"><mark>把房子的事，交給認得的人。</mark></p>
-      <p class="hood__intro">您好，我是許津銓，目前於【住商不動產RM團隊】服務。之後會以房屋買賣為主；若您在桃園有房子想賣或想出租，都可以把資料留給我，我會再親自跟您聯繫。</p>
+      <div class="hood__hello"><img src="photo.jpg" alt="許津銓" width="72" height="72"><p class="bubble">房產津選、買賣雙銓！<span>【住商不動產RM團隊】</span></p></div>
+      <h1 id="h1" class="hood__h1"><span class="hood__sub">FB搜尋:銓力租售好房屋</span>許津銓</h1>
+      <p class="hood__slogan"><mark>讓好房遇見好人，懂房也懂您的心。</mark></p>
+      <p class="hood__intro">大家好我是阿銓，謝謝願意停下腳步，請給津銓為您服務的機會！
+無論要找房子、租房子、售屋購屋，還是想聊聊天都歡迎隨時聯繫、隨時預約賞屋，只推薦合適的好宅給您💓！</p>
       <div class="cta-row">
   <a class="btn btn--primary btn--lg" href="#form" data-go-intent="sell"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3.5h7.5L19 8v12.5H7z"/><path d="M14.5 3.5V8H19M10 12.5h6M10 16h4"/></svg><span>免費委託估價</span></a>
   <a class="btn btn--outline btn--lg" href="tel:0983553849"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 3.5h2.9l1.5 4.1-2.1 1.5a12 12 0 0 0 6 6l1.5-2.1 4.1 1.5v2.9a2 2 0 0 1-2.2 2A16.4 16.4 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg><span>撥打電話</span></a>
@@ -578,8 +580,8 @@ window.SITE_CONFIG={
   </div>
 </section>
 <section class="sec sec--form" id="form" aria-labelledby="form-h"><div class="wrap"><div class="formcard">
-  <h2 class="sec-h" id="form-h">告訴我，您想怎麼處理房子</h2>
-  <p class="sec-sub">先選一項，再依表單留下資料。我會再用電話或 LINE 跟您聯絡。</p>
+  <h2 class="sec-h" id="form-h">買賣租賃萬事屋</h2>
+  <p class="sec-sub">依照需求填入表格內容，確認資料正確填寫後送出，將會馬上與您聯絡。</p>
   <div class="tabs" role="tablist" aria-label="需求類型">
   <button type="button" role="tab" class="tab" id="tab-buy" aria-controls="panel-buy" aria-selected="true" data-intent="buy"><img class="tab__ico" src="icons/house.webp" alt="" width="40" height="40" loading="lazy" decoding="async"><span>我想買房</span></button>
   <button type="button" role="tab" class="tab" id="tab-sell" aria-controls="panel-sell" aria-selected="false" tabindex="-1" data-intent="sell"><img class="tab__ico" src="icons/key.webp" alt="" width="40" height="40" loading="lazy" decoding="async"><span>我想賣房、出租</span></button>
@@ -743,7 +745,7 @@ window.SITE_CONFIG={
 </form></div>
 </div></div></section>
 <section class="sec sec--services" id="services" aria-labelledby="svc-h"><div class="wrap">
-  <div class="sec-head "><h2 class="sec-h" id="svc-h">房屋配對 · 買賣 · 委託</h2><p class="sec-sub">從找房、估價到委託曝光，都可以找許先生。</p></div>
+  <div class="sec-head "><h2 class="sec-h" id="svc-h">銓力租售好房屋</h2><p class="sec-sub">提供最誠實的建議，馬上配對案件、好屋報你知！</p></div>
   <div class="svc-list"><article class="svc svc--match reveal">
   <div class="svc__head"><div class="svc__art"><img class="svc__ico" src="icons/handshake.webp" alt="" width="72" height="72" loading="lazy" decoding="async"></div><div class="svc__titles"><h3 class="svc__title">房屋配對｜輕鬆找房不煩惱</h3><p class="svc__en" lang="en">Property Matching</p></div></div>
   <div class="svc__body">
@@ -752,134 +754,56 @@ window.SITE_CONFIG={
 <article class="svc svc--sales reveal">
   <div class="svc__head"><div class="svc__art"><img class="svc__ico" src="icons/house.webp" alt="" width="72" height="72" loading="lazy" decoding="async"></div><div class="svc__titles"><h3 class="svc__title">房產買賣｜為您精選好房屋</h3><p class="svc__en" lang="en">Residential Sales</p></div></div>
   <div class="svc__body">
-  <ul class="dots"><li>為您做市場趨勢、稅務分析、投資方向建議！</li><li>室內裝修、格局規劃推薦，一齊打造理想生活樣貌！</li><li>開價不等於成交價，勇敢出價、先享受世界！</li></ul></div>
+  <ul class="dots"><li>買房小白別擔心，為您做市場趨勢、稅務分析、投資方向建議！</li><li>室內裝修、格局規劃推薦，一齊打造理想生活樣貌！</li><li>開價不等於成交價，勇敢出價的人先享受世界！</li></ul></div>
 </article>
 <article class="svc svc--entrust reveal">
   <div class="svc__head"><div class="svc__art"><img class="svc__ico" src="icons/key.webp" alt="" width="72" height="72" loading="lazy" decoding="async"></div><div class="svc__titles"><h3 class="svc__title">歡迎委託｜資產配置找津銓</h3><p class="svc__en" lang="en">Property Entrustment</p></div></div>
   <div class="svc__body">
-  <ul class="dots"><li>誠摯邀請您：若剛好有不動產買賣／稅務規劃／周遭行情分析等需求</li><li>歡迎隨時聯絡，請給津銓服務的機會，共創房產價值！</li><li>一人委託即享受團隊服務！住商機構聯賣全台約650家分店！</li><li>六大房仲網站、六大賞屋平台曝光！</li></ul><a class="svc__go" href="#form" data-go-intent="sell">前往委託估價<svg class="i i--arrow" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12h15M14 6.5l5.5 5.5-5.5 5.5"/></svg></a></div>
+  <ul class="dots"><li>不動產買賣／稅務規劃／周遭行情分析等需求，請隨時聯絡津銓，共創房產價值！</li><li>一人委託即享受團隊服務！住商機構全台約872家分店！</li><li>為您開啟家的美好：六大房仲網站曝光、六大賞屋平台曝光！</li></ul><a class="svc__go" href="#form" data-go-intent="sell">前往委託估價<svg class="i i--arrow" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12h15M14 6.5l5.5 5.5-5.5 5.5"/></svg></a></div>
 </article></div></div></section>
 <section class="sec sec--listings" id="listings" aria-labelledby="lst-h"><div class="wrap">
-  <div class="sec-head"><h2 class="sec-h" id="lst-h">精選案件</h2><p class="sec-sub">以下皆為<strong>範例物件</strong>，僅供版面示範，非正式委託案。土地與廠房也都可以找我問。</p></div>
+  <div class="sec-head"><h2 class="sec-h" id="lst-h">好屋快尋約賞屋</h2><p class="sec-sub">以下皆為<strong>範例物件</strong>，僅供版面示範，非正式委託案。土地與廠房也都可以找我問。</p></div>
   <div class="filters">
   <div class="seg" role="group" aria-label="出售或出租"><button type="button" class="seg__b" aria-pressed="true" data-deal="全部">全部</button><button type="button" class="seg__b" aria-pressed="false" data-deal="出售">出售</button><button type="button" class="seg__b" aria-pressed="false" data-deal="出租">出租</button></div>
-  <div class="fchips" role="group" aria-label="物件類型"><button type="button" class="fchip" aria-pressed="true" data-cat="全部">全部</button><button type="button" class="fchip" aria-pressed="false" data-cat="一房">一房 <span class=fchip__n>2</span></button><button type="button" class="fchip" aria-pressed="false" data-cat="兩房">兩房 <span class=fchip__n>2</span></button><button type="button" class="fchip" aria-pressed="false" data-cat="三房">三房 <span class=fchip__n>1</span></button><button type="button" class="fchip" aria-pressed="false" data-cat="四房以上">四房以上 <span class=fchip__n>2</span></button><button type="button" class="fchip" aria-pressed="false" data-cat="店面・辦公">店面・辦公 <span class=fchip__n>2</span></button><button type="button" class="fchip" aria-pressed="false" data-cat="廠房">廠房 <span class=fchip__n>2</span></button><button type="button" class="fchip" aria-pressed="false" data-cat="土地">土地 <span class=fchip__n>3</span></button></div>
-  <p class="filters__count" aria-live="polite" data-count>共 14 件範例物件</p>
+  <div class="fchips" role="group" aria-label="物件類型"><button type="button" class="fchip" aria-pressed="true" data-cat="全部">全部</button><button type="button" class="fchip" aria-pressed="false" data-cat="一房">一房 <span class=fchip__n>1</span></button><button type="button" class="fchip" aria-pressed="false" data-cat="兩房">兩房 <span class=fchip__n>2</span></button><button type="button" class="fchip" aria-pressed="false" data-cat="三房">三房 <span class=fchip__n>0</span></button><button type="button" class="fchip" aria-pressed="false" data-cat="四房以上">四房以上 <span class=fchip__n>1</span></button><button type="button" class="fchip" aria-pressed="false" data-cat="店面・辦公">店面・辦公 <span class=fchip__n>0</span></button><button type="button" class="fchip" aria-pressed="false" data-cat="廠房">廠房 <span class=fchip__n>0</span></button><button type="button" class="fchip" aria-pressed="false" data-cat="土地">土地 <span class=fchip__n>0</span></button></div>
+  <p class="filters__count" aria-live="polite" data-count>共 4 件物件</p>
 </div>
-<ul class="lst-grid" id="lst-grid" data-grid><li class="lst reveal" data-cat="三房" data-deal="出售">
-  <div class="lst__art"><img class="lst__ico" src="icons/apartment.webp" alt="" width="132" height="132" loading="lazy" decoding="async"><span class="badge badge--deal badge--sale">出售</span><span class="badge badge--sample">範例物件</span></div>
-  <div class="lst__body"><h3 class="lst__title">桃園經國商圈電梯三房</h3>
-  <p class="lst__addr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg><span>桃園市桃園區經國路一帶</span></p>
-  <p class="lst__price">1,388萬</p>
-  <p class="lst__spec">電梯大樓　·　3房2廳2衛　·　32.5 坪</p>
-  <p class="lst__note">近經國轉運站，採光良好，適合首購或換屋。</p></div>
+<ul class="lst-grid" id="lst-grid" data-grid><li class="lst reveal" data-cat="兩房" data-deal="出租">
+  <div class="lst__art"><img class="lst__ico" src="icons/apartment.webp" alt="" width="132" height="132" loading="lazy" decoding="async"><span class="badge badge--deal badge--rent">出租</span><span class="badge badge--sample">範例物件</span></div>
+  <div class="lst__body"><h3 class="lst__title">【新上架】南崁龜山3房社區</h3>
+  <p class="lst__addr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg><span>桃園市龜山區南上路</span></p>
+  <p class="lst__price">月租 27,000 元</p>
+  <p class="lst__spec">電梯大樓　·　3房2廳1衛　·　30 坪　·　6/12　·　屋齡 8 年</p>
+  <p class="lst__note">高樓層景觀，家具家電齊全，可短期內入住。（預覽頁新增的範例物件）</p></div>
+</li>
+<li class="lst reveal" data-cat="兩房" data-deal="出售">
+  <div class="lst__art"><img class="lst__ico" src="icons/apartment.webp" alt="" width="132" height="132" loading="lazy" decoding="async"><span class="badge badge--deal badge--sale">出售</span></div>
+  <div class="lst__body"><h3 class="lst__title">藝文G11站兩房車</h3>
+  <p class="lst__addr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg><span>桃園市桃園區莊二街</span></p>
+  <p class="lst__price">1,068萬</p>
+  <p class="lst__spec">電梯大樓　·　2房2廳1衛　·　36.71 坪　·　2F/12F　·　屋齡 33.8 年</p>
+  <p class="lst__note">格局方正採光良好，步行10分鐘到藝文特區。
+近國道交通便利、通勤雙北快速。
+稀有低總價兩房車，適合首購或換屋。</p></div>
 </li>
 <li class="lst reveal" data-cat="四房以上" data-deal="出售">
-  <div class="lst__art"><img class="lst__ico" src="icons/apartment.webp" alt="" width="132" height="132" loading="lazy" decoding="async"><span class="badge badge--deal badge--sale">出售</span><span class="badge badge--sample">範例物件</span></div>
-  <div class="lst__body"><h3 class="lst__title">中壢過嶺靜巷美宅四房</h3>
-  <p class="lst__addr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg><span>桃園市中壢區過嶺</span></p>
-  <p class="lst__price">1,680萬</p>
-  <p class="lst__spec">電梯大樓　·　4房2廳2衛　·　41.2 坪</p>
+  <div class="lst__art"><img class="lst__ico" src="icons/apartment.webp" alt="" width="132" height="132" loading="lazy" decoding="async"><span class="badge badge--deal badge--sale">出售</span></div>
+  <div class="lst__body"><h3 class="lst__title">龜山幸福高投報4套房</h3>
+  <p class="lst__addr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg><span>桃園市龜山區幸福社區</span></p>
+  <p class="lst__price">798萬</p>
+  <p class="lst__spec">電梯大樓　·　4房0廳4衛　·　23.14 坪　·　5F/5F　·　屋齡 45.1 年</p>
   <p class="lst__note">近公園與學校，格局方正，室內已整理。</p></div>
 </li>
 <li class="lst reveal" data-cat="一房" data-deal="出租">
   <div class="lst__art"><img class="lst__ico" src="icons/apartment.webp" alt="" width="132" height="132" loading="lazy" decoding="async"><span class="badge badge--deal badge--rent">出租</span><span class="badge badge--sample">範例物件</span></div>
-  <div class="lst__body"><h3 class="lst__title">蘆竹南崁收租套房</h3>
-  <p class="lst__addr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg><span>桃園市蘆竹區南崁</span></p>
-  <p class="lst__price">月租 16,800 元</p>
-  <p class="lst__spec">套房　·　1房1廳1衛　·　12 坪</p>
-  <p class="lst__note">近南崁交流道與商圈，適合小資或收租。</p></div>
-</li>
-<li class="lst reveal" data-cat="兩房" data-deal="出售">
-  <div class="lst__art"><img class="lst__ico" src="icons/apartment.webp" alt="" width="132" height="132" loading="lazy" decoding="async"><span class="badge badge--deal badge--sale">出售</span><span class="badge badge--sample">範例物件</span></div>
-  <div class="lst__body"><h3 class="lst__title">龜山文青路兩房電梯華廈</h3>
-  <p class="lst__addr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg><span>桃園市龜山區文青路</span></p>
-  <p class="lst__price">1,080萬</p>
-  <p class="lst__spec">華廈　·　2房2廳1衛　·　24.8 坪</p>
-  <p class="lst__note">近體育大學與生活機能，管理完善。</p></div>
-</li>
-<li class="lst reveal" data-cat="四房以上" data-deal="出售">
-  <div class="lst__art"><img class="lst__ico" src="icons/house.webp" alt="" width="132" height="132" loading="lazy" decoding="async"><span class="badge badge--deal badge--sale">出售</span><span class="badge badge--sample">範例物件</span></div>
-  <div class="lst__body"><h3 class="lst__title">八德介壽路透天整棟</h3>
-  <p class="lst__addr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg><span>桃園市八德區介壽路一帶</span></p>
-  <p class="lst__price">2,280萬</p>
-  <p class="lst__spec">透天　·　5房3廳4衛　·　58 坪</p>
-  <p class="lst__note">臨路透天，一樓可店可住，適合家庭或置產。</p></div>
-</li>
-<li class="lst reveal" data-cat="一房" data-deal="出售">
-  <div class="lst__art"><img class="lst__ico" src="icons/apartment.webp" alt="" width="132" height="132" loading="lazy" decoding="async"><span class="badge badge--deal badge--sale">出售</span><span class="badge badge--sample">範例物件</span></div>
-  <div class="lst__body"><h3 class="lst__title">桃園中正路低總價一房</h3>
-  <p class="lst__addr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg><span>桃園市桃園區中正路一帶</span></p>
-  <p class="lst__price">680萬</p>
-  <p class="lst__spec">電梯大樓　·　1房1廳1衛　·　14.6 坪</p>
-  <p class="lst__note">低總價、好管理，適合首購或收租。</p></div>
-</li>
-<li class="lst reveal" data-cat="兩房" data-deal="出租">
-  <div class="lst__art"><img class="lst__ico" src="icons/apartment.webp" alt="" width="132" height="132" loading="lazy" decoding="async"><span class="badge badge--deal badge--rent">出租</span><span class="badge badge--sample">範例物件</span></div>
-  <div class="lst__body"><h3 class="lst__title">中壢中原兩房出租中</h3>
-  <p class="lst__addr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg><span>桃園市中壢區中原商圈</span></p>
-  <p class="lst__price">月租 22,000 元</p>
-  <p class="lst__spec">公寓　·　2房2廳1衛　·　21 坪</p>
-  <p class="lst__note">近商圈與學校，生活機能方便。</p></div>
-</li>
-<li class="lst reveal" data-cat="店面・辦公" data-deal="出租">
-  <div class="lst__art"><img class="lst__ico" src="icons/shop.webp" alt="" width="132" height="132" loading="lazy" decoding="async"><span class="badge badge--deal badge--rent">出租</span><span class="badge badge--sample">範例物件</span></div>
-  <div class="lst__body"><h3 class="lst__title">平鎮工業區旁店面</h3>
-  <p class="lst__addr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg><span>桃園市平鎮區工業區旁</span></p>
-  <p class="lst__price">月租 45,000 元</p>
-  <p class="lst__spec">店面　·　店面＋夾層　·　28 坪</p>
-  <p class="lst__note">近廠區與主要道路，適合餐飲或小型工作室。</p></div>
-</li>
-<li class="lst reveal" data-cat="店面・辦公" data-deal="出售">
-  <div class="lst__art"><img class="lst__ico" src="icons/blueprint.webp" alt="" width="132" height="132" loading="lazy" decoding="async"><span class="badge badge--deal badge--sale">出售</span><span class="badge badge--sample">範例物件</span></div>
-  <div class="lst__body"><h3 class="lst__title">經國商務辦公樓層</h3>
-  <p class="lst__addr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg><span>桃園市桃園區經國路</span></p>
-  <p class="lst__price">1,880萬</p>
-  <p class="lst__spec">辦公　·　開放空間　·　45 坪</p>
-  <p class="lst__note">近轉運站，適合事務所或小型公司。</p></div>
-</li>
-<li class="lst reveal" data-cat="廠房" data-deal="出售">
-  <div class="lst__art"><img class="lst__ico" src="icons/factory.webp" alt="" width="132" height="132" loading="lazy" decoding="async"><span class="badge badge--deal badge--sale">出售</span><span class="badge badge--sample">範例物件</span></div>
-  <div class="lst__body"><h3 class="lst__title">蘆竹海湖廠房（含場地）</h3>
-  <p class="lst__addr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg><span>桃園市蘆竹區海湖</span></p>
-  <p class="lst__price">3,680萬</p>
-  <p class="lst__spec">廠房 280 坪　·　樓高 7 米　·　三相 200 安培</p>
-  <p class="lst__note">近林口／南崁交流道，適合倉儲或輕型生產。範例物件。</p></div>
-</li>
-<li class="lst reveal" data-cat="廠房" data-deal="出租">
-  <div class="lst__art"><img class="lst__ico" src="icons/factory.webp" alt="" width="132" height="132" loading="lazy" decoding="async"><span class="badge badge--deal badge--rent">出租</span><span class="badge badge--sample">範例物件</span></div>
-  <div class="lst__body"><h3 class="lst__title">大園區廠房分租</h3>
-  <p class="lst__addr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg><span>桃園市大園區高鐵附近</span></p>
-  <p class="lst__price">月租 180,000 元</p>
-  <p class="lst__spec">廠房 186 坪　·　樓高 8 米　·　三相 300 安培</p>
-  <p class="lst__note">樓高充足、電力穩定，適合加工或物流。範例物件。</p></div>
-</li>
-<li class="lst reveal" data-cat="土地" data-deal="出售">
-  <div class="lst__art"><img class="lst__ico" src="icons/land.webp" alt="" width="132" height="132" loading="lazy" decoding="async"><span class="badge badge--deal badge--sale">出售</span><span class="badge badge--sample">範例物件</span></div>
-  <div class="lst__body"><h3 class="lst__title">大園區方正建地</h3>
-  <p class="lst__addr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg><span>桃園市大園區</span></p>
-  <p class="lst__price">2,880萬</p>
-  <p class="lst__spec">建地　·　165 坪</p>
-  <p class="lst__note">地勢平坦、臨路，適合自地自建或開發評估。範例物件。</p></div>
-</li>
-<li class="lst reveal" data-cat="土地" data-deal="出售">
-  <div class="lst__art"><img class="lst__ico" src="icons/land.webp" alt="" width="132" height="132" loading="lazy" decoding="async"><span class="badge badge--deal badge--sale">出售</span><span class="badge badge--sample">範例物件</span></div>
-  <div class="lst__body"><h3 class="lst__title">楊梅區工業地</h3>
-  <p class="lst__addr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg><span>桃園市楊梅區幼獅附近</span></p>
-  <p class="lst__price">4,260萬</p>
-  <p class="lst__spec">工業地　·　320 坪</p>
-  <p class="lst__note">近工業區與交流道，適合設廠或長期持有。範例物件。</p></div>
-</li>
-<li class="lst reveal" data-cat="土地" data-deal="出售">
-  <div class="lst__art"><img class="lst__ico" src="icons/land.webp" alt="" width="132" height="132" loading="lazy" decoding="async"><span class="badge badge--deal badge--sale">出售</span><span class="badge badge--sample">範例物件</span></div>
-  <div class="lst__body"><h3 class="lst__title">觀音區平坦農地</h3>
-  <p class="lst__addr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg><span>桃園市觀音區</span></p>
-  <p class="lst__price">1,280萬</p>
-  <p class="lst__spec">農地　·　412 坪</p>
-  <p class="lst__note">面積完整、進出方便。地目與使用限制請再依法確認。範例物件。</p></div>
+  <div class="lst__body"><h3 class="lst__title">藝文特區可補助套房</h3>
+  <p class="lst__addr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg><span>桃園市桃園區莊敬路二段</span></p>
+  <p class="lst__price">月租 11,000 元</p>
+  <p class="lst__spec">套房　·　1房1衛　·　8 坪　·　3F／4F</p>
+  <p class="lst__note">近藝文特區、國道旁，可申請租屋補助</p></div>
 </li></ul>
 <p class="lst-more-wrap" data-lst-more-wrap hidden><button type="button" class="btn btn--outline lst-more" data-lst-more hidden aria-expanded="false" aria-controls="lst-grid">看更多物件</button></p>
-<p class="empty" data-empty hidden>這個分類目前沒有範例物件，請試試其他條件。</p></div></section>
+<p class="empty" data-empty hidden>這個分類目前沒有物件，請試試其他條件，或直接 LINE 問我。</p></div></section>
 <section class="sec sec--market" aria-labelledby="market-h"><div class="wrap"><div class="mk">
   <div class="mk__head"><h2 class="sec-h" id="market-h">桃園房價行情 <span class="badge badge--sample">範例數字</span></h2>
   <p class="mk__lead">桃園一坪大多在 32–48 萬</p><p class="mk__meta">近一年示範 860 筆　·　中位數約 39.5 萬</p></div>
@@ -887,7 +811,7 @@ window.SITE_CONFIG={
   <p class="mk__note">以上為範例數字，正式版可串內政部實價登錄。</p>
 </div></div></section>
 <section class="sec sec--faq" id="faq" aria-labelledby="faq-h"><div class="wrap faq-wrap">
-  <div class="sec-head"><h2 class="sec-h" id="faq-h">買房、賣房常見問題</h2><p class="sec-sub">先問這幾件。</p></div>
+  <div class="sec-head"><h2 class="sec-h" id="faq-h">常見問題指南</h2><p class="sec-sub">買房租屋、貸款稅務、常見問題解析，幫您快速了解！</p></div>
     <div class="faq">
     <div class="faq-tabs" role="tablist" aria-label="問題分類">
       <button type="button" class="faq-tab" role="tab" id="faq-tab-buy" aria-controls="faq-panel-buy" aria-selected="true" tabindex="0">買賣</button>
@@ -934,7 +858,7 @@ window.SITE_CONFIG={
 <footer class="foot" id="contact">
   <div class="wrap foot__in">
     <div class="foot__id"><img class="foot__photo" src="photo.jpg" alt="許津銓" width="72" height="72" loading="lazy">
-      <div><p class="foot__name">許津銓（許先生）</p><p class="foot__team">【住商不動產RM團隊】｜服務區域：桃園</p>
+      <div><p class="foot__name">許津銓（許先生）</p><p class="foot__team">住商不動產-小檜溪澄淨未來加盟店｜全台服務</p>
       <p class="foot__contact" translate="no"><a href="tel:0983553849"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 3.5h2.9l1.5 4.1-2.1 1.5a12 12 0 0 0 6 6l1.5-2.1 4.1 1.5v2.9a2 2 0 0 1-2.2 2A16.4 16.4 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg><span>0983-553-849</span></a><a href="https://line.me/R/ti/p/@652ddpuz" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 4C7.3 4 3.5 7 3.5 10.8c0 3.3 3 6.1 7 6.7l-.4 2.6 3.7-2.6c3.6-.6 6.7-3.4 6.7-6.7C20.5 7 16.7 4 12 4Z"/><path d="M8 9.3v3h1.6M11.2 9.3v3M13 12.3V9.3l2.1 3V9.3M17.8 9.3h-1.5v3h1.5M16.3 10.8h1.4" stroke-width="1.3" stroke-linecap="round"/></svg><span>LINE @652ddpuz</span></a></p></div></div>
     <div class="foot__legal" role="group" aria-label="法定揭露"><p class="foot__h" aria-hidden="true">法定揭露</p><dl class="disclosure disclosure--foot">
   <div><dt>營業員證號</dt><dd>許津銓 (110)登字第403846號</dd></div>
@@ -942,7 +866,7 @@ window.SITE_CONFIG={
   <div><dt>致善豐格不動產經紀有限公司</dt><dd>不動產經紀人：楊上譽 (114)年桃市經字002067</dd></div>
 </dl></div>
   </div>
-  <p class="wrap foot__fine">許津銓｜住商不動產RM團隊　示範模板　表單與報表數字為範例資料。精選案件皆為版面示意的範例物件，不是實際房源。</p>
+  <p class="wrap foot__fine">為保障您的權益，廣告僅簡略敘述，請直接來電洽詢物件最新資訊及狀況。 實際需依照房屋現況為準，圖片或格局圖僅供參考。 物件內容以此標的物以實際謄本為主。</p>
 </footer>
 <nav class="phonebar" aria-label="快速聯絡">
   <a href="tel:0983553849"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 3.5h2.9l1.5 4.1-2.1 1.5a12 12 0 0 0 6 6l1.5-2.1 4.1 1.5v2.9a2 2 0 0 1-2.2 2A16.4 16.4 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg><span>打電話</span></a>
@@ -1056,7 +980,7 @@ function parseLstLimit(v){
 function lstLimit(){ var p=parseLstLimit(window.__lstLimit); return innerWidth>=900?p[1]:p[0]; }
 function filt(opts){
   if(opts&&opts.reset)lstOpen=false;
-  var n=0, noun=window.__lstNoun||"範例物件", matches=[];
+  var n=0, noun=window.__lstNoun||"物件", matches=[];
   $$(".lst").forEach(function(c){
     var ok=(deal==="全部"||c.dataset.deal===deal)&&(cat==="全部"||c.dataset.cat===cat);
     c.hidden=!ok; c.removeAttribute("data-overflow");
